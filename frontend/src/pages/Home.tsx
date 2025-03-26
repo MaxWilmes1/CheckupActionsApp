@@ -2,6 +2,7 @@ import CheckupActionCard from "../components/CheckupActionCard.tsx";
 import {useEffect, useState} from "react";
 import {CheckupAction} from "../models/CheckupAction.ts";
 import axios from "axios";
+import NewCheckupActionCard from "../components/NewCheckupActionCard.tsx";
 
 export default function Home() {
     const [actions, setActions] = useState<CheckupAction[]>()
@@ -28,6 +29,7 @@ export default function Home() {
                     <CheckupActionCard key={action.id} action={action} fetchActions={fetchActions}/>
                 ))
             }
+            <NewCheckupActionCard fetchActions={fetchActions}/>
         </>
     )
 

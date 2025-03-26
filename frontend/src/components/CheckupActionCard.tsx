@@ -16,7 +16,7 @@ export default function CheckupActionCard(props: Props) {
     return (
         <div className={"checkup-action-card"}>
             <p>{props.action.title}</p>
-            <button onClick={deleteActions}>delete</button>
+            <button className={"button-delete"} onClick={deleteActions}>delete</button>
         </div>
     )
 }
