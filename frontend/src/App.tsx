@@ -1,7 +1,9 @@
-export default function App(){
+import Home from "./pages/Home.tsx";
+
+export default function App() {
     return (
         <>
-        <p>Hallo Welt!</p>
+            <Home/>
         </>
     )
 }
