@@ -68,13 +68,52 @@ class CheckupActionControllerTest {
 
     @Test
     @DirtiesContext
-    void addAction() {
+    void addAction() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/api/checkup-actions/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                                """
+                                        {
+                                        "title": "testPassed"
+                                        }
+                                        """
+                        ))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(
+                                """
+                                         {
+                                          title: "testPassed"
+                                         }
+                                        """
+                        )
+                )
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
+    }
+
+    @Test
+    @DirtiesContext
+    void deleteAction() throws Exception {
+        CheckupAction action = CheckupAction.builder()
+                .id("1")
+                .title("test")
+                .build();
+        checkupActionRepository.save(action);
+        String idToDelete = "1";
+        mvc.perform(MockMvcRequestBuilders.delete("/api/checkup-actions/delete/" + idToDelete))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
     }
 
     @Test
     @DirtiesContext
     void shouldReturnUpdatedAction_whenUpdatingExistingAction() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/api/checkup-actions/add")
+        CheckupAction action = CheckupAction.builder()
+                .id("1")
+                .title("test")
+                .build();
+        checkupActionRepository.save(action);
+
+        mvc.perform(MockMvcRequestBuilders.put("/api/checkup-actions/update/" + action.id())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 """
@@ -88,15 +127,10 @@ class CheckupActionControllerTest {
                 .andExpect(MockMvcResultMatchers.content().json(
                         """
                                  {
+                                 id: "1",
                                   title: "testPassed"
                                  }
                                 """
-                ))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
-    }
-
-    @Test
-    @DirtiesContext
-    void deleteAction() {
+                ));
     }
 }
