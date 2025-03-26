@@ -1,4 +1,4 @@
-package com.hdi.backend.CheckupActions;
+package com.hdi.backend.checkupactions;
 
 import org.junit.jupiter.api.Test;
 
@@ -90,35 +90,33 @@ class CheckupActionServiceTest {
     }
 
     @Test
-    void shouldThrowException_whenActionNotFound(){
+    void shouldThrowException_whenActionNotFound() {
         //GIVEN
         String notExistentId = "9999";
         when(mockCheckupActionRepository.findById(notExistentId)).thenReturn(Optional.empty());
-
+        String expected = "Checkup action with ID 9999 not found";
         //WHEN & THEN
-        assertThrows(NoSuchElementException.class, () -> checkupActionService.getActionById(notExistentId));
+        Exception actual = assertThrows(NoSuchElementException.class, () -> checkupActionService.getActionById(notExistentId));
         verify(mockCheckupActionRepository).findById(notExistentId);
+        assertEquals(expected, actual.getMessage());
     }
 
     @Test
     void shouldSaveAndReturnCheckupActionWithGeneratedId() {
         // GIVEN
-        CheckupAction actionWithoutId = CheckupAction.builder()
+        CheckupActionDTO actionWithoutId = CheckupActionDTO.builder()
                 .title("test")
                 .build();
+        CheckupAction expectedToSave = new CheckupAction(null, actionWithoutId.title());
+        CheckupAction savedAction = new CheckupAction("generatedMongoId123", actionWithoutId.title());
 
-        CheckupAction savedAction = CheckupAction.builder()
-                .id("generatedMongoId123")
-                .title("test")
-                .build();
-
-        when(mockCheckupActionRepository.save(any(CheckupAction.class))).thenReturn(savedAction);
+        when(mockCheckupActionRepository.save(expectedToSave)).thenReturn(savedAction);
 
         // WHEN
         CheckupAction actual = checkupActionService.addAction(actionWithoutId);
 
         // THEN
-        verify(mockCheckupActionRepository).save(any(CheckupAction.class));
+        verify(mockCheckupActionRepository).save(expectedToSave);
         assertNotNull(actual.id());
         assertEquals("test", actual.title());
     }
@@ -142,10 +140,13 @@ class CheckupActionServiceTest {
         // GIVEN
         String idToUpdate = "1";
         CheckupAction existingAction = CheckupAction.builder()
-                .id(idToUpdate)
+                .id("1")
                 .title("test")
                 .build();
-        CheckupAction updatedAction = CheckupAction.builder()
+        CheckupActionDTO updateActionData = CheckupActionDTO.builder()
+                .title("testSuccessfull")
+                .build();
+        CheckupAction expectedToSave = CheckupAction.builder()
                 .id("1")
                 .title("testSuccessfull")
                 .build();
@@ -154,9 +155,9 @@ class CheckupActionServiceTest {
                 .title("testSuccessfull")
                 .build();
         when(mockCheckupActionRepository.findById(idToUpdate)).thenReturn(Optional.of(existingAction));
-        when(mockCheckupActionRepository.save(any(CheckupAction.class))).thenReturn(updatedAction);
+        when(mockCheckupActionRepository.save(expectedToSave)).thenReturn(expectedToSave);
         // WHEN
-        CheckupAction actual = checkupActionService.updateAction(idToUpdate, updatedAction);
+        CheckupAction actual = checkupActionService.updateAction(idToUpdate, updateActionData);
         // THEN
         assertNotNull(actual);
         assertEquals(expected.title(), actual.title());

@@ -1,4 +1,4 @@
-package com.hdi.backend.CheckupActions;
+package com.hdi.backend.checkupactions;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,20 +17,21 @@ public class CheckupActionService {
     }
 
     public CheckupAction getActionById(String id) {
-        return checkupActionRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        return checkupActionRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Checkup action with ID " + id + " not found"));
     }
 
-    public CheckupAction addAction(CheckupAction checkupAction) {
-        return checkupActionRepository.save(checkupAction);
+    public CheckupAction addAction(CheckupActionDTO checkupActionDTO) {
+        CheckupAction checkupActionToSave = new CheckupAction(null, checkupActionDTO.title());
+        return checkupActionRepository.save(checkupActionToSave);
     }
 
     public void deleteAction(String id) {
         checkupActionRepository.deleteById(id);
     }
 
-    public CheckupAction updateAction(String id, CheckupAction checkupAction) {
+    public CheckupAction updateAction(String id, CheckupActionDTO checkupActionDTO) {
         CheckupAction oldCheckupAction = getActionById(id);
-        CheckupAction updatedCheckupAction = new CheckupAction(oldCheckupAction.id(), checkupAction.title());
+        CheckupAction updatedCheckupAction = new CheckupAction(oldCheckupAction.id(), checkupActionDTO.title());
         return checkupActionRepository.save(updatedCheckupAction);
     }
 }

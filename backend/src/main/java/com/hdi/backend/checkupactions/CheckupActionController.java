@@ -1,4 +1,4 @@
-package com.hdi.backend.CheckupActions;
+package com.hdi.backend.checkupactions;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +23,8 @@ public class CheckupActionController {
     }
 
     @PostMapping("/add")
-    CheckupAction addCheckupAction(@RequestBody CheckupAction checkupAction) {
-        return checkupActionService.addAction(checkupAction);
+    CheckupAction addCheckupAction(@RequestBody CheckupActionDTO checkupActionDTO) {
+        return checkupActionService.addAction(checkupActionDTO);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -33,7 +33,7 @@ public class CheckupActionController {
     }
 
     @PutMapping("/update/{id}")
-    CheckupAction updateAction(@PathVariable String id, @RequestBody CheckupAction checkupAction){
-        return checkupActionService.updateAction(id, checkupAction);
+    CheckupAction updateAction(@PathVariable String id, @RequestBody CheckupActionDTO checkupActionDTO){
+        return checkupActionService.updateAction(id, checkupActionDTO);
     }
 }

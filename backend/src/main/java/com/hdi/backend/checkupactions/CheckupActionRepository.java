@@ -1,4 +1,4 @@
-package com.hdi.backend.CheckupActions;
+package com.hdi.backend.checkupactions;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

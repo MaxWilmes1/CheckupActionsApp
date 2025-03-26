@@ -1,4 +1,4 @@
-package com.hdi.backend.CheckupActions;
+package com.hdi.backend.checkupactions;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
