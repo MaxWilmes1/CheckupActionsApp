@@ -4,7 +4,7 @@ import {CheckupAction} from "../models/CheckupAction.ts";
 import axios from "axios";
 
 export default function Home() {
-    const [actions, setActions] = useState<CheckupAction[]>([])
+    const [actions, setActions] = useState<CheckupAction[]>()
 
     useEffect(() => {
             fetchActions()
@@ -17,11 +17,15 @@ export default function Home() {
             .catch(e => console.log("Error fetching actions", e))
     }
 
+    if(!actions){
+        return "Loading..."
+    }
+
     return (
         <>
             {
                 actions.map((action) => (
-                    <CheckupActionCard key={action.id} action={action}/>
+                    <CheckupActionCard key={action.id} action={action} fetchActions={fetchActions}/>
                 ))
             }
         </>

@@ -1,4 +1,4 @@
 export type CheckupAction = {
     id: string,
-    title: string
+    title: string,
 }
