@@ -7,7 +7,7 @@ type Props = {
     fetchActions: () => void
 };
 
-export default function CheckupActionCard(props: Props) {
+export default function CheckupActionCard(props: Readonly<Props>) {
 
     const deleteActions = () => {
         axios.delete(`api/checkup-actions/delete/${props.action.id}`)

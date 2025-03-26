@@ -6,7 +6,7 @@ type Props = {
     fetchActions: () => void
 }
 
-export default function NewCheckupActionCard(props: Props) {
+export default function NewCheckupActionCard(props: Readonly<Props>) {
     const [newAction, setNewAction] = useState<NewCheckupAction>()
 
     const saveAction = () => {
