@@ -13,12 +13,14 @@ export default function NewCheckupActionCard(props: Readonly<Props>) {
         e.preventDefault()
         axios.post("api/checkup-actions/add", newAction)
             .then(props.fetchActions)
+        setNewAction({title:""})
     }
 
     return (
         <form onSubmit={saveAction}>
             <input type={"text"}
                    placeholder={"title"}
+                   value={newAction?.title}
                    onChange={(e) =>
                        setNewAction({...newAction, title: e.target.value})
                    }
