@@ -1,5 +1,5 @@
 import {NavLink, useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
 import {NewCheckupAction} from "../models/NewCheckupAction.ts";
 import axios from "axios";
 
@@ -16,7 +16,8 @@ export default function CheckupActionDetails() {
             .catch(error => console.error("Fehler beim Laden:", error));
     }, [params.id]);
 
-    const updateAction = () => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
         axios.put(`/api/checkup-actions/update/${params.id}`, action)
             .then(() =>
                 console.log(action)
@@ -30,7 +31,7 @@ export default function CheckupActionDetails() {
     }
 
     return (
-        <form onSubmit={updateAction}>
+        <form onSubmit={handleSubmit}>
             <input type={"text"} value={action.title} onChange={e => setAction({...action, title: e.target.value})}/>
             <button className={"button-save"}>Update</button>
             <NavLink to={"/"}>Home</NavLink>
