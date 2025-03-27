@@ -1,8 +1,9 @@
 version: '3.8'
+
 services:
   mongodb:
     image: mongo
-    container_name: mongodb
+    container_name: local-test-mongodb
     ports:
       - "27017:27017"
     networks:
@@ -17,6 +18,9 @@ services:
       - mongodb
     environment:
       - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/mydatabase
+      - APP_URL=${APP_URL}
+      - GITHUB_OAUTH_ID=${GITHUB_OAUTH_ID}
+      - GITHUB_OAUTH_SECRET=${GITHUB_OAUTH_SECRET}
     ports:
       - "8080:8080"
     networks:
