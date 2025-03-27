@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -23,6 +24,7 @@ class CheckupActionControllerTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser
     void shouldReturnAllActions_whenActionsExist() throws Exception {
         CheckupAction action = CheckupAction.builder()
                 .id("1")
@@ -46,6 +48,7 @@ class CheckupActionControllerTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser
     void shouldReturnActionById_whenActionExist() throws Exception {
         String idToFind = "1";
         CheckupAction action = CheckupAction.builder()
@@ -68,6 +71,7 @@ class CheckupActionControllerTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser
     void addAction() throws Exception {
         mvc.perform(MockMvcRequestBuilders.post("/api/checkup-actions/add")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -92,6 +96,7 @@ class CheckupActionControllerTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser
     void deleteAction() throws Exception {
         CheckupAction action = CheckupAction.builder()
                 .id("1")
@@ -106,6 +111,7 @@ class CheckupActionControllerTest {
 
     @Test
     @DirtiesContext
+    @WithMockUser
     void shouldReturnUpdatedAction_whenUpdatingExistingAction() throws Exception {
         CheckupAction action = CheckupAction.builder()
                 .id("1")
