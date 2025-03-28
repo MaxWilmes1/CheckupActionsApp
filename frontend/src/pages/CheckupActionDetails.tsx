@@ -18,11 +18,11 @@ export default function CheckupActionDetails() {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        axios.put(`/api/checkup-actions/update/${params.id}`, action)
+        axios.put(`/api/checkup-actions/${params.id}`, action)
             .then(() =>
                 console.log(action)
             )
-        navigate("/")
+        navigate("/checkup-actions")
 
     }
 

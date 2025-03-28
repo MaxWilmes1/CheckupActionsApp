@@ -1,9 +1,10 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
+import {AppUser} from "../models/AppUser.ts";
 
 export default function Header() {
-    const [userName, setUserName] = useState<string | null>(null)
+    const [user, setUser] = useState<AppUser | null>(null)
 
     function gitHubOauthLogin() {
         const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin
@@ -18,19 +19,19 @@ export default function Header() {
 
     useEffect(() => {
         axios.get('/api/auth/me')
-            .then(r => {setUserName(r.data)})
-            .catch(() => setUserName(null))
+            .then(r => {setUser(r.data)})
+            .catch(() => setUser(null))
     }, [])
 
     return (
         <div>
             <h1>Checkup Actions App</h1>
-            {userName && <p>Logged in as: {userName}</p>}
-            {!userName
+            {user?.username && <p>Logged in as: {user.username}</p>}
+            {!user
                 ? <button onClick={gitHubOauthLogin}>GitHub Oauth login</button>
                 : <button onClick={logout}>Logout</button>
             }
-            {userName && <NavLink to={"/checkup-actions"}>View all Checkup Actions</NavLink>}
+            {user && <NavLink to={"/checkup-actions"}>View all Checkup Actions</NavLink>}
         </div>
     );
 }

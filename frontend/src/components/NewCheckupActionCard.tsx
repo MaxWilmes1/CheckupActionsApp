@@ -11,7 +11,7 @@ export default function NewCheckupActionCard(props: Readonly<Props>) {
 
     const saveAction = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        axios.post("api/checkup-actions/add", newAction)
+        axios.post("api/checkup-actions", newAction)
             .then(props.fetchActions)
         setNewAction({title:""})
     }
