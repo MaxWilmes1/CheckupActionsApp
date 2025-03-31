@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useUser } from "../utils/UserContext.tsx";
+import { useUser } from "./UserContext.tsx";
 
 type Props = {
     children: ReactNode;

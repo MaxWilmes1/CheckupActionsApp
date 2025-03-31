@@ -25,6 +25,7 @@ export const UserProvider: React.FC<React.PropsWithChildren<object>> = ({ childr
 };
 
 // Erstelle einen Custom Hook, um den UserContext in anderen Komponenten zu verwenden
+// eslint-disable-next-line react-refresh/only-export-components
 export const useUser = () => {
     return useContext(UserContext);
 };
