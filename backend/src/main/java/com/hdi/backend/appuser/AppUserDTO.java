@@ -4,6 +4,8 @@ import lombok.Builder;
 
 @Builder
 public record AppUserDTO(
-        AppUserRole role
+        AppUserRole role,
+        String username,
+        String id
 ) {
 }

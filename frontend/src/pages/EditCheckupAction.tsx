@@ -3,7 +3,7 @@ import {FormEvent, useEffect, useState} from "react";
 import {NewCheckupAction} from "../models/NewCheckupAction.ts";
 import axios from "axios";
 
-export default function CheckupActionDetails() {
+export default function EditCheckupAction() {
     const params = useParams()
     const [action, setAction] = useState<NewCheckupAction>()
     const navigate = useNavigate()
@@ -13,7 +13,7 @@ export default function CheckupActionDetails() {
             .then(r => {
                 setAction(r.data);
             })
-            .catch(error => console.error("Fehler beim Laden:", error));
+            .catch(error => console.error("Error loading checkup action with id:" + params.id, error));
     }, [params.id]);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {

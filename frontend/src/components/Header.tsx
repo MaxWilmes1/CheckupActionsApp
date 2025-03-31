@@ -1,10 +1,8 @@
-import axios from "axios";
-import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
-import {AppUser} from "../models/AppUser.ts";
+import {useUser} from "../utils/UserContext.tsx";
 
 export default function Header() {
-    const [user, setUser] = useState<AppUser | null>(null)
+    const {user} = useUser();
 
     function gitHubOauthLogin() {
         const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin
@@ -17,12 +15,6 @@ export default function Header() {
         window.open(host + '/logout', '_self')
     }
 
-    useEffect(() => {
-        axios.get('/api/auth/me')
-            .then(r => {setUser(r.data)})
-            .catch(() => setUser(null))
-    }, [])
-
     return (
         <div>
             <h1>Checkup Actions App</h1>
@@ -32,6 +24,7 @@ export default function Header() {
                 : <button onClick={logout}>Logout</button>
             }
             {user && <NavLink to={"/checkup-actions"}>View all Checkup Actions</NavLink>}
+            {user?.role === "ADMIN" && <NavLink to={"/admin/board"}>Admin Board</NavLink> }
         </div>
     );
 }

@@ -1,35 +1,30 @@
 import Home from "./pages/Home.tsx";
 import {Route, Routes} from "react-router-dom";
-import CheckupActionDetails from "./pages/CheckupActionDetails.tsx";
-import AllActionsView from "./pages/AllActionsView.tsx";
-import ProtectedRoutes from "./ProtectedRoutes.tsx";
-import {useEffect, useState} from "react";
-import axios from "axios";
+import EditCheckupAction from "./pages/EditCheckupAction.tsx";
+import AllActions from "./pages/AllActions.tsx";
+import ProtectedRoutes from "./utils/ProtectedRoutes.tsx";
+import AdminProtectedRoute from "./utils/AdminProtectedRoute.tsx";
+import AdminBoard from "./pages/AdminBoard.tsx";
+import {UserProvider} from "./utils/UserContext.tsx";
+import EditUser from "./pages/EditUser.tsx";
 
 export default function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
 
-    useEffect(() => {
-        axios.get("/api/auth/me")
-            .then(() => {
-                setIsLoggedIn(true)
-            })
-            .catch(error => {
-                console.error("Failed loading the user", error)
-                setIsLoggedIn(false)
-            })
-    }, [])
 
     return (
-        <>
+        <UserProvider>
             <Routes>
                 <Route path={"/"} element={<Home/>}></Route>
-                <Route element={<ProtectedRoutes isLoggedIn={isLoggedIn}/>}>
-                    <Route path={"/checkup-actions"} element={<AllActionsView/>}></Route>
-                    <Route path={"/checkup-actions/:id"} element={<CheckupActionDetails/>}/>
+                <Route element={<ProtectedRoutes/>}>
+                    <Route path={"/checkup-actions"} element={<AllActions/>}></Route>
+                    <Route path={"/checkup-actions/:id"} element={<EditCheckupAction/>}/>
+                </Route>
+                <Route element={<AdminProtectedRoute/>}>
+                    <Route path={"/admin/board"} element={<AdminBoard/>}/>
+                    <Route path={"/admin/editUser/:id"} element={<EditUser/>}/>
                 </Route>
 
             </Routes>
-        </>
+        </UserProvider>
     )
 }

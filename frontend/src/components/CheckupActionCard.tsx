@@ -15,7 +15,7 @@ export default function CheckupActionCard(props: Readonly<Props>) {
     }
 
     return (
-        <div className={"checkup-action-card"}>
+        <div className={"card"}>
             <p>{props.action.title}</p>
             <button className={"button-delete"} onClick={deleteActions}>delete</button>
             <NavLink to={`/checkup-actions/${props.action.id}`}>Details</NavLink>

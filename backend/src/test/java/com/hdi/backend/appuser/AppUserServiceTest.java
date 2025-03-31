@@ -3,6 +3,7 @@ package com.hdi.backend.appuser;
 import com.hdi.backend.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,6 +13,28 @@ class AppUserServiceTest {
 
     private final AppUserRepository mockAppUserRepository = mock(AppUserRepository.class);
     private final AppUserService appUserService = new AppUserService(mockAppUserRepository);
+
+    @Test
+    void getAppUsers_shouldReturnList2Users_when2UsersExists() {
+        // GIVEN
+        AppUser u1 = AppUser.builder()
+                .id("1")
+                .role(AppUserRole.USER)
+                .username("testname1")
+                .build();
+        AppUser u2 = AppUser.builder()
+                .id("2")
+                .role(AppUserRole.ADMIN)
+                .username("testname")
+                .build();
+        List<AppUser> appUserList = List.of(u1, u2);
+        when(mockAppUserRepository.findAll()).thenReturn(appUserList);
+        // WHEN
+        List<AppUser> actual = appUserService.getAppUsers();
+        // THEN
+        verify(mockAppUserRepository).findAll();
+        assertEquals(appUserList, actual);
+    }
 
     @Test
     void getAppUserById_shouldReturnUser_whenUserExist() {
