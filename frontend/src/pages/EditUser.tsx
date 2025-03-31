@@ -37,7 +37,7 @@ export default function EditUser() {
                 <option value={"ADMIN"}>ADMIN</option>
             </select>
             <button onClick={handleSave}>Save</button>
-            <NavLink to={"/admin/board"}>Admin Board</NavLink>
+            <NavLink to={"/admin/board"}>Admin Board </NavLink>
         </div>
     );
 }

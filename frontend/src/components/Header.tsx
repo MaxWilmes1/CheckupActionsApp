@@ -1,5 +1,6 @@
 import {NavLink} from "react-router-dom";
 import {useUser} from "../utils/UserContext.tsx";
+import AdminOnly from "../utils/AdminOnly.tsx";
 
 export default function Header() {
     const {user} = useUser();
@@ -19,12 +20,15 @@ export default function Header() {
         <div>
             <h1>Checkup Actions App</h1>
             {user?.username && <p>Logged in as: {user.username}</p>}
+            {user?.role && <p>Role: {user.role}</p>}
             {!user
                 ? <button onClick={gitHubOauthLogin}>GitHub Oauth login</button>
                 : <button onClick={logout}>Logout</button>
             }
             {user && <NavLink to={"/checkup-actions"}>View all Checkup Actions</NavLink>}
-            {user?.role === "ADMIN" && <NavLink to={"/admin/board"}>Admin Board</NavLink> }
+            <AdminOnly>
+                <NavLink to={"/admin/board"}>Admin Board</NavLink>
+            </AdminOnly>
         </div>
     );
 }
