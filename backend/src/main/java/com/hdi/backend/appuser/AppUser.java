@@ -1,16 +1,15 @@
 package com.hdi.backend.appuser;
 
+import lombok.Builder;
 import lombok.With;
 
-import java.util.List;
-
 @With
+@Builder
 public record AppUser(
         String id,
         AppUserRole role,
         String username,
         String avatarUrl,
-        String createdAt,
-        List<String> favorite
+        String createdAt
 ) {
 }

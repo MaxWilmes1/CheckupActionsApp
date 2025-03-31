@@ -11,12 +11,14 @@ public class AppUserController {
     private final AppUserService appUserService;
 
     @GetMapping("/{id}")
-    public AppUser getAppUserById(@PathVariable String id) {
-        return appUserService.getAppUserById(id);
+    public AppUserDTO getAppUserById(@PathVariable String id) {
+        AppUser user = appUserService.getAppUserById(id);
+        return new AppUserDTO(user.role());
     }
 
     @PutMapping("/{id}")
     public AppUserDTO updateUserRole(@PathVariable String id, @RequestBody AppUserDTO userData) {
-        return appUserService.updateUserRole(id, userData);
+        AppUser updatedUser = appUserService.updateUserRole(id, userData);
+        return new AppUserDTO(updatedUser.role());
     }
 }

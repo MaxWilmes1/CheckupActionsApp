@@ -13,13 +13,12 @@ public class AppUserService {
 
     public AppUser getAppUserById(String id) {
         return appUserRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("User with id: " + id + " not found"));
+                .orElseThrow(() -> new NoSuchElementException("User with id " + id + " not found"));
     }
 
-    public AppUserDTO updateUserRole(String id, AppUserDTO userData) {
+    public AppUser updateUserRole(String id, AppUserDTO userData) {
         AppUser appUserToUpdate = getAppUserById(id);
         AppUser appUserToSave = appUserToUpdate.withRole(userData.role());
-        appUserRepository.save(appUserToSave);
-        return userData;
+        return appUserRepository.save(appUserToSave);
     }
 }

@@ -35,8 +35,7 @@ public class AuthService {
                                             AppUserRole.USER,
                                             githubUser.getAttributes().get("login").toString(),
                                             githubUser.getAttributes().get("avatar_url").toString(),
-                                            githubUser.getAttributes().get("created_at").toString(),
-                                            List.of()
+                                            githubUser.getAttributes().get("created_at").toString()
                                     )
                             )
                     );
