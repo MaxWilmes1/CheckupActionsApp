@@ -1,9 +1,8 @@
 package com.hdi.backend.appuser;
 
+import com.hdi.backend.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -13,7 +12,7 @@ public class AppUserService {
 
     public AppUser getAppUserById(String id) {
         return appUserRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("User with id " + id + " not found"));
+                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
     }
 
     public AppUser updateUserRole(String id, AppUserDTO userData) {

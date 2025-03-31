@@ -1,9 +1,9 @@
 package com.hdi.backend.checkupactions;
 
+import com.hdi.backend.exception.ActionNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -96,7 +96,7 @@ class CheckupActionServiceTest {
         when(mockCheckupActionRepository.findById(notExistentId)).thenReturn(Optional.empty());
         String expected = "Checkup action with ID 9999 not found";
         //WHEN & THEN
-        Exception actual = assertThrows(NoSuchElementException.class, () -> checkupActionService.getActionById(notExistentId));
+        Exception actual = assertThrows(ActionNotFoundException.class, () -> checkupActionService.getActionById(notExistentId));
         verify(mockCheckupActionRepository).findById(notExistentId);
         assertEquals(expected, actual.getMessage());
     }

@@ -1,8 +1,8 @@
 package com.hdi.backend.appuser;
 
+import com.hdi.backend.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,7 +36,7 @@ class AppUserServiceTest {
         when(mockAppUserRepository.findById(notExistentId)).thenReturn(Optional.empty());
         String expected = "User with id 9999 not found";
         // WHEN & THEN
-        Exception actual = assertThrows(NoSuchElementException.class, () -> appUserService.getAppUserById(notExistentId));
+        Exception actual = assertThrows(UserNotFoundException.class, () -> appUserService.getAppUserById(notExistentId));
         verify(mockAppUserRepository).findById(notExistentId);
         assertEquals(expected, actual.getMessage());
     }
