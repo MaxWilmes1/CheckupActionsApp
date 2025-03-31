@@ -71,9 +71,9 @@ class CheckupActionControllerTest {
 
     @Test
     @DirtiesContext
-    @WithMockUser
-    void addAction() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/api/checkup-actions/add")
+    @WithMockUser(authorities = "ADMIN")
+    void addAction_shouldAddAction_WhenUserLoggedInAndAdmin() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/api/checkup-actions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 """
@@ -96,7 +96,7 @@ class CheckupActionControllerTest {
 
     @Test
     @DirtiesContext
-    @WithMockUser
+    @WithMockUser (authorities = "ADMIN")
     void deleteAction() throws Exception {
         CheckupAction action = CheckupAction.builder()
                 .id("1")
@@ -104,14 +104,14 @@ class CheckupActionControllerTest {
                 .build();
         checkupActionRepository.save(action);
         String idToDelete = "1";
-        mvc.perform(MockMvcRequestBuilders.delete("/api/checkup-actions/delete/" + idToDelete))
+        mvc.perform(MockMvcRequestBuilders.delete("/api/checkup-actions/" + idToDelete))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
     }
 
     @Test
     @DirtiesContext
-    @WithMockUser
+    @WithMockUser(authorities = "ADMIN")
     void shouldReturnUpdatedAction_whenUpdatingExistingAction() throws Exception {
         CheckupAction action = CheckupAction.builder()
                 .id("1")
@@ -119,7 +119,7 @@ class CheckupActionControllerTest {
                 .build();
         checkupActionRepository.save(action);
 
-        mvc.perform(MockMvcRequestBuilders.put("/api/checkup-actions/update/" + action.id())
+        mvc.perform(MockMvcRequestBuilders.put("/api/checkup-actions/" + action.id())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 """

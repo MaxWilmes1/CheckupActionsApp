@@ -22,17 +22,17 @@ public class CheckupActionController {
         return checkupActionService.getActionById(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     CheckupAction addCheckupAction(@RequestBody CheckupActionDTO checkupActionDTO) {
         return checkupActionService.addAction(checkupActionDTO);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     void deleteAction(@PathVariable String id) {
         checkupActionService.deleteAction(id);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     CheckupAction updateAction(@PathVariable String id, @RequestBody CheckupActionDTO checkupActionDTO){
         return checkupActionService.updateAction(id, checkupActionDTO);
     }

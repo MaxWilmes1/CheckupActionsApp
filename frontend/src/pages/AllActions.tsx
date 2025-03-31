@@ -5,7 +5,7 @@ import {CheckupAction} from "../models/CheckupAction.ts";
 import axios from "axios";
 import {NavLink} from "react-router-dom";
 
-function AllActionsView() {
+function AllActions() {
 
     const [actions, setActions] = useState<CheckupAction[]>()
 
@@ -36,4 +36,4 @@ function AllActionsView() {
     );
 }
 
-export default AllActionsView;
+export default AllActions;

@@ -1,10 +1,10 @@
 package com.hdi.backend.checkupactions;
 
+import com.hdi.backend.exception.ActionNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +17,7 @@ public class CheckupActionService {
     }
 
     public CheckupAction getActionById(String id) {
-        return checkupActionRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Checkup action with ID " + id + " not found"));
+        return checkupActionRepository.findById(id).orElseThrow(() -> new ActionNotFoundException("Checkup action with ID " + id + " not found"));
     }
 
     public CheckupAction addAction(CheckupActionDTO checkupActionDTO) {

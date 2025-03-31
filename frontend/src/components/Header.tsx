@@ -1,9 +1,9 @@
-import axios from "axios";
-import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
+import {useUser} from "../utils/UserContext.tsx";
+import AdminOnly from "../utils/AdminOnly.tsx";
 
 export default function Header() {
-    const [userName, setUserName] = useState<string | null>(null)
+    const {user} = useUser();
 
     function gitHubOauthLogin() {
         const host = window.location.host === 'localhost:5173' ? 'http://localhost:8080' : window.location.origin
@@ -16,21 +16,19 @@ export default function Header() {
         window.open(host + '/logout', '_self')
     }
 
-    useEffect(() => {
-        axios.get('/api/auth/me')
-            .then(r => {setUserName(r.data)})
-            .catch(() => setUserName(null))
-    }, [])
-
     return (
         <div>
             <h1>Checkup Actions App</h1>
-            {userName && <p>Logged in as: {userName}</p>}
-            {!userName
+            {user?.username && <p>Logged in as: {user.username}</p>}
+            {user?.role && <p>Role: {user.role}</p>}
+            {!user
                 ? <button onClick={gitHubOauthLogin}>GitHub Oauth login</button>
                 : <button onClick={logout}>Logout</button>
             }
-            {userName && <NavLink to={"/checkup-actions"}>View all Checkup Actions</NavLink>}
+            {user && <NavLink to={"/checkup-actions"}>View all Checkup Actions</NavLink>}
+            <AdminOnly>
+                <NavLink to={"/admin/board"}>Admin Board</NavLink>
+            </AdminOnly>
         </div>
     );
 }
