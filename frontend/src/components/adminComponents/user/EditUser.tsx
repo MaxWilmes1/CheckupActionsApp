@@ -1,8 +1,8 @@
 import {NavLink, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {AppUser} from "../models/AppUser.ts";
-import {AppUserRole} from "../models/AppUserRole.tsx";
+import {AppUser} from "../../../models/appUser/AppUser.ts";
+import {AppUserRole} from "../../../models/appUser/AppUserRole.tsx";
 
 export default function EditUser() {
     const params = useParams()
@@ -17,7 +17,7 @@ export default function EditUser() {
                 setSelectedRole(r.data.role)
             })
             .catch(error => console.error("Error loading user with id:" + params.id, error));
-    }, []);
+    }, [params.id]);
 
     const handleSave = ()=>{
         axios.put(`/api/users/${params.id}`, {...user, role:selectedRole})
@@ -30,14 +30,15 @@ export default function EditUser() {
         <div>
             <p>{user?.username}</p>
             <p>{user?.id}</p>
-            <label>Role:</label>
-            <select value={selectedRole} onChange={e => setSelectedRole(e.target.value as AppUserRole)}>
-                <option value={"NONE"}>NONE</option>
-                <option value={"USER"}>USER</option>
-                <option value={"ADMIN"}>ADMIN</option>
-            </select>
+            <label>Role:
+                <select value={selectedRole} onChange={e => setSelectedRole(e.target.value as AppUserRole)}>
+                    <option value={"NONE"}>NONE</option>
+                    <option value={"USER"}>USER</option>
+                    <option value={"ADMIN"}>ADMIN</option>
+                </select>
+            </label>
             <button onClick={handleSave}>Save</button>
-            <NavLink to={"/admin/board"}>Admin Board </NavLink>
+            <NavLink to={"/admin/board"}>Admin Dashbaord </NavLink>
         </div>
     );
 }

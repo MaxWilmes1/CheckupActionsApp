@@ -5,7 +5,7 @@ type Props = {
     children: ReactNode;
 };
 
-export default function AdminOnly({ children }: Props) {
+export default function AdminOnly({ children }: Readonly<Props>) {
     const { user } = useUser();
 
     if (user?.role !== "ADMIN") return null;

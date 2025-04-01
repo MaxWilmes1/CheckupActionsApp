@@ -1,11 +1,11 @@
-import {AppUser} from "../models/AppUser.ts";
+import {AppUser} from "../../../models/appUser/AppUser.ts";
 import {useNavigate} from "react-router-dom";
 
 type Props = {
     user: AppUser
 }
 
-export default function UserCard(props: Props) {
+export default function UserCard(props: Readonly<Props>) {
     const navigate = useNavigate()
 
     const handleClick = () => {

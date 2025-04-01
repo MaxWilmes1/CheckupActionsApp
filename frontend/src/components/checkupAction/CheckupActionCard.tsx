@@ -1,7 +1,7 @@
-import {CheckupAction} from "../models/CheckupAction.ts";
+import {CheckupAction} from "../../models/checkupAction/CheckupAction.ts";
 import axios from "axios";
 import {NavLink} from "react-router-dom";
-import AdminOnly from "../utils/AdminOnly.tsx";
+import AdminOnly from "../../utils/AdminOnly.tsx";
 
 type Props = {
     action: CheckupAction
