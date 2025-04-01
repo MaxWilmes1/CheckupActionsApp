@@ -1,8 +1,8 @@
 import {NavLink, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {AppUser} from "../models/AppUser.ts";
-import {AppUserRole} from "../models/AppUserRole.tsx";
+import {AppUser} from "../../../models/appUser/AppUser.ts";
+import {AppUserRole} from "../../../models/appUser/AppUserRole.tsx";
 
 export default function EditUser() {
     const params = useParams()
@@ -37,7 +37,7 @@ export default function EditUser() {
                 <option value={"ADMIN"}>ADMIN</option>
             </select>
             <button onClick={handleSave}>Save</button>
-            <NavLink to={"/admin/board"}>Admin Board </NavLink>
+            <NavLink to={"/admin/board"}>Admin Dashbaord </NavLink>
         </div>
     );
 }

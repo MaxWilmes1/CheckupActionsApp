@@ -1,10 +1,9 @@
 import {useEffect, useState} from "react";
-import {AppUser} from "../models/AppUser.ts";
+import {AppUser} from "../../../models/appUser/AppUser.ts";
 import axios from "axios";
-import UserCard from "../components/UserCard.tsx";
-import {NavLink} from "react-router-dom";
+import UserCard from "./UserCard.tsx";
 
-function AdminBoard() {
+export default function ManageUsers() {
     const [users, setUsers] = useState<AppUser[]>()
 
     useEffect(() => {
@@ -25,16 +24,12 @@ function AdminBoard() {
 
     return (
         <div>
-            <p>Admin Board</p>
+            <h3>ManageUsers</h3>
             {
                 users.map(user => (
                     <UserCard key={user.id} user={user}/>
                 ))
             }
-            <NavLink to={"/"}>Home</NavLink>
         </div>
     );
 }
-
-
-export default AdminBoard;

@@ -25,9 +25,9 @@ export default function Header() {
                 ? <button onClick={gitHubOauthLogin}>GitHub Oauth login</button>
                 : <button onClick={logout}>Logout</button>
             }
-            {user && <NavLink to={"/checkup-actions"}>View all Checkup Actions</NavLink>}
+            {user && <NavLink to={"/checkup-actions"}>Checkup Actions Dashboard</NavLink>}
             <AdminOnly>
-                <NavLink to={"/admin/board"}>Admin Board</NavLink>
+                <NavLink to={"/admin/board"}>Admin Dashboard</NavLink>
             </AdminOnly>
         </div>
     );

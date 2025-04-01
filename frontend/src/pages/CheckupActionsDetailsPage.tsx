@@ -1,15 +1,18 @@
 import {NavLink, useNavigate, useParams} from "react-router-dom";
 import {FormEvent, useEffect, useState} from "react";
-import {NewCheckupAction} from "../models/NewCheckupAction.ts";
+import {NewCheckupAction} from "../models/checkupAction/NewCheckupAction.ts";
 import axios from "axios";
 import {useIsAdmin} from "../utils/useAdmin.ts";
 import AdminOnly from "../utils/AdminOnly.tsx";
+import {useTitle} from "../utils/useTitle.ts";
+import {Title} from "../models/title/Title.ts";
 
-export default function EditCheckupAction() {
+export default function CheckupActionsDetailsPage() {
     const params = useParams()
     const [action, setAction] = useState<NewCheckupAction>()
     const navigate = useNavigate()
-    const isAdmin = useIsAdmin()
+    const isAdmin: boolean = useIsAdmin()
+    const titles: Title[] = useTitle()
 
     useEffect(() => {
         axios.get(`/api/checkup-actions/${params.id}`)
@@ -34,16 +37,21 @@ export default function EditCheckupAction() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <input
-                type={"text"}
+            <select
                 value={action.title}
                 onChange={e => setAction({...action, title: e.target.value})}
                 disabled={!isAdmin}
-            />
+            >
+                {
+                    titles.map(title => (
+                        <option key={title.id} value={title.title}>{title.title}</option>
+                    ))
+                }
+            </select>
             <AdminOnly>
                 <button className={"button-save"}>Update</button>
             </AdminOnly>
-            <NavLink to={"/"}>Home</NavLink>
+            <NavLink to={"/checkup-actions"}>Checkup-Actions Dashboard</NavLink>
         </form>
     );
 }

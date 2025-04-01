@@ -1,11 +1,11 @@
 import {useEffect, useState} from 'react';
-import CheckupActionCard from "../components/CheckupActionCard.tsx";
-import NewCheckupActionCard from "../components/NewCheckupActionCard.tsx";
-import {CheckupAction} from "../models/CheckupAction.ts";
+import CheckupActionCard from "../components/checkupAction/CheckupActionCard.tsx";
+import NewCheckupActionCard from "../components/checkupAction/NewCheckupActionCard.tsx";
+import {CheckupAction} from "../models/checkupAction/CheckupAction.ts";
 import axios from "axios";
 import {NavLink} from "react-router-dom";
 
-function AllActions() {
+export default function CheckupActionsDashboard() {
 
     const [actions, setActions] = useState<CheckupAction[]>()
 
@@ -35,5 +35,3 @@ function AllActions() {
         </>
     );
 }
-
-export default AllActions;

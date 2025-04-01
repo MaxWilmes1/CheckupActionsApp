@@ -1,4 +1,4 @@
-import {AppUser} from "../models/AppUser.ts";
+import {AppUser} from "../../../models/appUser/AppUser.ts";
 import {useNavigate} from "react-router-dom";
 
 type Props = {
