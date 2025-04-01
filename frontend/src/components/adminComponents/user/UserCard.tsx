@@ -5,7 +5,7 @@ type Props = {
     user: AppUser
 }
 
-export default function UserCard(props: Props) {
+export default function UserCard(props: Readonly<Props>) {
     const navigate = useNavigate()
 
     const handleClick = () => {

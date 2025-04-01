@@ -30,12 +30,13 @@ export default function EditUser() {
         <div>
             <p>{user?.username}</p>
             <p>{user?.id}</p>
-            <label>Role:</label>
-            <select value={selectedRole} onChange={e => setSelectedRole(e.target.value as AppUserRole)}>
-                <option value={"NONE"}>NONE</option>
-                <option value={"USER"}>USER</option>
-                <option value={"ADMIN"}>ADMIN</option>
-            </select>
+            <label>Role:
+                <select value={selectedRole} onChange={e => setSelectedRole(e.target.value as AppUserRole)}>
+                    <option value={"NONE"}>NONE</option>
+                    <option value={"USER"}>USER</option>
+                    <option value={"ADMIN"}>ADMIN</option>
+                </select>
+            </label>
             <button onClick={handleSave}>Save</button>
             <NavLink to={"/admin/board"}>Admin Dashbaord </NavLink>
         </div>
