@@ -17,7 +17,7 @@ export default function EditUser() {
                 setSelectedRole(r.data.role)
             })
             .catch(error => console.error("Error loading user with id:" + params.id, error));
-    }, []);
+    }, [params.id]);
 
     const handleSave = ()=>{
         axios.put(`/api/users/${params.id}`, {...user, role:selectedRole})

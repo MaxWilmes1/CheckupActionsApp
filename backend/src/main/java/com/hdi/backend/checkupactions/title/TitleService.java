@@ -11,7 +11,7 @@ public class TitleService {
 
     private final TitleRepository titleRepository;
 
-    public List<Title> getAllTitles() {
+    public List<Title> getTitles() {
         return titleRepository.findAll();
     }
 

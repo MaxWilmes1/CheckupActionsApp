@@ -14,7 +14,7 @@ public class TitleController {
 
     @GetMapping
     public List<Title> getAllTitles(){
-        return titleService.getAllTitles();
+        return titleService.getTitles();
     }
 
     @GetMapping("/{id}")

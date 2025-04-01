@@ -7,7 +7,7 @@ type Props = {
     fetchTitles: () => void;
 };
 
-export default function TitleCard(props: Props) {
+export default function TitleCard(props: Readonly<Props>) {
     const [editMode, setEditMode] = useState(false);
     const [updatedTitle, setUpdatedTitle] = useState(props.title.title);
 
