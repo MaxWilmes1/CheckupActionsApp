@@ -1,4 +1,4 @@
-import {NavLink, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {FormEvent, useEffect, useState} from "react";
 import {NewCheckupAction} from "../models/checkupAction/NewCheckupAction.ts";
 import axios from "axios";
@@ -51,7 +51,6 @@ export default function CheckupActionsDetailsPage() {
             <AdminOnly>
                 <button className={"button-save"}>Update</button>
             </AdminOnly>
-            <NavLink to={"/checkup-actions"}>Checkup-Actions Dashboard</NavLink>
         </form>
     );
 }

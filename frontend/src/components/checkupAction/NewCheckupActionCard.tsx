@@ -3,6 +3,7 @@ import axios from "axios";
 import {NewCheckupAction} from "../../models/checkupAction/NewCheckupAction.ts";
 import {useTitle} from "../../utils/useTitle.ts";
 import {Title} from "../../models/title/Title.ts";
+import {Paper} from "@mui/material";
 
 type Props = {
     fetchActions: () => void
@@ -21,20 +22,23 @@ export default function NewCheckupActionCard(props: Readonly<Props>) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <select
-                value={newAction?.title}
-                onChange={(e) =>
-                    setNewAction({...newAction, title: e.target.value})
-                }
-            >
-                {
-                    titles.map(title => (
-                        <option key={title.id} value={title.title}> {title.title}</option>
-                    ))
-                }
-            </select>
-            <button className={"button-save"}>Save</button>
-        </form>
+        <Paper elevation={4}>
+            <form onSubmit={handleSubmit}>
+                <select
+                    value={newAction?.title}
+                    onChange={(e) =>
+                        setNewAction({...newAction, title: e.target.value})
+                    }
+                >
+                    {
+                        titles.map(title => (
+                            <option key={title.id} value={title.title}> {title.title}</option>
+                        ))
+                    }
+                </select>
+                <button className={"button-save"}>Save</button>
+            </form>
+        </Paper>
+
     );
 }

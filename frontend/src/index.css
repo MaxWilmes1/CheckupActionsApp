@@ -1,32 +1,6 @@
-*, *::before, *::after {
+*{
     margin: 0;
     padding: 0;
-    font-family: Galvji, Arial, Roboto, sans-serif;
-    background-color: #242424;
-    color: white;
-}
-
-.card {
-    color: white;
-    border: 3px solid white;
-    border-radius: 8px;
-    max-width: 20rem;
-    min-height: 3rem;
-    margin: 5px;
-    padding: 3px;
-}
-
-.button-delete {
-    color: white;
-    background: red;
-    padding: 5px;
-}
-.button-save {
-    color: white;
-    background: green;
-    padding: 5px;
-}
-
-input {
-    color: white;
+    box-sizing: border-box;
+    font-family: "Roboto", serif;
 }
