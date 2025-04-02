@@ -3,7 +3,6 @@ import CheckupActionCard from "../components/checkupAction/CheckupActionCard.tsx
 import NewCheckupActionCard from "../components/checkupAction/NewCheckupActionCard.tsx";
 import {CheckupAction} from "../models/checkupAction/CheckupAction.ts";
 import axios from "axios";
-import {NavLink} from "react-router-dom";
 
 export default function CheckupActionsDashboard() {
 
@@ -31,7 +30,6 @@ export default function CheckupActionsDashboard() {
                 ))
             }
             <NewCheckupActionCard fetchActions={fetchActions}/>
-            <NavLink to={"/"}>Home</NavLink>
         </>
     );
 }

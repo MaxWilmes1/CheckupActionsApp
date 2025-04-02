@@ -1,44 +1,47 @@
-import {FormEvent, useState} from 'react';
+import { FormEvent, useState } from 'react';
 import axios from "axios";
-import {NewCheckupAction} from "../../models/checkupAction/NewCheckupAction.ts";
-import {useTitle} from "../../utils/useTitle.ts";
-import {Title} from "../../models/title/Title.ts";
-import {Paper} from "@mui/material";
+import { NewCheckupAction } from "../../models/checkupAction/NewCheckupAction.ts";
+import { useTitle } from "../../utils/useTitle.ts";
+import { Title } from "../../models/title/Title.ts";
+import { Paper } from "@mui/material";
 
 type Props = {
-    fetchActions: () => void
-}
+    fetchActions: () => void;
+};
 
 export default function NewCheckupActionCard(props: Readonly<Props>) {
-    const [newAction, setNewAction] = useState<NewCheckupAction>()
-    const titles: Title[] = useTitle()
+    const titles: Title[] = useTitle();
+    const [newAction, setNewAction] = useState<NewCheckupAction>({ title: "" });
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+        e.preventDefault();
+
+        if (!newAction.title) {
+            alert("Bitte einen Titel auswählen!");
+            return;
+        }
+
         axios.post("/api/checkup-actions", newAction)
             .then(props.fetchActions)
             .catch(e => console.error("Error saving action:", e));
-        setNewAction({title: ""})
-    }
+
+        setNewAction({ title: "" });
+    };
 
     return (
         <Paper elevation={4}>
             <form onSubmit={handleSubmit}>
                 <select
-                    value={newAction?.title}
-                    onChange={(e) =>
-                        setNewAction({...newAction, title: e.target.value})
-                    }
+                    value={newAction.title}
+                    onChange={(e) => setNewAction({ ...newAction, title: e.target.value })}
                 >
-                    {
-                        titles.map(title => (
-                            <option key={title.id} value={title.title}> {title.title}</option>
-                        ))
-                    }
+                    <option value="">-- Bitte wählen --</option>
+                    {titles.map(title => (
+                        <option key={title.id} value={title.title}>{title.title}</option>
+                    ))}
                 </select>
-                <button className={"button-save"}>Save</button>
+                <button className="button-save">Save</button>
             </form>
         </Paper>
-
     );
 }
