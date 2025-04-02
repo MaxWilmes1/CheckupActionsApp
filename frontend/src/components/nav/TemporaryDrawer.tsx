@@ -17,13 +17,13 @@ type Props = {
     setDrawerOpen: (open: boolean) => void;
 };
 
-export default function TemporaryDrawer({open, setDrawerOpen}: Props) {
+export default function TemporaryDrawer({open, setDrawerOpen}: Readonly<Props>) {
     const toggleDrawer = (newOpen: boolean) => () => {
         setDrawerOpen(newOpen);
     };
 
     const DrawerList = (
-        <Box sx={{width: 250}} role="presentation" onClick={toggleDrawer(false)}>
+        <Box sx={{width: 250}} onClick={toggleDrawer(false)}>
                 <List>
                     <ListItem disablePadding>
                         <ListItemButton component={NavLink} to="/">

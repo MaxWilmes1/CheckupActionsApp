@@ -14,7 +14,7 @@ type Props = {
     setDrawerOpen: (open: boolean) => void;
 };
 
-export default function ButtonAppBar({ setDrawerOpen }: Props) {
+export default function ButtonAppBar({ setDrawerOpen }: Readonly<Props>) {
     const { user } = useUser();
 
     function gitHubOauthLogin() {
