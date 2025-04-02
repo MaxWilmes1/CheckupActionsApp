@@ -45,7 +45,6 @@ export default function ManageTitles() {
                        onChange={e => setNewTitle({title: e.target.value})}/>
                 <button className={"button-save"}>Save</button>
             </form>
-
         </div>
     );
 }

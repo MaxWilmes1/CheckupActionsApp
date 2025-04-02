@@ -1,4 +1,4 @@
-import {NavLink, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {AppUser} from "../../../models/appUser/AppUser.ts";
@@ -38,7 +38,6 @@ export default function EditUser() {
                 </select>
             </label>
             <button onClick={handleSave}>Save</button>
-            <NavLink to={"/admin/board"}>Admin Dashbaord </NavLink>
         </div>
     );
 }

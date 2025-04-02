@@ -1,7 +1,6 @@
 import {useState} from "react";
 import ManageUsers from "../components/adminComponents/user/ManageUsers";
 import ManageTitles from "../components/adminComponents/title/ManageTitles";
-import {NavLink} from "react-router-dom";
 
 export default function AdminDashboard() {
     const [tab, setTab] = useState<"USERS" | "TITLES">("USERS");
@@ -21,7 +20,6 @@ export default function AdminDashboard() {
 
             {tab === "USERS" && <ManageUsers />}
             {tab === "TITLES" && <ManageTitles />}
-            <NavLink to={"/"}>Home</NavLink>
         </div>
     );
 }
