@@ -1,6 +1,6 @@
 import {Title} from "../../../models/title/Title.ts";
 import axios from "axios";
-import {useState} from "react";
+import {FormEvent, useState} from "react";
 
 type Props = {
     title: Title;
@@ -17,7 +17,8 @@ export default function TitleCard(props: Readonly<Props>) {
             .catch(e => console.error("Error deleting title", e));
     };
 
-    const updateTitle = () => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
         axios.put("/api/title/" + props.title.id, { title: updatedTitle })
             .then(() => {
                 setEditMode(false);
@@ -30,12 +31,14 @@ export default function TitleCard(props: Readonly<Props>) {
         <div className="card">
             {editMode ? (
                 <>
-                    <input
-                        type="text"
-                        value={updatedTitle}
-                        onChange={(e) => setUpdatedTitle(e.target.value)}
-                    />
-                    <button onClick={updateTitle} className="button-save">Save</button>
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            value={updatedTitle}
+                            onChange={(e) => setUpdatedTitle(e.target.value)}
+                        />
+                        <button className="button-save">Save</button>
+                    </form>
                     <button onClick={() => setEditMode(false)}>Cancel</button>
                 </>
             ) : (

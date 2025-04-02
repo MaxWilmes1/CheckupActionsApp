@@ -7,12 +7,13 @@ import AdminProtectedRoute from "./utils/AdminProtectedRoute.tsx";
 import {UserProvider} from "./utils/UserContext.tsx";
 import EditUser from "./components/adminComponents/user/EditUser.tsx";
 import AdminDashboard from "./pages/AdminDashboard.tsx";
+import Header from "./components/nav/Header.tsx";
 
 export default function App() {
 
-
     return (
         <UserProvider>
+            <Header/>
             <Routes>
                 <Route path={"/"} element={<Home/>}></Route>
                 <Route element={<ProtectedRoutes/>}>
