@@ -28,7 +28,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/me").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/checkup-actions/**").hasAuthority(AppUserRole.ADMIN.toString())
                         .requestMatchers(HttpMethod.PUT, "/api/checkup-actions/**").hasAuthority(AppUserRole.ADMIN.toString())
-                        .requestMatchers("/api/users/**").hasAuthority(AppUserRole.ADMIN.toString())
+                        .requestMatchers("/api/user/**").hasAuthority(AppUserRole.ADMIN.toString())
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))

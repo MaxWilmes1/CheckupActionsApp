@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { CheckupAction } from "../models/checkupAction/CheckupAction.ts";
+import { CheckupAction } from "../../models/checkupAction/CheckupAction.ts";
 
 const defaultCheckupAction: CheckupAction = {
     id: "",

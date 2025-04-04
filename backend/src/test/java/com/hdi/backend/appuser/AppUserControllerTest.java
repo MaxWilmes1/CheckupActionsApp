@@ -40,7 +40,7 @@ class AppUserControllerTest {
         appUserRepository.save(u2);
 
         // WHEN & THEN
-        mvc.perform(MockMvcRequestBuilders.get("/api/users"))
+        mvc.perform(MockMvcRequestBuilders.get("/api/user"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""
                         [
@@ -70,7 +70,7 @@ class AppUserControllerTest {
                 .build();
         appUserRepository.save(u);
         // WHEN & THEN
-        mvc.perform(MockMvcRequestBuilders.get("/api/users/" + u.id()))
+        mvc.perform(MockMvcRequestBuilders.get("/api/user/" + u.id()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""
                                                     {
@@ -93,7 +93,7 @@ class AppUserControllerTest {
                 .build();
         appUserRepository.save(u);
         // WHEN & THEN
-        mvc.perform(MockMvcRequestBuilders.put("/api/users/" + u.id())
+        mvc.perform(MockMvcRequestBuilders.put("/api/user/" + u.id())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {

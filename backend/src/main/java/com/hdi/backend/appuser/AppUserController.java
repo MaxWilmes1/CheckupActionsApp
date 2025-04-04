@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/users")
+@RequestMapping("api/user")
 @RequiredArgsConstructor
 public class AppUserController {
 
@@ -28,4 +28,5 @@ public class AppUserController {
         AppUser updatedUser = appUserService.updateUserRole(id, userData);
         return new AppUserDTO(updatedUser.role(), userData.username(), userData.id());
     }
+
 }

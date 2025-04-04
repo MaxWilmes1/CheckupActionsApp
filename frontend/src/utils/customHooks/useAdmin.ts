@@ -1,4 +1,4 @@
-import { useUser } from "./UserContext.tsx";
+import { useUser } from "../components/UserContext.tsx";
 
 export function useIsAdmin() {
     const { user } = useUser();

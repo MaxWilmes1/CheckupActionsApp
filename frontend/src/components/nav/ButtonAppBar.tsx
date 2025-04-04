@@ -6,8 +6,8 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import { useUser } from "../../utils/UserContext.tsx";
-import HasRole from "../../utils/HasRole.tsx";
+import { useUser } from "../../utils/components/UserContext.tsx";
+import HasRole from "../../utils/components/HasRole.tsx";
 import { Avatar, Tooltip } from "@mui/material";
 
 type Props = {
