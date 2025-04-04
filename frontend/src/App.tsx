@@ -8,6 +8,7 @@ import {UserProvider} from "./utils/UserContext.tsx";
 import EditUser from "./components/adminComponents/user/EditUser.tsx";
 import AdminDashboard from "./pages/AdminDashboard.tsx";
 import Header from "./components/nav/Header.tsx";
+import NewCheckupActionPage from "./pages/NewCheckupActionPage.tsx";
 
 export default function App() {
 
@@ -19,12 +20,12 @@ export default function App() {
                 <Route element={<ProtectedRoutes/>}>
                     <Route path={"/checkup-actions"} element={<CheckupActionsDashboard/>}></Route>
                     <Route path={"/checkup-actions/:id"} element={<CheckupActionsDetailsPage/>}/>
+                    <Route path={"/checkup-actions/add"} element={<NewCheckupActionPage/>}/>
                 </Route>
                 <Route element={<AdminProtectedRoute/>}>
                     <Route path={"/admin/board"} element={<AdminDashboard/>}/>
                     <Route path={"/admin/editUser/:id"} element={<EditUser/>}/>
                 </Route>
-
             </Routes>
         </UserProvider>
     )

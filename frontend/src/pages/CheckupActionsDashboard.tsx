@@ -1,35 +1,104 @@
-import {useEffect, useState} from 'react';
-import CheckupActionCard from "../components/checkupAction/CheckupActionCard.tsx";
-import NewCheckupActionCard from "../components/checkupAction/NewCheckupActionCard.tsx";
-import {CheckupAction} from "../models/checkupAction/CheckupAction.ts";
+import {useEffect, useState} from "react";
 import axios from "axios";
+import {NavLink} from "react-router-dom";
+import {CheckupAction} from "../models/checkupAction/CheckupAction.ts";
+import AdminOnly from "../utils/AdminOnly.tsx";
+import Box from "@mui/material/Box";
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import EditIcon from "@mui/icons-material/EditOutlined";
+import IconButton from "@mui/material/IconButton";
+import {DataGrid, GridActionsCellItem, GridColDef, GridRowsProp} from "@mui/x-data-grid";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+
 
 export default function CheckupActionsDashboard() {
-
-    const [actions, setActions] = useState<CheckupAction[]>()
+    const [data, setData] = useState<CheckupAction[]>([]);
 
     useEffect(() => {
-            fetchActions()
-        }, []
-    )
+        fetchData();
+    }, []);
 
-    const fetchActions = () => {
-        axios.get("api/checkup-actions")
-            .then(r => setActions(r.data))
-            .catch(e => console.log("Error fetching actions", e))
-    }
+    const fetchData = () => {
+        axios.get("/api/checkup-actions")
+            .then(r => {
+                setData(r.data);
+            })
+            .catch(error => {
+                console.error("Error fetching data", error);
+            });
+    };
 
-    if (!actions) {
-        return "Loading..."
-    }
+    const handleDelete = (id: string) => {
+        axios.delete(`/api/checkup-actions/${id}`)
+            .then(() => {
+                fetchData();
+            })
+            .catch(error => {
+                console.error("Error deleting item", error);
+            });
+    };
+
+    const rows: GridRowsProp = data.map((item) => ({
+        id: item.id,
+        title: item.title
+    }));
+
+    const columns: GridColDef[] = [
+        {
+            field: "actions",
+            headerName: "Actions",
+            width: 90,
+            sortable: false,
+            filterable: false,
+            renderCell: (params) => (
+                <AdminOnly>
+                    <GridActionsCellItem
+                        icon={<DeleteIcon/>}
+                        label="Delete"
+                        color="inherit"
+                        onClick={() => handleDelete(params.row.id)}
+                    />
+                    <NavLink to={`/checkup-actions/${params.row.id}`}>
+                        <IconButton aria-label="edit">
+                            <EditIcon />
+                        </IconButton>
+                    </NavLink>
+                </AdminOnly>
+            )
+        },
+        {field: "title", headerName: "Title", width: 150},
+    ];
+
     return (
-        <>
-            {
-                actions.map((action) => (
-                    <CheckupActionCard key={action.id} action={action} fetchActions={fetchActions}/>
-                ))
-            }
-            <NewCheckupActionCard fetchActions={fetchActions}/>
-        </>
+        <Box style={{height: "100%", width: "100%", padding: "20px"}}>
+            <Typography color={"textPrimary"} variant="h5" component="h2" sx={{margin: "10px"}}>
+                Checkup Actions - table
+            </Typography>
+            <Divider/>
+            <NavLink to={"/checkup-actions/add"}>
+                <Button color="primary" startIcon={<AddIcon />} >
+                    Add new
+                </Button>
+            </NavLink>
+            <DataGrid
+                rows={rows}
+                columns={columns}
+                sx={{
+                    boxShadow: 4,
+                    border: 2,
+                    borderColor: 'primary.main',
+                    borderRadius: 2,
+                    '& .MuiDataGrid-columnHeaders': {
+                        backgroundColor: '#eceff1',
+                        color: '#263238',
+                        fontWeight: 'bold',
+                        fontSize: 16
+                    }
+                }}
+            />
+        </Box>
     );
 }
