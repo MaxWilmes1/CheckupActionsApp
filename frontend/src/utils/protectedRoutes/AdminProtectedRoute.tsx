@@ -1,5 +1,5 @@
 import {Navigate, Outlet} from "react-router-dom";
-import {useUser} from "./UserContext.tsx";
+import {useUser} from "../components/UserContext.tsx";
 
 export default function AdminProtectedRoute() {
     const {user} = useUser()

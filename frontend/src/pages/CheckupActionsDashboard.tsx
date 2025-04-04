@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {NavLink} from "react-router-dom";
 import {CheckupAction} from "../models/checkupAction/CheckupAction.ts";
-import AdminOnly from "../utils/AdminOnly.tsx";
+import AdminOnly from "../utils/components/AdminOnly.tsx";
 import Box from "@mui/material/Box";
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
@@ -73,8 +73,8 @@ export default function CheckupActionsDashboard() {
     ];
 
     return (
-        <Box style={{height: "100%", width: "100%", padding: "20px"}}>
-            <Typography color={"textPrimary"} variant="h5" component="h2" sx={{margin: "10px"}}>
+        <Box style={{height: "100%", width: "100%", padding: "10px"}}>
+            <Typography color={"textPrimary"} variant="h5" component="h2" sx={{margin: "5px"}}>
                 Checkup Actions - table
             </Typography>
             <Divider/>

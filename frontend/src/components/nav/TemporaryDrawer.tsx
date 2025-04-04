@@ -6,7 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import AdminOnly from "../../utils/AdminOnly.tsx";
+import AdminOnly from "../../utils/components/AdminOnly.tsx";
 import {NavLink} from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import DashboardIcon from '@mui/icons-material/Dashboard';

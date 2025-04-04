@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { AppUser } from '../models/appUser/AppUser.ts';
+import { AppUser } from '../../models/appUser/AppUser.ts';
 
 // Erstelle den Context für den Benutzer
 const UserContext = createContext<{ user: AppUser | null }>({
