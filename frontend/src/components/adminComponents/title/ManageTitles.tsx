@@ -32,7 +32,7 @@ export default function ManageTitles() {
                 setTitles(response.data);
             })
             .catch(error => {
-                console.error("Error fetching users!", error);
+                console.error("Error fetching titles!", error);
             });
     };
 
@@ -48,10 +48,10 @@ export default function ManageTitles() {
         // Sende die aktualisierten Daten an die API
         axios.put(`/api/title/${newRow.id}`, newRow)
             .then(response => {
-                console.log("User updated:", response.data);
+                console.log("title updated:", response.data);
             })
             .catch(error => {
-                console.error("Error updating user!", error);
+                console.error("Error updating title!", error);
             });
 
         return newRow; // Muss zurückgegeben werden, damit DataGrid die Änderung übernimmt

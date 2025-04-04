@@ -6,7 +6,7 @@ export function useTitle() {
     const [titles, setTitles] = useState<Title[]>([])
 
     useEffect(() => {
-        axios.get("/api/title")
+        axios.get("/api/user")
             .then(r => {
                 setTitles(r.data)
             })

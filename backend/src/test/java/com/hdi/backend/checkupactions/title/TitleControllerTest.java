@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -20,6 +21,7 @@ class TitleControllerTest {
     private TitleRepository titleRepository;
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
     void getAllTitles() throws Exception {
         // GIVEN
         Title t1 = Title.builder()
@@ -51,6 +53,7 @@ class TitleControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
     void getTitleById() throws Exception {
         // GIVEN
         Title t1 = Title.builder()
@@ -71,6 +74,7 @@ class TitleControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
     void addTitle() throws Exception {
         mvc.perform(MockMvcRequestBuilders.post("/api/title")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -91,6 +95,7 @@ class TitleControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
     }
     @Test
+    @WithMockUser(authorities = "ADMIN")
     void updateTitle() throws Exception {
         // GIVEN
         Title t = Title.builder()
@@ -120,6 +125,7 @@ class TitleControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
     void deleteTitle() throws Exception {
         // GIVEN
         Title titleToDelete = Title.builder()
