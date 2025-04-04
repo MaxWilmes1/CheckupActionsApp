@@ -11,7 +11,7 @@ type Props = {
     onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
-export default function CheckupActionForm(props: Props) {
+export default function CheckupActionForm(props: Readonly<Props>) {
     return (
         <Box sx={{ marginTop: 2 }}>
             <form onSubmit={props.onSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
