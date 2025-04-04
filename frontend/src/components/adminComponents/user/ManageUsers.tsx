@@ -18,7 +18,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import {Box} from "@mui/material";
 
-export default function FullFeaturedCrudGrid() {
+export default function ManageUsers() {
     const [users, setUsers] = useState<AppUser[]>([]);
     const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
     const roles = ['NONE', 'USER', 'ADMIN']
@@ -28,7 +28,7 @@ export default function FullFeaturedCrudGrid() {
     }, []);
 
     const fetchUsers = () => {
-        axios.get("/api/users")
+        axios.get("/api/user")
             .then(response => {
                 setUsers(response.data);
             })
@@ -47,7 +47,7 @@ export default function FullFeaturedCrudGrid() {
         setUsers(prevUsers => prevUsers.map(user => user.id === newRow.id ? newRow : user));
 
         // Sende die aktualisierten Daten an die API
-        axios.put(`/api/users/${newRow.id}`, newRow)
+        axios.put(`/api/user/${newRow.id}`, newRow)
             .then(response => {
                 console.log("User updated:", response.data);
             })
