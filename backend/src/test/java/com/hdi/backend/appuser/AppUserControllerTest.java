@@ -112,4 +112,21 @@ class AppUserControllerTest {
                                                                             }
                         """));
     }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    @DirtiesContext
+    void deleteUser_shouldReturnNothing_whenExistingUserIsDeleted() throws Exception {
+        // GIVEN
+        AppUser userToDelete = AppUser.builder()
+                .id("1")
+                .username("testUser")
+                .role(AppUserRole.ADMIN)
+                .build();
+        appUserRepository.save(userToDelete);
+
+// WHEN & THEN
+        mvc.perform(MockMvcRequestBuilders.delete("/api/user/" + userToDelete.id()))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
 }

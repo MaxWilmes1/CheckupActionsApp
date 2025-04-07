@@ -1,4 +1,5 @@
 export type Title = {
     id: string,
-    title: string
+    title: string,
+    isNew: boolean
 }

@@ -90,4 +90,19 @@ class AppUserServiceTest {
         verify(mockAppUserRepository).save(updatedUser);
         assertEquals(updatedUser, actual);
     }
+
+    @Test
+    void deleteUser() {
+        // GIVEN
+        AppUser userToDelete = AppUser.builder()
+                .id("1")
+                .username("testUser")
+                .role(AppUserRole.ADMIN)
+                .build();
+        doNothing().when(mockAppUserRepository).deleteById("1");
+        // WHEN
+        appUserService.deleteUser(userToDelete.id());
+        // THEN
+        verify(mockAppUserRepository).deleteById("1");
+    }
 }

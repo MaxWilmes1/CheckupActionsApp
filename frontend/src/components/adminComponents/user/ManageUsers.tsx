@@ -13,7 +13,7 @@ import {
     GridRowModesModel
 } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
-// import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import {Box} from "@mui/material";
@@ -43,10 +43,8 @@ export default function ManageUsers() {
 
     // API-Requests
     const processRowUpdate = (newRow: AppUser) => {
-        // Aktualisiere den State mit den neuen Werten
         setUsers(prevUsers => prevUsers.map(user => user.id === newRow.id ? newRow : user));
 
-        // Sende die aktualisierten Daten an die API
         axios.put(`/api/user/${newRow.id}`, newRow)
             .then(response => {
                 console.log("User updated:", response.data);
@@ -55,16 +53,22 @@ export default function ManageUsers() {
                 console.error("Error updating user!", error);
             });
 
-        return newRow; // Muss zurückgegeben werden, damit DataGrid die Änderung übernimmt
+        return newRow;
     };
 
     const handleSaveClick = (id: GridRowId) => () => {
         setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.View}});
     };
 
-    // const handleDeleteClick = (id: GridRowId) => () => {
-    //     setUsers(users.filter(row => row.id !== id));
-    // };
+    const handleDeleteClick = (id: GridRowId) => () => {
+        axios.delete(`/api/user/${id}`)
+            .then(() => {
+                setUsers(users.filter(row => row.id !== id));
+            })
+            .catch(e => {
+                console.error("Error deleting user",e)
+            })
+    };
 
     // Edit Mode Management
     const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
@@ -116,7 +120,7 @@ export default function ManageUsers() {
                 }
                 return [
                     <GridActionsCellItem icon={<EditIcon/>} label="Edit" onClick={handleEditClick(id)}/>,
-                    // <GridActionsCellItem icon={<DeleteIcon/>} label="Delete" onClick={handleDeleteClick(id)}/>
+                    <GridActionsCellItem icon={<DeleteIcon/>} label="Delete" onClick={handleDeleteClick(id)}/>
                 ];
             }
         }
