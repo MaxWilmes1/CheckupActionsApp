@@ -5,6 +5,12 @@ import { CheckupAction } from "../../models/checkupAction/CheckupAction.ts";
 const defaultCheckupAction: CheckupAction = {
     id: "",
     title: "",
+    subtitle: "",
+    art: "",
+    adu: "",
+    application: "",
+    cinum: "",
+    pi: "",
 };
 
 export function useCheckupAction(id?: string) {
