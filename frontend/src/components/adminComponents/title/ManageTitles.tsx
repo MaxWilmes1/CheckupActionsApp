@@ -9,7 +9,7 @@ import {
     GridRowId,
     GridRowEditStopReasons,
     GridRowModes,
-    GridRowModesModel
+    GridRowModesModel,
 } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
@@ -17,6 +17,39 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import {Box} from "@mui/material";
 import {Title} from "../../../models/title/Title.ts";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import {randomId} from "@mui/x-data-grid-generator";
+
+//#############
+interface EditToolbarProps {
+    setRows: React.Dispatch<React.SetStateAction<Title[]>>;
+    setRowModesModel: React.Dispatch<React.SetStateAction<GridRowModesModel>>;
+}
+
+function EditToolbar({ setRows, setRowModesModel }: EditToolbarProps) {
+    const handleClick = () => {
+        const id = randomId();
+        setRows((oldRows) => [
+            ...oldRows,
+            { id, title: "", isNew: true },
+        ]);
+        setRowModesModel((oldModel) => ({
+            ...oldModel,
+            [id]: { mode: GridRowModes.Edit, fieldToFocus: "title" },
+        }));
+    };
+
+    return (
+        <GridToolbarContainer>
+            <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+                Add record
+            </Button>
+        </GridToolbarContainer>
+    );
+}
+
+//#############
 
 export default function ManageTitles() {
     const [titles, setTitles] = useState<Title[]>([]);
@@ -40,22 +73,40 @@ export default function ManageTitles() {
         return "Loading...";
     }
 
-    // API-Requests
-    const processRowUpdate = (newRow: Title) => {
-        // Aktualisiere den State mit den neuen Werten
-        setTitles(prevTitles => prevTitles.map(title => title.id === newRow.id ? newRow : title));
+    const processRowUpdate = (newRow: Title & { isNew?: boolean }) => {
+        const updatedRow = { ...newRow };
+        if (newRow.isNew) {
+            delete updatedRow.isNew; // nicht mit an die API schicken
+            axios.post("/api/title", updatedRow)
+                .then(response => {
+                    console.log("Title created:", response.data);
+                    setTitles(prev => prev.map(row =>
+                        row.id === newRow.id ? response.data : row // Ersetze temp-ID durch echte vom Server
+                    ));
+                })
+                .catch(error => {
+                    console.error("Error creating title!", error);
+                });
+        } else {
+            axios.put(`/api/title/${newRow.id}`, updatedRow)
+                .then(response => {
+                    console.log("Title updated:", response.data);
+                })
+                .catch(error => {
+                    console.error("Error updating title!", error);
+                });
+        }
 
-        // Sende die aktualisierten Daten an die API
-        axios.put(`/api/title/${newRow.id}`, newRow)
-            .then(response => {
-                console.log("title updated:", response.data);
-            })
-            .catch(error => {
-                console.error("Error updating title!", error);
-            });
+        // Direkt anzeigen im Grid (auch wenn async läuft)
+        setTitles(prevTitles =>
+            prevTitles.map(title =>
+                title.id === newRow.id ? updatedRow : title
+            )
+        );
 
-        return newRow; // Muss zurückgegeben werden, damit DataGrid die Änderung übernimmt
+        return updatedRow;
     };
+
 
     const handleSaveClick = (id: GridRowId) => () => {
         setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.View}});
@@ -128,8 +179,15 @@ export default function ManageTitles() {
                 onRowModesModelChange={handleRowModesModelChange}
                 onRowEditStop={handleRowEditStop}
                 processRowUpdate={processRowUpdate}
-                slots={{toolbar: GridToolbarContainer}}
+                slots={{ toolbar: EditToolbar }}
+                slotProps={{
+                    toolbar: {
+                        setRows: setTitles,
+                        setRowModesModel: setRowModesModel
+                    }
+                }}
             />
+
         </Box>
     );
 }
