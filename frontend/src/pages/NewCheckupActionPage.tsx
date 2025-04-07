@@ -4,6 +4,7 @@ import {useCheckupAction} from "../utils/customHooks/useCheckupAction.ts";
 import {useData} from "../utils/customHooks/useData.ts";
 import CheckupActionForm from "../components/checkupAction/CheckupActionForm.tsx";
 import axios from "axios";
+import {FormEvent} from "react";
 
 export default function NewCheckupActionPage() {
     const {action, setAction} = useCheckupAction();
@@ -11,11 +12,14 @@ export default function NewCheckupActionPage() {
     const data = useData();
 
     const handleChange = (event: SelectChangeEvent) => {
-        const newTitle = event.target.value;
-        setAction(prevAction => prevAction ? {...prevAction, title: newTitle} : null);
+        const { name, value } = event.target;
+        setAction(prevAction => {
+            if (!prevAction) return null;
+            return { ...prevAction, [name]: value };
+        });
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (action) {
             axios.post("/api/checkup-actions", action)
