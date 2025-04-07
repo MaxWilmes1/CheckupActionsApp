@@ -26,4 +26,8 @@ public class AppUserService {
         AppUser appUserToSave = appUserToUpdate.withRole(userData.role());
         return appUserRepository.save(appUserToSave);
     }
+
+    public void deleteUser(String id) {
+        appUserRepository.deleteById(id);
+    }
 }

@@ -29,4 +29,9 @@ public class AppUserController {
         return new AppUserDTO(updatedUser.role(), userData.username(), userData.id());
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable String id){
+        appUserService.deleteUser(id);
+    }
+
 }
