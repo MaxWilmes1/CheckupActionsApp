@@ -43,7 +43,13 @@ export default function CheckupActionsDashboard() {
 
     const rows: GridRowsProp = data.map((item) => ({
         id: item.id,
-        title: item.title
+        title: item.title,
+        subtitle: item.subtitle,
+        art: item.art,
+        adu: item.adu,
+        application: item.application,
+        cinum: item.cinum,
+        pi: item.pi
     }));
 
     const columns: GridColDef[] = [
@@ -70,6 +76,12 @@ export default function CheckupActionsDashboard() {
             )
         },
         {field: "title", headerName: "Title", width: 150},
+        {field: "subtitle", headerName: "Sub-Title", width: 150},
+        {field: "art", headerName: "ART", width: 150},
+        {field: "adu", headerName: "ADU", width: 150},
+        {field: "application", headerName: "App", width: 150},
+        {field: "cinum", headerName: "CINUM", width: 150},
+        {field: "pi", headerName: "PI", width: 150},
     ];
 
     return (

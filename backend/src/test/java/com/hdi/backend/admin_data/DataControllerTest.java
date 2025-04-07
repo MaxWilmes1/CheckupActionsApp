@@ -1,4 +1,4 @@
-package com.hdi.backend.checkupactions.title;
+package com.hdi.backend.admin_data;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,40 +12,44 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class TitleControllerTest {
+class DataControllerTest {
 
     @Autowired
     private MockMvc mvc;
 
     @Autowired
-    private TitleRepository titleRepository;
+    private DataRepository dataRepository;
 
     @Test
     @WithMockUser(authorities = "ADMIN")
     void getAllTitles() throws Exception {
         // GIVEN
-        Title t1 = Title.builder()
+        Data d1 = Data.builder()
                 .id("1")
-                .title("test")
+                .info("test")
+                .type(DataType.TITLE)
                 .build();
-        Title t2 = Title.builder()
+        Data d2 = Data.builder()
                 .id("2")
-                .title("test2")
+                .info("test2")
+                .type(DataType.TITLE)
                 .build();
-        titleRepository.save(t1);
-        titleRepository.save(t2);
+        dataRepository.save(d1);
+        dataRepository.save(d2);
         // WHEN & THEN
-        mvc.perform(MockMvcRequestBuilders.get("/api/title"))
+        mvc.perform(MockMvcRequestBuilders.get("/api/data"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""
                         [
                         {
                         id: "1",
-                        title: "test"
+                        info: "test",
+                        type: "TITLE"
                         },
                         {
                         id: "2",
-                        title: "test2"
+                        info: "test2",
+                        type: "TITLE"
                         
                         }
                         ]
@@ -56,18 +60,20 @@ class TitleControllerTest {
     @WithMockUser(authorities = "ADMIN")
     void getTitleById() throws Exception {
         // GIVEN
-        Title t1 = Title.builder()
+        Data d = Data.builder()
                 .id("1")
-                .title("test")
+                .info("test")
+                .type(DataType.TITLE)
                 .build();
-        titleRepository.save(t1);
+        dataRepository.save(d);
         // WHEN & THEN
-        mvc.perform(MockMvcRequestBuilders.get("/api/title/" + t1.id()))
+        mvc.perform(MockMvcRequestBuilders.get("/api/data/" + d.id()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""
                         {
                         id: "1",
-                        title: "test"
+                        info: "test",
+                        type: "TITLE"
                         }
                         
                         """));
@@ -76,19 +82,21 @@ class TitleControllerTest {
     @Test
     @WithMockUser(authorities = "ADMIN")
     void addTitle() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/api/title")
+        mvc.perform(MockMvcRequestBuilders.post("/api/data")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
                                 "id": "1",
-                                "title": "test"
+                                "info": "test",
+                                "type": "TITLE"
                                 }
                                 """)
                 )
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""
                         {
-                        title: "test"
+                        "info": "test",
+                        "type": "TITLE"
                         }
                         
                         """))
@@ -98,18 +106,20 @@ class TitleControllerTest {
     @WithMockUser(authorities = "ADMIN")
     void updateTitle() throws Exception {
         // GIVEN
-        Title t = Title.builder()
+        Data d = Data.builder()
                 .id("1")
-                .title("test")
+                .info("test")
+                .type(DataType.TITLE)
                 .build();
-        titleRepository.save(t);
+        dataRepository.save(d);
         // WHEN & THEN
-        mvc.perform(MockMvcRequestBuilders.put("/api/title/" + t.id())
+        mvc.perform(MockMvcRequestBuilders.put("/api/data/" + d.id())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 """
                                         {
-                                        "title": "testPassed"
+                                        "info": "testPassed",
+                                        "type": "TITLE"
                                         }
                                         """
                         )
@@ -118,7 +128,8 @@ class TitleControllerTest {
                 .andExpect(MockMvcResultMatchers.content().json("""
                         {
                         id: "1",
-                        title: "testPassed"
+                        info: "testPassed",
+                        "type": "TITLE"
                         }
                         
                         """));
@@ -128,13 +139,14 @@ class TitleControllerTest {
     @WithMockUser(authorities = "ADMIN")
     void deleteTitle() throws Exception {
         // GIVEN
-        Title titleToDelete = Title.builder()
+        Data dataToDelete = Data.builder()
                 .id("1")
-                .title("test")
+                .info("test")
+                .type(DataType.TITLE)
                 .build();
-        titleRepository.save(titleToDelete);
+        dataRepository.save(dataToDelete);
         // WHEN & THEN
-        mvc.perform(MockMvcRequestBuilders.delete("/api/title/" + titleToDelete.id()))
+        mvc.perform(MockMvcRequestBuilders.delete("/api/data/" + dataToDelete.id()))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

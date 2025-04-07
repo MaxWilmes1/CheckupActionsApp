@@ -137,6 +137,18 @@ export default function ManageUsers() {
                 onRowEditStop={handleRowEditStop}
                 processRowUpdate={processRowUpdate}
                 slots={{toolbar: GridToolbarContainer}}
+                sx={{
+                    boxShadow: 4,
+                    border: 2,
+                    borderColor: 'primary.main',
+                    borderRadius: 2,
+                    '& .MuiDataGrid-columnHeaders': {
+                        backgroundColor: '#eceff1',
+                        color: '#263238',
+                        fontWeight: 'bold',
+                        fontSize: 16
+                    }
+                }}
             />
         </Box>
     );

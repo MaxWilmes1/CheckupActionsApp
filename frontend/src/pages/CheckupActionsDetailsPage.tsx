@@ -1,21 +1,26 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {SelectChangeEvent, Box, Typography, Divider} from "@mui/material";
 import {useCheckupAction} from "../utils/customHooks/useCheckupAction.ts";
-import {useTitle} from "../utils/customHooks/useTitle.ts";
+import {useData} from "../utils/customHooks/useData.ts";
 import CheckupActionForm from "../components/checkupAction/CheckupActionForm.tsx";
 import axios from "axios";
+import {FormEvent} from "react";
 
 export default function CheckupActionsDetailsPage() {
     const params = useParams();
-    const { action, setAction } = useCheckupAction(params.id);
+    const {action, setAction} = useCheckupAction(params.id);
     const navigate = useNavigate();
-    const titles = useTitle();
+    const data = useData();
 
     const handleChange = (event: SelectChangeEvent) => {
-        setAction(prevAction => prevAction ? {...prevAction, title: event.target.value} : null);
+        const { name, value } = event.target;
+        setAction(prevAction => {
+            if (!prevAction) return null;
+            return { ...prevAction, [name]: value };
+        });
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (action) {
             axios.put(`/api/checkup-actions/${params.id}`, action)
@@ -23,17 +28,21 @@ export default function CheckupActionsDetailsPage() {
         }
     };
 
-    if (!action || !titles) {
+    if (!action || !data) {
         return "Loading...";
     }
 
     return (
-        <Box sx={{ backgroundColor: "#f0f0f0", display: "flex", flexDirection: "column", padding: 2 }}>
+        <Box sx={{backgroundColor: "#f0f0f0", display: "flex", flexDirection: "column", padding: 2}}>
             <Typography color="textPrimary" variant="subtitle1" component="h2">
                 ID: {action.id}
             </Typography>
-            <Divider />
-            <CheckupActionForm action={action} titles={titles} onChange={handleChange} onSubmit={handleSubmit} />
+            <Divider/>
+            <CheckupActionForm action={action}
+                               data={data}
+                               onChange={handleChange}
+                               onSubmit={handleSubmit}
+            />
         </Box>
     );
 }

@@ -1,4 +1,4 @@
-package com.hdi.backend.checkupactions.title;
+package com.hdi.backend.admin_data;
 
 import lombok.Builder;
 import lombok.With;
@@ -6,8 +6,9 @@ import org.springframework.data.annotation.Id;
 
 @With
 @Builder
-public record Title(
+public record Data(
         @Id String id,
-        String title
+        DataType type,
+        String info
 ) {
 }

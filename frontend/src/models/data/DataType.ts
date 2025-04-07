@@ -1,0 +1,1 @@
+export type DataType = "TITLE" | "SUBTITLE" | "ART" | "ADU" | "APPLICATION" | "CINUM" | "PI";

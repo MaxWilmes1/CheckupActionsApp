@@ -18,7 +18,12 @@ import CancelIcon from "@mui/icons-material/Close";
 import {Box, Button} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {randomId} from "@mui/x-data-grid-generator";
-import {Title} from "../../../models/title/Title.ts"
+import {Data} from "../../../models/data/Data.ts"
+import {DataType} from "../../../models/data/DataType.ts";
+
+type Props = {
+    type: DataType
+}
 
 // -------------------- Toolbar --------------------
 function EditToolbar({onAddClick}: Readonly<{ onAddClick: () => void }>) {
@@ -32,23 +37,26 @@ function EditToolbar({onAddClick}: Readonly<{ onAddClick: () => void }>) {
 }
 
 // -------------------- Component --------------------
-export default function ManageTitles() {
-    const [titles, setTitles] = useState<Title[]>([]);
+export default function DataForm(props: Props) {
+    const [data, setData] = useState<Data[]>([]);
     const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
+    const type = props.type
 
     useEffect(() => {
-        axios.get<Title[]>("/api/title")
-            .then(r => setTitles(r.data))
-            .catch(e => console.error("Error fetching titles", e));
+        axios.get<Data[]>("/api/data")
+            .then(r => setData(
+                r.data.filter(data => data.type === type)
+            ))
+            .catch(e => console.error(`Error fetching ${type.toLowerCase()}`, e));
     }, []);
 
     const handleAddClick = () => {
         const id = randomId();
-        const newRow: Title = {id, title: "", isNew: true};
-        setTitles(prev => [...prev, newRow]);
+        const newRow: Data = {id, type: type, info: "", isNew: true};
+        setData(prev => [...prev, newRow]);
         setRowModesModel(prev => ({
             ...prev,
-            [id]: {mode: GridRowModes.Edit, fieldToFocus: "title"}
+            [id]: {mode: GridRowModes.Edit, fieldToFocus: "info"}
         }));
     };
 
@@ -62,27 +70,27 @@ export default function ManageTitles() {
         setRowModesModel(model);
     };
 
-    const processRowUpdate = async (newRow: Title) => {
+    const processRowUpdate = async (newRow: Data) => {
         const updatedRow = {...newRow};
 
         if (newRow.isNew) {
-            axios.post("/api/title", {title: newRow.title})
+            axios.post("/api/data", {info: newRow.info, type: type})
                 .then(r => {
-                    console.log("New title added", r.data)
+                    console.log(`New ${type.toLowerCase()} added`, r.data)
                 })
                 .catch(e => {
-                    console.error("Error adding new title", e)
+                    console.error(`Error adding new ${type.toLowerCase()} `, e)
                 })
             return newRow
         } else {
-                 axios.put(`/api/title/${newRow.id}`, updatedRow)
-                     .then(r => {
-                         console.log("title updated successfully", r.data)
-                     })
-                     .catch(e => {
-                         console.error("Error updating title", e)
-                     })
-                return updatedRow
+            axios.put(`/api/data/${newRow.id}`, updatedRow)
+                .then(r => {
+                    console.log(`${type.toLowerCase()} updated successfully`, r.data)
+                })
+                .catch(e => {
+                    console.error(`Error updating ${type.toLowerCase()}`, e)
+                })
+            return updatedRow
         }
     };
 
@@ -108,17 +116,17 @@ export default function ManageTitles() {
     };
 
     const handleDeleteClick = (id: GridRowId) => async () => {
-        axios.delete(`/api/title/${id}`)
+        axios.delete(`/api/data/${id}`)
             .then(() => {
-                setTitles(prev => prev.filter(row => row.id !== id));
+                setData(prev => prev.filter(row => row.id !== id));
             })
             .catch(e => {
-                console.error("Error deleting title", e)
+                console.error(`Error deleting ${type.toLowerCase()}`, e)
             })
     };
 
     const columns: GridColDef[] = [
-        {field: "title", headerName: "Title", width: 200, editable: true},
+        {field: "info", headerName: `${type.charAt(0).toUpperCase()}${type.slice(1).toLowerCase()}`, width: 200, editable: true},
         {
             field: "actions",
             type: "actions",
@@ -145,7 +153,7 @@ export default function ManageTitles() {
     return (
         <Box sx={{height: 500, width: "100%"}}>
             <DataGrid
-                rows={titles}
+                rows={data}
                 columns={columns}
                 editMode="row"
                 rowModesModel={rowModesModel}
@@ -154,6 +162,18 @@ export default function ManageTitles() {
                 processRowUpdate={processRowUpdate}
                 slots={{
                     toolbar: () => <EditToolbar onAddClick={handleAddClick}/>
+                }}
+                sx={{
+                    boxShadow: 4,
+                    border: 2,
+                    borderColor: 'primary.main',
+                    borderRadius: 2,
+                    '& .MuiDataGrid-columnHeaders': {
+                        backgroundColor: '#eceff1',
+                        color: '#263238',
+                        fontWeight: 'bold',
+                        fontSize: 16
+                    }
                 }}
             />
         </Box>

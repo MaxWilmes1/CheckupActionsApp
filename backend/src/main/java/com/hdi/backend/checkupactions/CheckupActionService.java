@@ -21,7 +21,16 @@ public class CheckupActionService {
     }
 
     public CheckupAction addAction(CheckupActionDTO checkupActionDTO) {
-        CheckupAction checkupActionToSave = new CheckupAction(null, checkupActionDTO.title());
+        CheckupAction checkupActionToSave = new CheckupAction(
+                null,
+                checkupActionDTO.title(),
+                checkupActionDTO.subtitle(),
+                checkupActionDTO.art(),
+                checkupActionDTO.adu(),
+                checkupActionDTO.application(),
+                checkupActionDTO.cinum(),
+                checkupActionDTO.pi()
+        );
         return checkupActionRepository.save(checkupActionToSave);
     }
 
@@ -30,8 +39,17 @@ public class CheckupActionService {
     }
 
     public CheckupAction updateAction(String id, CheckupActionDTO checkupActionDTO) {
-        CheckupAction oldCheckupAction = getActionById(id);
-        CheckupAction updatedCheckupAction = new CheckupAction(oldCheckupAction.id(), checkupActionDTO.title());
+        getActionById(id);
+        CheckupAction updatedCheckupAction = new CheckupAction(
+                id,
+                checkupActionDTO.title(),
+                checkupActionDTO.subtitle(),
+                checkupActionDTO.art(),
+                checkupActionDTO.adu(),
+                checkupActionDTO.application(),
+                checkupActionDTO.cinum(),
+                checkupActionDTO.pi()
+        );
         return checkupActionRepository.save(updatedCheckupAction);
     }
 }

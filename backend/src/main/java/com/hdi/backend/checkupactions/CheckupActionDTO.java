@@ -6,6 +6,12 @@ import lombok.With;
 @Builder
 @With
 public record CheckupActionDTO(
-        String title
+        String title,
+        String subtitle,
+        String art,
+        String adu,
+        String application,
+        String cinum,
+        String pi
 ) {
 }

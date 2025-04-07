@@ -107,8 +107,26 @@ class CheckupActionServiceTest {
         CheckupActionDTO actionWithoutId = CheckupActionDTO.builder()
                 .title("test")
                 .build();
-        CheckupAction expectedToSave = new CheckupAction(null, actionWithoutId.title());
-        CheckupAction savedAction = new CheckupAction("generatedMongoId123", actionWithoutId.title());
+        CheckupAction expectedToSave = new CheckupAction(
+                null,
+                actionWithoutId.title(),
+                actionWithoutId.subtitle(),
+                actionWithoutId.art(),
+                actionWithoutId.adu(),
+                actionWithoutId.application(),
+                actionWithoutId.cinum(),
+                actionWithoutId.pi()
+        );
+        CheckupAction savedAction = new CheckupAction(
+                "generatedMongoId123",
+                actionWithoutId.title(),
+                actionWithoutId.subtitle(),
+                actionWithoutId.art(),
+                actionWithoutId.adu(),
+                actionWithoutId.application(),
+                actionWithoutId.cinum(),
+                actionWithoutId.pi()
+        );
 
         when(mockCheckupActionRepository.save(expectedToSave)).thenReturn(savedAction);
 
