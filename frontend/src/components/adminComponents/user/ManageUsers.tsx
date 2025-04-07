@@ -114,13 +114,13 @@ export default function ManageUsers() {
                 const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
                 if (isInEditMode) {
                     return [
-                        <GridActionsCellItem icon={<SaveIcon/>} label="Save" onClick={handleSaveClick(id)}/>,
-                        <GridActionsCellItem icon={<CancelIcon/>} label="Cancel" onClick={handleCancelClick(id)}/>
+                        <GridActionsCellItem key={`save-${id}`} icon={<SaveIcon/>} label="Save" onClick={handleSaveClick(id)}/>,
+                        <GridActionsCellItem key={`cancel-${id}`} icon={<CancelIcon/>} label="Cancel" onClick={handleCancelClick(id)}/>
                     ];
                 }
                 return [
-                    <GridActionsCellItem icon={<EditIcon/>} label="Edit" onClick={handleEditClick(id)}/>,
-                    <GridActionsCellItem icon={<DeleteIcon/>} label="Delete" onClick={handleDeleteClick(id)}/>
+                    <GridActionsCellItem key={`edit-${id}`} icon={<EditIcon/>} label="Edit" onClick={handleEditClick(id)}/>,
+                    <GridActionsCellItem key={`delete-${id}`} icon={<DeleteIcon/>} label="Delete" onClick={handleDeleteClick(id)}/>
                 ];
             }
         }
