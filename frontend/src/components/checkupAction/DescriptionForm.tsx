@@ -18,6 +18,7 @@ export default function DescriptionForm(props: Props) {
             rows={5}
             placeholder="Enter description"
             onChange={props.onChange}
+            required={true}
         />
     );
 }

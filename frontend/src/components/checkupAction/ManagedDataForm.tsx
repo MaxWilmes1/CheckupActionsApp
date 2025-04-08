@@ -31,6 +31,7 @@ export default function ManagedDataForm(props: Props) {
                 name={type}
                 value={selectedValue}
                 onChange={props.onChange}
+                required={true}
             >
                 {props.managedData.map(o => (
                     <MenuItem key={o.id} value={o.info}>

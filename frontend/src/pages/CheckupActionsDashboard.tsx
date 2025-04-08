@@ -12,7 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import {DataGrid, GridActionsCellItem, GridColDef, GridRowsProp} from "@mui/x-data-grid";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-
+import dayjs from "dayjs";
 
 export default function CheckupActionsDashboard() {
     const [data, setData] = useState<CheckupAction[]>([]);
@@ -49,7 +49,9 @@ export default function CheckupActionsDashboard() {
         adu: item.adu,
         application: item.application,
         cinum: item.cinum,
-        pi: item.pi
+        pi: item.pi,
+        dateCreated: item.dateCreated ? dayjs(item.dateCreated).format("DD.MM.YYYY HH:mm") : "",
+        dateLastEdit: item.dateLastEdit ? dayjs(item.dateLastEdit).format("DD.MM.YYYY HH:mm") : ""
     }));
 
     const columns: GridColDef[] = [
@@ -75,6 +77,8 @@ export default function CheckupActionsDashboard() {
                 </AdminOnly>
             )
         },
+        {field: "dateCreated", headerName: "Created", width: 150},
+        {field: "dateLastEdit", headerName: "Last Edit", width: 150},
         {field: "title", headerName: "Title", width: 150},
         {field: "subtitle", headerName: "Sub-Title", width: 150},
         {field: "art", headerName: "ART", width: 150},

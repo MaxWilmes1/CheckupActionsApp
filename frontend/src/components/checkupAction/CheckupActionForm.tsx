@@ -26,15 +26,6 @@ export default function CheckupActionForm(props: Readonly<Props>) {
     return (
         <Box sx={{marginTop: 2}}>
             <form onSubmit={props.onSubmit} style={{display: "flex", flexDirection: "column", gap: "16px"}}>
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    size={"small"}
-                    sx={{alignSelf: "flex-start"}}
-                >
-                    <SaveIcon/>
-                </Button>
                 <ManagedDataForm action={props.action} managedData={titles} type={"TITLE"} onChange={props.onChange}/>
                 <ManagedDataForm action={props.action} managedData={subtitles} type={"SUBTITLE"} onChange={props.onChange}/>
                 <ManagedDataForm action={props.action} managedData={arts} type={"ART"} onChange={props.onChange}/>
@@ -44,6 +35,15 @@ export default function CheckupActionForm(props: Readonly<Props>) {
                 <ManagedDataForm action={props.action} managedData={pis} type={"PI"} onChange={props.onChange}/>
                 <ResponsibilityForm action={props.action} onChange={props.onChange}/>
                 <DescriptionForm action={props.action} onChange={props.onChange}/>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    size={"small"}
+                    sx={{alignSelf: "flex-end"}}
+                >
+                    <SaveIcon/>
+                </Button>
             </form>
         </Box>
     );

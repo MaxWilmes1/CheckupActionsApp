@@ -8,5 +8,7 @@ export type CheckupAction = {
     cinum: string,
     pi: string,
     description: string,
-    responsibility: string
+    responsibility: string,
+    dateCreated: string,
+    dateLastEdit: string
 }

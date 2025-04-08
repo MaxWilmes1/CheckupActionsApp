@@ -17,6 +17,7 @@ export default function ResponsibilityForm(props: Props) {
             rows={1}
             placeholder="Enter responsibility"
             onChange={props.onChange}
+            required={true}
         />
     );
 }
