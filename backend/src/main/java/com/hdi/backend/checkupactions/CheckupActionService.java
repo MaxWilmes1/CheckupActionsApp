@@ -3,7 +3,7 @@ package com.hdi.backend.checkupactions;
 import com.hdi.backend.exception.ActionNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -29,7 +29,11 @@ public class CheckupActionService {
                 checkupActionDTO.adu(),
                 checkupActionDTO.application(),
                 checkupActionDTO.cinum(),
-                checkupActionDTO.pi()
+                checkupActionDTO.pi(),
+                checkupActionDTO.description(),
+                checkupActionDTO.responsibility(),
+                LocalDateTime.now(),
+                LocalDateTime.now()
         );
         return checkupActionRepository.save(checkupActionToSave);
     }
@@ -39,16 +43,20 @@ public class CheckupActionService {
     }
 
     public CheckupAction updateAction(String id, CheckupActionDTO checkupActionDTO) {
-        getActionById(id);
+        CheckupAction existingAction = getActionById(id);
         CheckupAction updatedCheckupAction = new CheckupAction(
-                id,
+                existingAction.id(),
                 checkupActionDTO.title(),
                 checkupActionDTO.subtitle(),
                 checkupActionDTO.art(),
                 checkupActionDTO.adu(),
                 checkupActionDTO.application(),
                 checkupActionDTO.cinum(),
-                checkupActionDTO.pi()
+                checkupActionDTO.pi(),
+                checkupActionDTO.description(),
+                checkupActionDTO.responsibility(),
+                existingAction.dateCreated(),
+                LocalDateTime.now()
         );
         return checkupActionRepository.save(updatedCheckupAction);
     }

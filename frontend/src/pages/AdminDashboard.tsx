@@ -4,11 +4,11 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import {Button, ButtonGroup } from "@mui/material";
-import {DataType} from "../models/data/DataType.ts";
+import {ManagedDataType} from "../models/managed_data/ManagedDataType.ts";
 import DataForm from "../components/adminComponents/data/DataForm.tsx";
 
 export default function AdminDashboard() {
-    const [tab, setTab] = useState<DataType | "USERS">("USERS");
+    const [tab, setTab] = useState<ManagedDataType | "USERS">("USERS");
 
     return (
         <Box sx={{height: "100%", width: "100%", padding: "10px"}}>

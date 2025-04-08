@@ -1,4 +1,4 @@
-package com.hdi.backend.admin_data;
+package com.hdi.backend.managed_data;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ class DataControllerTest {
         dataRepository.save(d1);
         dataRepository.save(d2);
         // WHEN & THEN
-        mvc.perform(MockMvcRequestBuilders.get("/api/data"))
+        mvc.perform(MockMvcRequestBuilders.get("/api/managedData"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""
                         [
@@ -67,7 +67,7 @@ class DataControllerTest {
                 .build();
         dataRepository.save(d);
         // WHEN & THEN
-        mvc.perform(MockMvcRequestBuilders.get("/api/data/" + d.id()))
+        mvc.perform(MockMvcRequestBuilders.get("/api/managedData/" + d.id()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json("""
                         {
@@ -82,7 +82,7 @@ class DataControllerTest {
     @Test
     @WithMockUser(authorities = "ADMIN")
     void addTitle() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/api/data")
+        mvc.perform(MockMvcRequestBuilders.post("/api/managedData")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -113,7 +113,7 @@ class DataControllerTest {
                 .build();
         dataRepository.save(d);
         // WHEN & THEN
-        mvc.perform(MockMvcRequestBuilders.put("/api/data/" + d.id())
+        mvc.perform(MockMvcRequestBuilders.put("/api/managedData/" + d.id())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 """
@@ -146,7 +146,7 @@ class DataControllerTest {
                 .build();
         dataRepository.save(dataToDelete);
         // WHEN & THEN
-        mvc.perform(MockMvcRequestBuilders.delete("/api/data/" + dataToDelete.id()))
+        mvc.perform(MockMvcRequestBuilders.delete("/api/managedData/" + dataToDelete.id()))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

@@ -2,7 +2,9 @@ package com.hdi.backend.checkupactions;
 
 import com.hdi.backend.exception.ActionNotFoundException;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -107,37 +109,32 @@ class CheckupActionServiceTest {
         CheckupActionDTO actionWithoutId = CheckupActionDTO.builder()
                 .title("test")
                 .build();
-        CheckupAction expectedToSave = new CheckupAction(
-                null,
-                actionWithoutId.title(),
-                actionWithoutId.subtitle(),
-                actionWithoutId.art(),
-                actionWithoutId.adu(),
-                actionWithoutId.application(),
-                actionWithoutId.cinum(),
-                actionWithoutId.pi()
-        );
+
         CheckupAction savedAction = new CheckupAction(
                 "generatedMongoId123",
                 actionWithoutId.title(),
-                actionWithoutId.subtitle(),
-                actionWithoutId.art(),
-                actionWithoutId.adu(),
-                actionWithoutId.application(),
-                actionWithoutId.cinum(),
-                actionWithoutId.pi()
+                null, null, null, null, null, null, null, null,
+                LocalDateTime.now(),
+                LocalDateTime.now()
         );
 
-        when(mockCheckupActionRepository.save(expectedToSave)).thenReturn(savedAction);
+        when(mockCheckupActionRepository.save(any())).thenReturn(savedAction);
 
         // WHEN
         CheckupAction actual = checkupActionService.addAction(actionWithoutId);
 
         // THEN
-        verify(mockCheckupActionRepository).save(expectedToSave);
-        assertNotNull(actual.id());
+        ArgumentCaptor<CheckupAction> captor = ArgumentCaptor.forClass(CheckupAction.class);
+        verify(mockCheckupActionRepository).save(captor.capture());
+        CheckupAction saved = captor.getValue();
+
+        assertNotNull(saved.dateCreated());
+        assertNotNull(saved.dateLastEdit());
+        assertEquals("test", saved.title());
         assertEquals("test", actual.title());
+        assertEquals("generatedMongoId123", actual.id());
     }
+
 
     @Test
     void shouldReturnNothing_whenDeleteExistingAction() {
@@ -160,24 +157,36 @@ class CheckupActionServiceTest {
         CheckupAction existingAction = CheckupAction.builder()
                 .id("1")
                 .title("test")
+                .dateCreated(LocalDateTime.now().minusDays(1))
                 .build();
+
         CheckupActionDTO updateActionData = CheckupActionDTO.builder()
                 .title("testSuccessfull")
                 .build();
-        CheckupAction expectedToSave = CheckupAction.builder()
+
+        CheckupAction savedAction = CheckupAction.builder()
                 .id("1")
                 .title("testSuccessfull")
+                .dateCreated(LocalDateTime.now().minusDays(1))
+                .dateLastEdit(LocalDateTime.now())
                 .build();
-        CheckupAction expected = CheckupAction.builder()
-                .id("1")
-                .title("testSuccessfull")
-                .build();
+
         when(mockCheckupActionRepository.findById(idToUpdate)).thenReturn(Optional.of(existingAction));
-        when(mockCheckupActionRepository.save(expectedToSave)).thenReturn(expectedToSave);
+        when(mockCheckupActionRepository.save(any())).thenReturn(savedAction);
+
         // WHEN
         CheckupAction actual = checkupActionService.updateAction(idToUpdate, updateActionData);
+
         // THEN
-        assertNotNull(actual);
-        assertEquals(expected.title(), actual.title());
+        ArgumentCaptor<CheckupAction> captor = ArgumentCaptor.forClass(CheckupAction.class);
+        verify(mockCheckupActionRepository).save(captor.capture());
+        CheckupAction saved = captor.getValue();
+
+        assertEquals("testSuccessfull", saved.title());
+        assertNotNull(saved.dateCreated());
+        assertNotNull(saved.dateLastEdit());
+
+        assertEquals("testSuccessfull", actual.title());
     }
+
 }

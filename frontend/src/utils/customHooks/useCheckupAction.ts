@@ -11,6 +11,10 @@ const defaultCheckupAction: CheckupAction = {
     application: "",
     cinum: "",
     pi: "",
+    description: "",
+    responsibility: "",
+    dateCreated: "",
+    dateLastEdit: ""
 };
 
 export function useCheckupAction(id?: string) {

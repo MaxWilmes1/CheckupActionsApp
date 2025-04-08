@@ -1,17 +1,18 @@
 import {useNavigate} from "react-router-dom";
-import {SelectChangeEvent, Box} from "@mui/material";
+import {SelectChangeEvent, Box, Typography} from "@mui/material";
 import {useCheckupAction} from "../utils/customHooks/useCheckupAction.ts";
-import {useData} from "../utils/customHooks/useData.ts";
+import {useManagedData} from "../utils/customHooks/useManagedData.ts";
 import CheckupActionForm from "../components/checkupAction/CheckupActionForm.tsx";
 import axios from "axios";
-import {FormEvent} from "react";
+import {ChangeEvent, FormEvent} from "react";
+import Divider from "@mui/material/Divider";
 
 export default function NewCheckupActionPage() {
     const {action, setAction} = useCheckupAction();
     const navigate = useNavigate();
-    const data = useData();
+    const managedData = useManagedData();
 
-    const handleChange = (event: SelectChangeEvent) => {
+    const handleChange = (event: SelectChangeEvent | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
         setAction(prevAction => {
             if (!prevAction) return null;
@@ -27,14 +28,18 @@ export default function NewCheckupActionPage() {
         }
     };
 
-    if (action === null || !data) {
+    if (action === null || !managedData) {
         return "Loading...";
     }
 
     return (
         <Box sx={{backgroundColor: "#f0f0f0", display: "flex", flexDirection: "column", padding: 2}}>
+            <Typography variant="h6" component="h1" color="textPrimary" sx={{fontWeight: "bold"}}>
+                Create new Checkup action
+            </Typography>
+            <Divider/>
             <CheckupActionForm action={action}
-                               data={data}
+                               managedData={managedData}
                                onChange={handleChange}
                                onSubmit={handleSubmit}
             />
