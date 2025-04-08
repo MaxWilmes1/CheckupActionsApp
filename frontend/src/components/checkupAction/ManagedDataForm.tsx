@@ -12,6 +12,10 @@ type Props = {
 
 export default function ManagedDataForm(props: Props) {
     const type = props.type.toLowerCase()
+    const selectedValue = props.managedData.some(o => o.info === props.action[type as keyof CheckupAction])
+        ? props.action[type as keyof CheckupAction]
+        : ""
+
     return (
         <FormControl
             variant="standard"
@@ -25,7 +29,7 @@ export default function ManagedDataForm(props: Props) {
             <InputLabel>{props.type}</InputLabel>
             <Select
                 name={type}
-                value={props.action[type as keyof CheckupAction] ?? ""}
+                value={selectedValue}
                 onChange={props.onChange}
             >
                 {props.managedData.map(o => (

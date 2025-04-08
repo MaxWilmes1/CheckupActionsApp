@@ -11,15 +11,7 @@ export default function NewCheckupActionPage() {
     const navigate = useNavigate();
     const managedData = useManagedData();
 
-    const handleSelectChange = (event: SelectChangeEvent) => {
-        const { name, value } = event.target;
-        setAction(prevAction => {
-            if (!prevAction) return null;
-            return { ...prevAction, [name]: value };
-        });
-    };
-
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (event: SelectChangeEvent | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
         setAction(prevAction => {
             if (!prevAction) return null;
@@ -43,8 +35,7 @@ export default function NewCheckupActionPage() {
         <Box sx={{backgroundColor: "#f0f0f0", display: "flex", flexDirection: "column", padding: 2}}>
             <CheckupActionForm action={action}
                                managedData={managedData}
-                               onSelectChange={handleSelectChange}
-                               onInputChange={handleInputChange}
+                               onChange={handleChange}
                                onSubmit={handleSubmit}
             />
         </Box>

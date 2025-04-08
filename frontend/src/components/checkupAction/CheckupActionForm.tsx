@@ -10,8 +10,7 @@ import ResponsibilityForm from "./ResponsibilityForm.tsx";
 type Props = {
     action: CheckupAction;
     managedData: ManagedData[];
-    onSelectChange: (event: SelectChangeEvent) => void;
-    onInputChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onChange: (event: SelectChangeEvent | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
@@ -36,15 +35,15 @@ export default function CheckupActionForm(props: Readonly<Props>) {
                 >
                     <SaveIcon/>
                 </Button>
-                <ManagedDataForm action={props.action} managedData={titles} type={"TITLE"} onChange={props.onSelectChange}/>
-                <ManagedDataForm action={props.action} managedData={subtitles} type={"SUBTITLE"} onChange={props.onSelectChange}/>
-                <ManagedDataForm action={props.action} managedData={arts} type={"ART"} onChange={props.onSelectChange}/>
-                <ManagedDataForm action={props.action} managedData={adus} type={"ADU"} onChange={props.onSelectChange}/>
-                <ManagedDataForm action={props.action} managedData={applications} type={"APPLICATION"} onChange={props.onSelectChange}/>
-                <ManagedDataForm action={props.action} managedData={cinums} type={"CINUM"} onChange={props.onSelectChange}/>
-                <ManagedDataForm action={props.action} managedData={pis} type={"PI"} onChange={props.onSelectChange}/>
-                <ResponsibilityForm action={props.action} onChange={props.onInputChange}/>
-                <DescriptionForm action={props.action} onChange={props.onInputChange}/>
+                <ManagedDataForm action={props.action} managedData={titles} type={"TITLE"} onChange={props.onChange}/>
+                <ManagedDataForm action={props.action} managedData={subtitles} type={"SUBTITLE"} onChange={props.onChange}/>
+                <ManagedDataForm action={props.action} managedData={arts} type={"ART"} onChange={props.onChange}/>
+                <ManagedDataForm action={props.action} managedData={adus} type={"ADU"} onChange={props.onChange}/>
+                <ManagedDataForm action={props.action} managedData={applications} type={"APPLICATION"} onChange={props.onChange}/>
+                <ManagedDataForm action={props.action} managedData={cinums} type={"CINUM"} onChange={props.onChange}/>
+                <ManagedDataForm action={props.action} managedData={pis} type={"PI"} onChange={props.onChange}/>
+                <ResponsibilityForm action={props.action} onChange={props.onChange}/>
+                <DescriptionForm action={props.action} onChange={props.onChange}/>
             </form>
         </Box>
     );

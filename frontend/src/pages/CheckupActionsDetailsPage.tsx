@@ -12,15 +12,7 @@ export default function CheckupActionsDetailsPage() {
     const navigate = useNavigate();
     const managedData = useManagedData();
 
-    const handleSelectChange = (event: SelectChangeEvent) => {
-        const { name, value } = event.target;
-        setAction(prevAction => {
-            if (!prevAction) return null;
-            return { ...prevAction, [name]: value };
-        });
-    };
-
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (event: SelectChangeEvent | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
         setAction(prevAction => {
             if (!prevAction) return null;
@@ -48,8 +40,7 @@ export default function CheckupActionsDetailsPage() {
             <Divider/>
             <CheckupActionForm action={action}
                                managedData={managedData}
-                               onSelectChange={handleSelectChange}
-                               onInputChange={handleInputChange}
+                               onChange={handleChange}
                                onSubmit={handleSubmit}
             />
         </Box>
