@@ -5,6 +5,8 @@ import lombok.With;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Objects;
+
 @Builder
 @With
 @Document
@@ -16,6 +18,37 @@ public record CheckupAction(
         String adu,
         String application,
         String cinum,
-        String pi
+        String pi,
+        String description,
+        String responsibility
 ) {
+    @Override
+    public String
+    toString() {
+        return "CheckupAction{" +
+                "adu='" + adu + '\'' +
+                ", id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", subtitle='" + subtitle + '\'' +
+                ", art='" + art + '\'' +
+                ", application='" + application + '\'' +
+                ", cinum='" + cinum + '\'' +
+                ", pi='" + pi + '\'' +
+                ", description='" + description + '\'' +
+                ", responsibility='" + responsibility + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        CheckupAction that = (CheckupAction) o;
+        return Objects.equals(id, that.id) && Objects.equals(pi, that.pi) && Objects.equals(art, that.art) && Objects.equals(adu, that.adu) && Objects.equals(title, that.title) && Objects.equals(cinum, that.cinum) && Objects.equals(subtitle, that.subtitle) && Objects.equals(application, that.application) && Objects.equals(description, that.description) && Objects.equals(responsibility, that.responsibility);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, subtitle, art, adu, application, cinum, pi, description, responsibility);
+    }
+
 }

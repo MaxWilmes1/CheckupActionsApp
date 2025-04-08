@@ -5,5 +5,7 @@ export type NewCheckupAction = {
     adu: string,
     application: string,
     cinum: string,
-    pi: string
+    pi: string,
+    description: string,
+    responsibility: string
 }

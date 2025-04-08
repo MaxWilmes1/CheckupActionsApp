@@ -1,4 +1,4 @@
-package com.hdi.backend.admin_data;
+package com.hdi.backend.managed_data;
 
 import lombok.Builder;
 import lombok.With;

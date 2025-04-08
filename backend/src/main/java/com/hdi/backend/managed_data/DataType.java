@@ -1,4 +1,4 @@
-package com.hdi.backend.admin_data;
+package com.hdi.backend.managed_data;
 
 public enum DataType {
     TITLE,

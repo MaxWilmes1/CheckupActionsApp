@@ -1,18 +1,26 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {SelectChangeEvent, Box, Typography, Divider} from "@mui/material";
 import {useCheckupAction} from "../utils/customHooks/useCheckupAction.ts";
-import {useData} from "../utils/customHooks/useData.ts";
+import {useManagedData} from "../utils/customHooks/useManagedData.ts";
 import CheckupActionForm from "../components/checkupAction/CheckupActionForm.tsx";
 import axios from "axios";
-import {FormEvent} from "react";
+import {ChangeEvent, FormEvent} from "react";
 
 export default function CheckupActionsDetailsPage() {
     const params = useParams();
     const {action, setAction} = useCheckupAction(params.id);
     const navigate = useNavigate();
-    const data = useData();
+    const managedData = useManagedData();
 
-    const handleChange = (event: SelectChangeEvent) => {
+    const handleSelectChange = (event: SelectChangeEvent) => {
+        const { name, value } = event.target;
+        setAction(prevAction => {
+            if (!prevAction) return null;
+            return { ...prevAction, [name]: value };
+        });
+    };
+
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
         setAction(prevAction => {
             if (!prevAction) return null;
@@ -28,7 +36,7 @@ export default function CheckupActionsDetailsPage() {
         }
     };
 
-    if (!action || !data) {
+    if (!action || !managedData) {
         return "Loading...";
     }
 
@@ -39,8 +47,9 @@ export default function CheckupActionsDetailsPage() {
             </Typography>
             <Divider/>
             <CheckupActionForm action={action}
-                               data={data}
-                               onChange={handleChange}
+                               managedData={managedData}
+                               onSelectChange={handleSelectChange}
+                               onInputChange={handleInputChange}
                                onSubmit={handleSubmit}
             />
         </Box>

@@ -115,7 +115,9 @@ class CheckupActionServiceTest {
                 actionWithoutId.adu(),
                 actionWithoutId.application(),
                 actionWithoutId.cinum(),
-                actionWithoutId.pi()
+                actionWithoutId.pi(),
+                actionWithoutId.description(),
+                actionWithoutId.responsibility()
         );
         CheckupAction savedAction = new CheckupAction(
                 "generatedMongoId123",
@@ -125,7 +127,9 @@ class CheckupActionServiceTest {
                 actionWithoutId.adu(),
                 actionWithoutId.application(),
                 actionWithoutId.cinum(),
-                actionWithoutId.pi()
+                actionWithoutId.pi(),
+                actionWithoutId.description(),
+                actionWithoutId.responsibility()
         );
 
         when(mockCheckupActionRepository.save(expectedToSave)).thenReturn(savedAction);

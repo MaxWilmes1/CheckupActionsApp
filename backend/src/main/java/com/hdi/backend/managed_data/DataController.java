@@ -1,4 +1,4 @@
-package com.hdi.backend.admin_data;
+package com.hdi.backend.managed_data;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/data")
+@RequestMapping("/api/managedData")
 @RequiredArgsConstructor
 public class DataController {
 

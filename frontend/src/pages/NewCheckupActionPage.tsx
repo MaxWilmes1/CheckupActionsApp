@@ -1,17 +1,25 @@
 import {useNavigate} from "react-router-dom";
 import {SelectChangeEvent, Box} from "@mui/material";
 import {useCheckupAction} from "../utils/customHooks/useCheckupAction.ts";
-import {useData} from "../utils/customHooks/useData.ts";
+import {useManagedData} from "../utils/customHooks/useManagedData.ts";
 import CheckupActionForm from "../components/checkupAction/CheckupActionForm.tsx";
 import axios from "axios";
-import {FormEvent} from "react";
+import {ChangeEvent, FormEvent} from "react";
 
 export default function NewCheckupActionPage() {
     const {action, setAction} = useCheckupAction();
     const navigate = useNavigate();
-    const data = useData();
+    const managedData = useManagedData();
 
-    const handleChange = (event: SelectChangeEvent) => {
+    const handleSelectChange = (event: SelectChangeEvent) => {
+        const { name, value } = event.target;
+        setAction(prevAction => {
+            if (!prevAction) return null;
+            return { ...prevAction, [name]: value };
+        });
+    };
+
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
         setAction(prevAction => {
             if (!prevAction) return null;
@@ -27,15 +35,16 @@ export default function NewCheckupActionPage() {
         }
     };
 
-    if (action === null || !data) {
+    if (action === null || !managedData) {
         return "Loading...";
     }
 
     return (
         <Box sx={{backgroundColor: "#f0f0f0", display: "flex", flexDirection: "column", padding: 2}}>
             <CheckupActionForm action={action}
-                               data={data}
-                               onChange={handleChange}
+                               managedData={managedData}
+                               onSelectChange={handleSelectChange}
+                               onInputChange={handleInputChange}
                                onSubmit={handleSubmit}
             />
         </Box>

@@ -29,7 +29,9 @@ public class CheckupActionService {
                 checkupActionDTO.adu(),
                 checkupActionDTO.application(),
                 checkupActionDTO.cinum(),
-                checkupActionDTO.pi()
+                checkupActionDTO.pi(),
+                checkupActionDTO.description(),
+                checkupActionDTO.responsibility()
         );
         return checkupActionRepository.save(checkupActionToSave);
     }
@@ -48,7 +50,9 @@ public class CheckupActionService {
                 checkupActionDTO.adu(),
                 checkupActionDTO.application(),
                 checkupActionDTO.cinum(),
-                checkupActionDTO.pi()
+                checkupActionDTO.pi(),
+                checkupActionDTO.description(),
+                checkupActionDTO.responsibility()
         );
         return checkupActionRepository.save(updatedCheckupAction);
     }

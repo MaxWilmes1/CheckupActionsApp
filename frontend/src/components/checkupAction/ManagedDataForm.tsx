@@ -1,14 +1,17 @@
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
-import {Data} from "../../models/data/Data.ts"
+import {ManagedData} from "../../models/managed_data/ManagedData.ts"
 import {CheckupAction} from "../../models/checkupAction/CheckupAction.ts";
+import {ManagedDataType} from "../../models/managed_data/ManagedDataType.ts";
 
 type Props = {
     action: CheckupAction;
-    titles: Data[];
+    managedData: ManagedData[];
     onChange: (event: SelectChangeEvent) => void;
+    type: ManagedDataType
 }
 
-export default function TitleForm(props: Props) {
+export default function ManagedDataForm(props: Props) {
+    const type = props.type.toLowerCase()
     return (
         <FormControl
             variant="standard"
@@ -19,15 +22,15 @@ export default function TitleForm(props: Props) {
                 borderRadius: 1
             }}
         >
-            <InputLabel>Title</InputLabel>
+            <InputLabel>{props.type}</InputLabel>
             <Select
-                name={"title"}
-                value={props.action.title}
+                name={type}
+                value={props.action[type as keyof CheckupAction] ?? ""}
                 onChange={props.onChange}
             >
-                {props.titles.map(title => (
-                    <MenuItem key={title.id} value={title.info}>
-                        {title.info}
+                {props.managedData.map(o => (
+                    <MenuItem key={o.id} value={o.info}>
+                        {o.info}
                     </MenuItem>
                 ))}
             </Select>

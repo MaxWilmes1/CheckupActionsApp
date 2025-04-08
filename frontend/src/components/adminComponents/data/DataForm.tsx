@@ -18,11 +18,11 @@ import CancelIcon from "@mui/icons-material/Close";
 import {Box, Button} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {randomId} from "@mui/x-data-grid-generator";
-import {Data} from "../../../models/data/Data.ts"
-import {DataType} from "../../../models/data/DataType.ts";
+import {ManagedData} from "../../../models/managed_data/ManagedData.ts"
+import {ManagedDataType} from "../../../models/managed_data/ManagedDataType.ts";
 
 type Props = {
-    type: DataType
+    type: ManagedDataType
 }
 
 // -------------------- Toolbar --------------------
@@ -38,12 +38,12 @@ function EditToolbar({onAddClick}: Readonly<{ onAddClick: () => void }>) {
 
 // -------------------- Component --------------------
 export default function DataForm(props: Props) {
-    const [data, setData] = useState<Data[]>([]);
+    const [data, setData] = useState<ManagedData[]>([]);
     const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
     const type = props.type
 
     useEffect(() => {
-        axios.get<Data[]>("/api/data")
+        axios.get<ManagedData[]>("/api/data")
             .then(r => setData(
                 r.data.filter(data => data.type === type)
             ))
@@ -52,7 +52,7 @@ export default function DataForm(props: Props) {
 
     const handleAddClick = () => {
         const id = randomId();
-        const newRow: Data = {id, type: type, info: "", isNew: true};
+        const newRow: ManagedData = {id, type: type, info: "", isNew: true};
         setData(prev => [...prev, newRow]);
         setRowModesModel(prev => ({
             ...prev,
@@ -70,7 +70,7 @@ export default function DataForm(props: Props) {
         setRowModesModel(model);
     };
 
-    const processRowUpdate = async (newRow: Data) => {
+    const processRowUpdate = async (newRow: ManagedData) => {
         const updatedRow = {...newRow};
 
         if (newRow.isNew) {
