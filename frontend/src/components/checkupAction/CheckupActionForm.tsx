@@ -5,6 +5,7 @@ import {CheckupAction} from "../../models/checkupAction/CheckupAction.ts";
 import {ManagedData} from "../../models/managed_data/ManagedData.ts"
 import ManagedDataForm from "./ManagedDataForm.tsx";
 import DescriptionForm from "./DescriptionForm.tsx";
+import ResponsibilityForm from "./ResponsibilityForm.tsx";
 
 type Props = {
     action: CheckupAction;
@@ -42,6 +43,7 @@ export default function CheckupActionForm(props: Readonly<Props>) {
                 <ManagedDataForm action={props.action} managedData={applications} type={"APPLICATION"} onChange={props.onSelectChange}/>
                 <ManagedDataForm action={props.action} managedData={cinums} type={"CINUM"} onChange={props.onSelectChange}/>
                 <ManagedDataForm action={props.action} managedData={pis} type={"PI"} onChange={props.onSelectChange}/>
+                <ResponsibilityForm action={props.action} onChange={props.onInputChange}/>
                 <DescriptionForm action={props.action} onChange={props.onInputChange}/>
             </form>
         </Box>
