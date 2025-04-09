@@ -15,7 +15,8 @@ public record CheckupActionDTO(
         String cinum,
         String pi,
         String description,
-        String responsibility
+        String responsibility,
+        Status status
 ) {
 
     @Override

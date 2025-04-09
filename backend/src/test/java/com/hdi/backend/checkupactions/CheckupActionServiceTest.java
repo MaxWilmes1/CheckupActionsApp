@@ -114,6 +114,7 @@ class CheckupActionServiceTest {
                 "generatedMongoId123",
                 actionWithoutId.title(),
                 null, null, null, null, null, null, null, null,
+                Status.OPEN,
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
