@@ -1,7 +1,7 @@
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
-import {ManagedData} from "../../models/managed_data/ManagedData.ts"
-import {CheckupAction} from "../../models/checkupAction/CheckupAction.ts";
-import {ManagedDataType} from "../../models/managed_data/ManagedDataType.ts";
+import {ManagedData} from "../../../../models/managed_data/ManagedData.ts"
+import {CheckupAction} from "../../../../models/checkupAction/CheckupAction.ts";
+import {ManagedDataType} from "../../../../models/managed_data/ManagedDataType.ts";
 
 type Props = {
     action: CheckupAction;
@@ -18,12 +18,13 @@ export default function ManagedDataForm(props: Props) {
 
     return (
         <FormControl
-            variant="standard"
+            variant="outlined"
+            fullWidth={false}
+            size="small"
+            required
             sx={{
-                p: 1,
-                width: "50%",
-                backgroundColor: "#fff",
-                borderRadius: 1
+                borderRadius: 1,
+                marginBottom: 1.5
             }}
         >
             <InputLabel>{props.type}</InputLabel>
@@ -31,8 +32,9 @@ export default function ManagedDataForm(props: Props) {
                 name={type}
                 value={selectedValue}
                 onChange={props.onChange}
-                required={true}
+                label={props.type}
             >
+
                 {props.managedData.map(o => (
                     <MenuItem key={o.id} value={o.info}>
                         {o.info}

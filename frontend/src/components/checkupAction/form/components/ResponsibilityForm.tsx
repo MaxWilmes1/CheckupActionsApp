@@ -1,5 +1,5 @@
-import { TextField} from "@mui/material";
-import {CheckupAction} from "../../models/checkupAction/CheckupAction.ts";
+import {TextField} from "@mui/material";
+import {CheckupAction} from "../../../../models/checkupAction/CheckupAction.ts";
 import {ChangeEvent} from "react";
 
 type Props = {
@@ -11,6 +11,7 @@ export default function ResponsibilityForm(props: Props) {
     return (
         <TextField
             name={"responsibility"}
+            size={"small"}
             value={props.action.responsibility}
             id="outlined-multiline-static"
             label="Responsibility"
