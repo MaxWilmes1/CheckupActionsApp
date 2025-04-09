@@ -43,12 +43,12 @@ export default function DataForm(props: Props) {
     const type = props.type
 
     useEffect(() => {
-        axios.get<ManagedData[]>("/api/data")
+        axios.get<ManagedData[]>("/api/managedData")
             .then(r => setData(
                 r.data.filter(data => data.type === type)
             ))
             .catch(e => console.error(`Error fetching ${type.toLowerCase()}`, e));
-    }, []);
+    }, [type]);
 
     const handleAddClick = () => {
         const id = randomId();
@@ -74,7 +74,7 @@ export default function DataForm(props: Props) {
         const updatedRow = {...newRow};
 
         if (newRow.isNew) {
-            axios.post("/api/data", {info: newRow.info, type: type})
+            axios.post("/api/managedData", {info: newRow.info, type: type})
                 .then(r => {
                     console.log(`New ${type.toLowerCase()} added`, r.data)
                 })
@@ -83,7 +83,7 @@ export default function DataForm(props: Props) {
                 })
             return newRow
         } else {
-            axios.put(`/api/data/${newRow.id}`, updatedRow)
+            axios.put(`/api/managedData/${newRow.id}`, updatedRow)
                 .then(r => {
                     console.log(`${type.toLowerCase()} updated successfully`, r.data)
                 })
@@ -116,7 +116,7 @@ export default function DataForm(props: Props) {
     };
 
     const handleDeleteClick = (id: GridRowId) => async () => {
-        axios.delete(`/api/data/${id}`)
+        axios.delete(`/api/managedData/${id}`)
             .then(() => {
                 setData(prev => prev.filter(row => row.id !== id));
             })

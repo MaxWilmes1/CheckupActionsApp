@@ -16,7 +16,7 @@ export default function AdminDashboard() {
                 Admin Dashboard
             </Typography>
             <Divider/>
-            <Box sx={{marginBottom: 1}}>
+            <Box sx={{marginBottom: 1, marginTop: 1}}>
                 <ButtonGroup variant={"contained"} size="small" sx={{gap: "1px"}}>
                     <Button onClick={() => setTab("USERS")}>users</Button>
                     <Button onClick={() => setTab("TITLE")}>titles</Button>
