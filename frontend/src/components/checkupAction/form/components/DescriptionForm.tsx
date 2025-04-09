@@ -1,4 +1,4 @@
-import {TextField} from "@mui/material";
+import {Box, TextField} from "@mui/material";
 import {CheckupAction} from "../../../../models/checkupAction/CheckupAction.ts";
 import {ChangeEvent} from "react";
 
@@ -9,16 +9,19 @@ type Props = {
 
 export default function DescriptionForm(props: Props) {
     return (
-        <TextField
-            name={"description"}
-            value={props.action.description}
-            id="outlined-multiline-static"
-            label="Description"
-            multiline
-            rows={5}
-            placeholder="Enter description"
-            onChange={props.onChange}
-            required={true}
-        />
+        <Box sx={{marginTop: 0.5}}>
+            <TextField
+                name={"description"}
+                value={props.action.description}
+                id="outlined-multiline-static"
+                label="Description"
+                multiline
+                fullWidth
+                rows={5}
+                placeholder="Enter description"
+                onChange={props.onChange}
+                required={true}
+            />
+        </Box>
     );
 }
