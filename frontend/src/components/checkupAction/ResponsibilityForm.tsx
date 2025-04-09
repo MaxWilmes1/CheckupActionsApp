@@ -11,6 +11,7 @@ export default function ResponsibilityForm(props: Props) {
     return (
         <TextField
             name={"responsibility"}
+            size={"small"}
             value={props.action.responsibility}
             id="outlined-multiline-static"
             label="Responsibility"

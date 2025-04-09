@@ -33,7 +33,7 @@ export default function NewCheckupActionPage() {
     }
 
     return (
-        <Box sx={{backgroundColor: "#f0f0f0", display: "flex", flexDirection: "column", padding: 2}}>
+        <Box sx={{display: "flex", flexDirection: "column", padding: 2}}>
             <Typography variant="h6" component="h1" color="textPrimary" sx={{fontWeight: "bold"}}>
                 Create new Checkup action
             </Typography>
