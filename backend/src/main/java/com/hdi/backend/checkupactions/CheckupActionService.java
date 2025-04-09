@@ -32,6 +32,7 @@ public class CheckupActionService {
                 checkupActionDTO.pi(),
                 checkupActionDTO.description(),
                 checkupActionDTO.responsibility(),
+                Status.OPEN,
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
@@ -55,6 +56,7 @@ public class CheckupActionService {
                 checkupActionDTO.pi(),
                 checkupActionDTO.description(),
                 checkupActionDTO.responsibility(),
+                checkupActionDTO.status(),
                 existingAction.dateCreated(),
                 LocalDateTime.now()
         );

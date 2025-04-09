@@ -14,7 +14,7 @@ export default function CheckupActionsDetailsHeader(props: Props) {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
-                marginBottom: 2
+                marginBottom: 1
             }}>
                 <Box sx={{
                     display: "flex",

@@ -19,9 +19,8 @@ export default function Title(props: Props) {
             sx={{
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "space-between",
                 borderRadius: 2,
-                width: "50%",
+                width: "100%",
             }}
         >
             <ManagedDataForm

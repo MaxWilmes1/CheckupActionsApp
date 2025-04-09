@@ -21,6 +21,7 @@ public record CheckupAction(
         String pi,
         String description,
         String responsibility,
+        Status status,
         LocalDateTime dateCreated,
         LocalDateTime dateLastEdit
 ) {

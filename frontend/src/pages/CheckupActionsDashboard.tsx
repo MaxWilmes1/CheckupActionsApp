@@ -43,6 +43,7 @@ export default function CheckupActionsDashboard() {
 
     const rows: GridRowsProp = data.map((item) => ({
         id: item.id,
+        status: item.status,
         title: item.title,
         subtitle: item.subtitle,
         art: item.art,
@@ -77,15 +78,16 @@ export default function CheckupActionsDashboard() {
                 </AdminOnly>
             )
         },
-        {field: "dateCreated", headerName: "Created", width: 150},
-        {field: "dateLastEdit", headerName: "Last Edit", width: 150},
+        {field: "status", headerName: "Status", width: 70},
+        {field: "pi", headerName: "PI", width: 70},
+        {field: "dateCreated", headerName: "Created", width: 130},
+        {field: "dateLastEdit", headerName: "Last Edit", width: 130},
         {field: "title", headerName: "Title", width: 150},
         {field: "subtitle", headerName: "Sub-Title", width: 150},
-        {field: "art", headerName: "ART", width: 150},
-        {field: "adu", headerName: "ADU", width: 150},
+        {field: "art", headerName: "ART", width: 130},
+        {field: "adu", headerName: "ADU", width: 130},
         {field: "application", headerName: "App", width: 150},
-        {field: "cinum", headerName: "CINUM", width: 150},
-        {field: "pi", headerName: "PI", width: 150},
+        {field: "cinum", headerName: "CINUM", width: 125},
     ];
 
     return (

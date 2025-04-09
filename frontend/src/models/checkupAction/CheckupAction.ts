@@ -1,3 +1,5 @@
+import {Status} from "./Status.ts";
+
 export type CheckupAction = {
     id: string,
     title: string,
@@ -9,6 +11,7 @@ export type CheckupAction = {
     pi: string,
     description: string,
     responsibility: string,
+    status: Status,
     dateCreated: string,
     dateLastEdit: string
 }
