@@ -15,7 +15,7 @@ type Props = {
 export default function TitleAndStateManagement(props: Props) {
     return (
         <Box>
-            <Box sx={{marginBottom: 2}}>
+            <Box sx={{marginBottom: 1}}>
                 <StateManagement action={props.action} onChange={props.onChange}/>
             </Box>
 

@@ -18,7 +18,7 @@ type Props = {
 export default function CheckupActionForm(props: Readonly<Props>) {
 
     return (
-        <Box sx={{display: "flex", flexDirection: "column", padding: 2}}>
+        <Box sx={{display: "flex", flexDirection: "column", padding: 0.5}}>
             <form onSubmit={props.onSubmit} style={{display: "flex", flexDirection: "column"}}>
                 <TitleAndStateManagement action={props.action} managedData={props.managedData}
                                          onChange={props.onChange}/>

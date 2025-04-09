@@ -1,11 +1,14 @@
 import {
     Box,
     Chip,
+    Divider,
     IconButton,
     SelectChangeEvent,
     Stack,
     Tooltip,
-    Typography
+    Typography,
+    useMediaQuery,
+    useTheme
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
@@ -23,6 +26,8 @@ type Props = {
 export default function StateManagement(props: Props) {
     const navigate = useNavigate();
     const params = useParams();
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
     const statusTransitions: Record<Status, Status[]> = {
         OPEN: ["PLANNED"],
@@ -59,66 +64,70 @@ export default function StateManagement(props: Props) {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
-                alignItems: "center",
-                gap: 2,
-                width: "100%",
-                padding: 1,
+                alignItems: isSmall ? "flex-start" : "center",
+                width: "100%"
             }}
         >
-            {/* Status Anzeige */}
-            <Box sx={{display: "flex", alignItems: "center", gap: 1, minWidth: 150}}>
-                <Typography variant="body2" color="text.secondary">Status:</Typography>
-                <Chip
-                    label={props.action?.status || "No status"}
-                    size="small"
-                    color={
-                        props.action.status === "CANCELLED"
-                            ? "error"
-                            : props.action.status === "DONE"
-                                ? "success"
-                                : "info"
-                    }
-                    variant="outlined"
-                />
+            {/* Status & Moves */}
+            <Box sx={{display: "flex", gap: 1.5, alignItems: "flex-start"}}>
+                {/* Status Info */}
+                <Box sx={{display: "flex", alignItems: "center", gap: 1}}>
+                    <Typography variant="body2" color="text.secondary">Status:</Typography>
+                    <Chip
+                        label={props.action?.status || "No status"}
+                        size="small"
+                        color={
+                            props.action.status === "CANCELLED"
+                                ? "error"
+                                : props.action.status === "DONE"
+                                    ? "success"
+                                    : "info"
+                        }
+                        variant="outlined"
+                    />
+                </Box>
+
+                <Divider orientation="vertical" flexItem/>
+
+                {/* Status Transition Chips */}
+                <Stack spacing={0.5}>
+                    {statusTransitions[props.action.status]?.map((targetStatus) => (
+                        <Chip
+                            key={targetStatus}
+                            label={targetStatus.toLowerCase().replace("_", " ")}
+                            variant="outlined"
+                            size="small"
+                            clickable
+                            onClick={() => handleClick(targetStatus)}
+                            color="info"
+                            sx={{textTransform: "capitalize", minWidth: 100}}
+                        />
+                    ))}
+                    {props.action.status !== "CANCELLED" && (
+                        <Chip
+                            label="cancelled"
+                            variant="outlined"
+                            size="small"
+                            clickable
+                            onClick={() => handleClick("CANCELLED")}
+                            color="error"
+                            sx={{minWidth: 100}}
+                        />
+                    )}
+                </Stack>
             </Box>
 
-            {/* Statuswechsel mit Chips */}
-            <Stack direction="row" spacing={1} sx={{flexWrap: "wrap"}}>
-                {statusTransitions[props.action.status]?.map((targetStatus) => (
-                    <Chip
-                        key={targetStatus}
-                        label={targetStatus.toLowerCase().replace("_", " ")}
-                        variant="outlined"
-                        size="small"
-                        clickable
-                        onClick={() => handleClick(targetStatus)}
-                        sx={{textTransform: "capitalize"}}
-                        color="info"
-                    />
-                ))}
-                {props.action.status !== "CANCELLED" && (
-                    <Chip
-                        label="cancelled"
-                        variant="outlined"
-                        size="small"
-                        clickable
-                        onClick={() => handleClick("CANCELLED")}
-                        color="error"
-                    />
-                )}
-            </Stack>
-
             {/* Save & Delete */}
-            <Stack direction="row" spacing={1} sx={{minWidth: 160, justifyContent: "flex-end"}}>
+            <Stack direction="row" spacing={1} alignItems="center">
                 <Tooltip title="Save">
-                    <IconButton color="primary" size="small" type="submit">
-                        <SaveIcon/>
+                    <IconButton color="primary" size="medium" type="submit">
+                        <SaveIcon fontSize="medium"/>
                     </IconButton>
                 </Tooltip>
                 {params.id && (
                     <Tooltip title="Delete">
-                        <IconButton color="error" size="small" onClick={handleDelete}>
-                            <DeleteIcon/>
+                        <IconButton color="error" size="medium" onClick={handleDelete}>
+                            <DeleteIcon fontSize="medium"/>
                         </IconButton>
                     </Tooltip>
                 )}
