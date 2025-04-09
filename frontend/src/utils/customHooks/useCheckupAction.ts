@@ -13,6 +13,7 @@ const defaultCheckupAction: CheckupAction = {
     pi: "",
     description: "",
     responsibility: "",
+    status: "OPEN",
     dateCreated: "",
     dateLastEdit: ""
 };
