@@ -91,7 +91,7 @@ export default function CheckupActionsDashboard() {
     return (
         <Box style={{height: "100%", width: "100%", padding: "10px"}}>
             <Typography color={"textPrimary"} variant="h5" component="h2" sx={{margin: "5px"}}>
-                Checkup Actions - table
+                Checkup Actions - Dashboard
             </Typography>
             <Divider/>
             <NavLink to={"/checkup-actions/add"}>
