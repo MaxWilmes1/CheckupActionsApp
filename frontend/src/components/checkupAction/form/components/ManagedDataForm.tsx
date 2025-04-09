@@ -1,7 +1,7 @@
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
-import {ManagedData} from "../../models/managed_data/ManagedData.ts"
-import {CheckupAction} from "../../models/checkupAction/CheckupAction.ts";
-import {ManagedDataType} from "../../models/managed_data/ManagedDataType.ts";
+import {ManagedData} from "../../../../models/managed_data/ManagedData.ts"
+import {CheckupAction} from "../../../../models/checkupAction/CheckupAction.ts";
+import {ManagedDataType} from "../../../../models/managed_data/ManagedDataType.ts";
 
 type Props = {
     action: CheckupAction;

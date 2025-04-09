@@ -2,7 +2,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {SelectChangeEvent, Box} from "@mui/material";
 import {useCheckupAction} from "../utils/customHooks/useCheckupAction.ts";
 import {useManagedData} from "../utils/customHooks/useManagedData.ts";
-import CheckupActionForm from "../components/checkupAction/CheckupActionForm.tsx";
+import CheckupActionForm from "../components/checkupAction/form/CheckupActionForm.tsx";
 import axios from "axios";
 import {ChangeEvent, FormEvent} from "react";
 import CheckupActionsDetailsHeader from "../components/checkupAction/CheckupActionsDetailsHeader.tsx";

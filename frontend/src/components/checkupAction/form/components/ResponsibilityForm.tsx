@@ -1,5 +1,5 @@
-import { TextField} from "@mui/material";
-import {CheckupAction} from "../../models/checkupAction/CheckupAction.ts";
+import {TextField} from "@mui/material";
+import {CheckupAction} from "../../../../models/checkupAction/CheckupAction.ts";
 import {ChangeEvent} from "react";
 
 type Props = {
