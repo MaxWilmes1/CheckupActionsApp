@@ -16,11 +16,25 @@ export default function CheckupActionsDetailsHeader(props: Props) {
                 alignItems: "center",
                 marginBottom: 2
             }}>
-                <Typography variant="h6" component="h1" color="textPrimary" sx={{fontWeight: "bold"}}>
-                    Action ID: {props.action.id}
-                </Typography>
-                <Box>
-                    <Typography variant="body2" component="p" color="textSecondary" >
+                <Box sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                }}>
+                    <Typography variant="h6" component="h1" color="textPrimary" sx={{marginBottom: 0.5, fontWeight:"bold"}}>
+                        Edit Checkup Action
+                    </Typography>
+                    <Typography variant="caption" component="h1" color="textPrimary">
+                        Action ID: {props.action.id}
+                    </Typography>
+                </Box>
+                <Box sx={
+                    {
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-end",
+                    }
+                }>
+                    <Typography variant="body2" component="p" color="textSecondary">
                         Created: {dayjs(props.action.dateCreated).format("DD.MM.YYYY HH:mm")}
                     </Typography>
                     <Divider/>

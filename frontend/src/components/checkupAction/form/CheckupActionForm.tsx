@@ -28,7 +28,7 @@ export default function CheckupActionForm(props: Readonly<Props>) {
                 <Divider sx={{marginBottom: 1}}/>
 
                 <Assignment action={props.action} managedData={props.managedData} onChange={props.onChange}/>
-
+                <Divider sx={{marginBottom: 1}}/>
                 <DescriptionForm action={props.action} onChange={props.onChange}/>
             </form>
         </Box>
