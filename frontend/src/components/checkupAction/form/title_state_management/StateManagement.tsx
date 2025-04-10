@@ -38,7 +38,7 @@ export default function StateManagement(props: Props) {
         CANCELLED: ["OPEN"]
     };
 
-    const handleClick = (nextStatus: Status) => {
+    const handleStatusChipClick = (nextStatus: Status) => {
         const updatedAction = {...props.action, status: nextStatus};
 
         axios.put(`/api/checkup-actions/${props.action.id}`, updatedAction)
@@ -56,6 +56,38 @@ export default function StateManagement(props: Props) {
         axios.delete(`/api/checkup-actions/${params.id}`)
             .then(() => navigate("/checkup-actions"))
             .catch(error => console.error("Error deleting item", error));
+    };
+
+    const getStatusColor = (status: Status): "error" | "success" | "info" | "warning" | "secondary" => {
+        switch (status) {
+            case "CANCELLED":
+                return "error";
+            case "DONE":
+                return "success";
+            case "OPEN":
+                return "info";
+            case "PLANNED":
+                return "warning";
+            default:
+                return "secondary";
+        }
+    };
+
+    const getTransitionColor = (targetStatus: Status): "error" | "success" | "info" | "warning" | "secondary" => {
+        switch (targetStatus) {
+            case "CANCELLED":
+                return "error";
+            case "DONE":
+                return "success";
+            case "PLANNED":
+                return "warning";
+            case "REACTIVE":
+                return "secondary";
+            case "OPEN":
+                return "info";
+            default:
+                return "secondary";
+        }
     };
 
     return (
@@ -76,13 +108,7 @@ export default function StateManagement(props: Props) {
                     <Chip
                         label={props.action?.status || "No status"}
                         size="small"
-                        color={
-                            props.action.status === "CANCELLED"
-                                ? "error"
-                                : props.action.status === "DONE"
-                                    ? "success"
-                                    : "info"
-                        }
+                        color={getStatusColor(props.action.status)}
                         variant="outlined"
                     />
                 </Box>
@@ -98,8 +124,8 @@ export default function StateManagement(props: Props) {
                             variant="outlined"
                             size="small"
                             clickable
-                            onClick={() => handleClick(targetStatus)}
-                            color="info"
+                            onClick={() => handleStatusChipClick(targetStatus)}
+                            color={getTransitionColor(targetStatus)}
                             sx={{textTransform: "capitalize", minWidth: 100}}
                         />
                     ))}
@@ -109,7 +135,7 @@ export default function StateManagement(props: Props) {
                             variant="outlined"
                             size="small"
                             clickable
-                            onClick={() => handleClick("CANCELLED")}
+                            onClick={() => handleStatusChipClick("CANCELLED")}
                             color="error"
                             sx={{minWidth: 100}}
                         />
