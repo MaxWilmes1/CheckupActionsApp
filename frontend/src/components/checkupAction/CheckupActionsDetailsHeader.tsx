@@ -30,6 +30,7 @@ export default function CheckupActionsDetailsHeader(props: Props) {
                 </Box>
                 <Box sx={{
                     display: "flex",
+                    paddingRight: 2,
                     flexDirection: "column",
                     alignItems: "flex-end",
                 }}>

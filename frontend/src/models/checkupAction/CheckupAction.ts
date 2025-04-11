@@ -1,4 +1,5 @@
 import {Status} from "./Status.ts";
+import {Comment} from "./Comment.ts";
 
 export type CheckupAction = {
     id: string,
@@ -12,6 +13,7 @@ export type CheckupAction = {
     description: string,
     responsibility: string,
     status: Status,
+    comments: Comment[],
     dateCreated: string,
     dateLastEdit: string
 }
