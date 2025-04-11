@@ -1,11 +1,10 @@
 import {
-    Box,
+    Box, SelectChangeEvent,
 } from '@mui/material';
 import {CheckupAction} from "../../../models/checkupAction/CheckupAction.ts";
-import {ChangeEvent} from "react";
-import {SelectChangeEvent} from "@mui/material";
 import CommentBody from "./CommentBody.tsx";
 import CommentHeader from "./CommentHeader.tsx";
+import {ChangeEvent} from "react";
 
 type Props = {
     open: boolean;
@@ -24,7 +23,7 @@ export default function CommentDrawer(props: Props) {
             )}
 
             {props.open && (
-                <CommentBody action={props.action} onClose={props.onClose}/>
+                <CommentBody action={props.action} onClose={props.onClose} onChange={props.onChange}/>
             )}
         </Box>
     );

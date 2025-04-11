@@ -1,11 +1,13 @@
-import {Box, Divider, IconButton, Typography} from "@mui/material";
+import {Box, Divider, IconButton, SelectChangeEvent, Typography} from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {CheckupAction} from "../../../models/checkupAction/CheckupAction.ts";
 import CommentList from "./CommentList.tsx";
+import {ChangeEvent} from "react";
 
 type Props = {
     action: CheckupAction
     onClose: () => void;
+    onChange: (event: SelectChangeEvent | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
 export default function CommentBody(props: Props) {
@@ -31,7 +33,7 @@ export default function CommentBody(props: Props) {
             </Box>
 
             <Divider sx={{mb: 2}}/>
-            <CommentList action={props.action}/>
+            <CommentList action={props.action} onChange={props.onChange}/>
         </Box>
     );
 }
