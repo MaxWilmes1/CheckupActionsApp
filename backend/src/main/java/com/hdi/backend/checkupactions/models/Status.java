@@ -1,4 +1,4 @@
-package com.hdi.backend.checkupactions;
+package com.hdi.backend.checkupactions.models;
 
 public enum Status {
     OPEN,

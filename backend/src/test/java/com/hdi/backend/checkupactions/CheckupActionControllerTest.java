@@ -1,5 +1,6 @@
 package com.hdi.backend.checkupactions;
 
+import com.hdi.backend.checkupactions.models.CheckupAction;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

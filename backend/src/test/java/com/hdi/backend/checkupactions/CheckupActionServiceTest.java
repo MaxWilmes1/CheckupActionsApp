@@ -1,6 +1,8 @@
 package com.hdi.backend.checkupactions;
 
+import com.hdi.backend.checkupactions.models.*;
 import com.hdi.backend.exception.ActionNotFoundException;
+import com.hdi.backend.utils.IdService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -14,7 +16,8 @@ import static org.mockito.Mockito.*;
 class CheckupActionServiceTest {
 
     private final CheckupActionRepository mockCheckupActionRepository = mock(CheckupActionRepository.class);
-    private final CheckupActionService checkupActionService = new CheckupActionService(mockCheckupActionRepository);
+    private final IdService mockIdService = mock(IdService.class);
+    private final CheckupActionService checkupActionService = new CheckupActionService(mockCheckupActionRepository, mockIdService);
 
     @Test
     void shouldReturnAllCheckupActions_whenRepositoryContainsActions() {
@@ -115,6 +118,7 @@ class CheckupActionServiceTest {
                 actionWithoutId.title(),
                 null, null, null, null, null, null, null, null,
                 Status.OPEN,
+                List.of(),
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
@@ -190,4 +194,159 @@ class CheckupActionServiceTest {
         assertEquals("testSuccessfull", actual.title());
     }
 
+    @Test
+    void addComment_shouldReturnActionWithComment_WhenFirstCommentAdded() {
+        // GIVEN
+        String commentID = "generatedMongoId123";
+        LocalDateTime fixedTime = LocalDateTime.of(2025, 4, 10, 11, 42, 3, 0);
+        CheckupAction actionWithoutComment = CheckupAction.builder()
+                .id("1")
+                .title("test")
+                .comments(List.of())
+                .build();
+
+        NewCommentDTO newComment = NewCommentDTO.builder()
+                .author("testAuthor")
+                .comment("testComment")
+                .build();
+
+        Comment expectedComment = Comment.builder()
+                .id(commentID)
+                .author(newComment.author())
+                .comment(newComment.comment())
+                .dateCreated(fixedTime)
+                .dateLastEdit(fixedTime)
+                .build();
+
+        CheckupAction expected = CheckupAction.builder()
+                .id("1")
+                .title("test")
+                .comments(List.of(expectedComment))
+                .dateCreated(fixedTime)
+                .dateLastEdit(fixedTime)
+                .build();
+
+        when(mockCheckupActionRepository.findById(actionWithoutComment.id())).thenReturn(Optional.of(actionWithoutComment));
+        when(mockIdService.generate()).thenReturn("generatedMongoId123");
+        when(mockCheckupActionRepository.save(any())).thenReturn(expected);
+
+        // WHEN
+        CheckupAction actual = checkupActionService.addComment(actionWithoutComment.id(), newComment);
+
+        // THEN
+        verify(mockCheckupActionRepository).findById(actionWithoutComment.id());
+        verify(mockCheckupActionRepository).save(any());
+
+        assertEquals(expected.id(), actual.id());
+        assertEquals(expected.title(), actual.title());
+        assertEquals(expected.comments(), actual.comments());
+
+        assertNotNull(actual.dateCreated());
+        assertNotNull(actual.dateLastEdit());
+    }
+
+
+    @Test
+    void updateComment_shouldReturnUpdatedComment_WhenActionWithCommentExists() {
+        // GIVEN
+        String commentID = "generatedMongoId123";
+        LocalDateTime fixedTime = LocalDateTime.of(2025, 4, 10, 11, 42, 3, 0);
+
+        Comment existingComment = Comment.builder()
+                .id(commentID)
+                .author("testAuthor")
+                .comment("testComment")
+                .dateCreated(fixedTime)
+                .dateLastEdit(fixedTime)
+                .build();
+
+        CheckupAction actionWithComment = CheckupAction.builder()
+                .id("1")
+                .title("test")
+                .comments(List.of(existingComment))
+                .build();
+
+        UpdateCommentDTO updateComment = UpdateCommentDTO.builder()
+                .comment("testSuccessfull")
+                .build();
+
+        Comment expectedComment = Comment.builder()
+                .id(commentID)
+                .author("testAuthor")
+                .comment(updateComment.comment())
+                .dateCreated(fixedTime)
+                .dateLastEdit(fixedTime)
+                .build();
+
+        CheckupAction expected = CheckupAction.builder()
+                .id("1")
+                .title("test")
+                .comments(List.of(expectedComment))
+                .dateCreated(fixedTime)
+                .dateLastEdit(fixedTime)
+                .build();
+
+        when(mockCheckupActionRepository.findById(actionWithComment.id())).thenReturn(Optional.of(actionWithComment));
+        when(mockCheckupActionRepository.save(any())).thenReturn(expected);
+
+        // WHEN
+        CheckupAction actual = checkupActionService.updateComment(actionWithComment.id(),existingComment.id(), updateComment);
+
+        // THEN
+        verify(mockCheckupActionRepository).findById(actionWithComment.id());
+        verify(mockCheckupActionRepository).save(any());
+
+        assertEquals(expected.id(), actual.id());
+        assertEquals(expected.title(), actual.title());
+        assertEquals(expected.comments(), actual.comments());
+
+        assertNotNull(actual.dateCreated());
+        assertNotNull(actual.dateLastEdit());
+    }
+
+    @Test
+    void deleteComment_shouldReturnEmptyList_WhenOneCommentExisted() {
+        // GIVEN
+        String commentID = "generatedMongoId123";
+        LocalDateTime fixedTime = LocalDateTime.of(2025, 4, 10, 11, 42, 3, 0);
+
+        Comment existingComment = Comment.builder()
+                .id(commentID)
+                .author("testAuthor")
+                .comment("testComment")
+                .dateCreated(fixedTime)
+                .dateLastEdit(fixedTime)
+                .build();
+
+        CheckupAction actionWithComment = CheckupAction.builder()
+                .id("1")
+                .title("test")
+                .comments(List.of(existingComment))
+                .build();
+
+        CheckupAction expected = CheckupAction.builder()
+                .id("1")
+                .title("test")
+                .comments(List.of())
+                .dateCreated(fixedTime)
+                .dateLastEdit(fixedTime)
+                .build();
+
+        when(mockCheckupActionRepository.findById(actionWithComment.id())).thenReturn(Optional.of(actionWithComment));
+        when(mockCheckupActionRepository.save(any())).thenReturn(expected);
+
+        // WHEN
+        CheckupAction actual = checkupActionService.deleteComment(actionWithComment.id(),existingComment.id());
+
+        // THEN
+        verify(mockCheckupActionRepository).findById(actionWithComment.id());
+        verify(mockCheckupActionRepository).save(any());
+
+        assertEquals(expected.id(), actual.id());
+        assertEquals(expected.title(), actual.title());
+        assertEquals(expected.comments(), actual.comments());
+
+        assertNotNull(actual.dateCreated());
+        assertNotNull(actual.dateLastEdit());
+    }
 }
