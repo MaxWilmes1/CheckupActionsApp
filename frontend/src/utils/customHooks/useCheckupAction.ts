@@ -14,6 +14,7 @@ const defaultCheckupAction: CheckupAction = {
     description: "",
     responsibility: "",
     status: "OPEN",
+    comments: [],
     dateCreated: "",
     dateLastEdit: ""
 };
