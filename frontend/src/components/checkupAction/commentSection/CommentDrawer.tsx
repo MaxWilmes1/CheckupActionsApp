@@ -17,7 +17,18 @@ type Props = {
 export default function CommentDrawer(props: Readonly<Props>) {
     return (
         <Box
-            sx={{display: 'flex', justifyContent: 'center', height: '100%', width: '100%', backgroundColor: '#fafafa'}}>
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                height: '100%',
+                width: '100%',
+                backgroundColor: '#fafafa',
+                overflowY: 'auto',
+                overflowX: 'hidden',
+                maxHeight: '100vh',
+                boxSizing: 'border-box'
+            }}
+        >
             {!props.open && (
                 <CommentHeader onOpen={props.onOpen}/>
             )}
