@@ -10,14 +10,12 @@ type Props = {
     type: ManagedDataType
 }
 
-export default function ManagedDataForm(props: Props) {
+export default function ManagedDataForm(props: Readonly<Props>) {
     const label = props.type === "ART" || props.type === "ADU" || props.type === "PI" || props.type === "CINUM"
         ? props.type
         : props.type.charAt(0).toUpperCase() + props.type.slice(1).toLowerCase();
     const type = props.type.toLowerCase()
-    const selectedValue = props.managedData.some(o => o.info === props.action[type as keyof CheckupAction])
-        ? props.action[type as keyof CheckupAction]
-        : ""
+    const selectedValue = props.action[type as keyof CheckupAction] as string;
 
     return (
         <FormControl
