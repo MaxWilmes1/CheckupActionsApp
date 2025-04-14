@@ -21,9 +21,10 @@ import {Status} from "../../../../models/checkupAction/Status.ts";
 type Props = {
     action: CheckupAction;
     onChange: (event: SelectChangeEvent | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    isDetailsPage: boolean;
 };
 
-export default function StateManagement(props: Props) {
+export default function StateManagement(props: Readonly<Props>) {
     const navigate = useNavigate();
     const params = useParams();
     const theme = useTheme();
@@ -101,47 +102,50 @@ export default function StateManagement(props: Props) {
             }}
         >
             {/* Status & Moves */}
-            <Box sx={{display: "flex", gap: 1.5, alignItems: "flex-start"}}>
-                {/* Status Info */}
-                <Box sx={{display: "flex", alignItems: "center", gap: 1}}>
-                    <Typography variant="body2" color="text.secondary">Status:</Typography>
-                    <Chip
-                        label={props.action?.status || "No status"}
-                        size="small"
-                        color={getStatusColor(props.action.status)}
-                        variant="outlined"
-                    />
+            {
+                props.isDetailsPage &&
+                <Box sx={{display: "flex", gap: 1.5, alignItems: "flex-start"}}>
+                    {/* Status Info */}
+                    <Box sx={{display: "flex", alignItems: "center", gap: 1}}>
+                        <Typography variant="body2" color="text.secondary">Status:</Typography>
+                        <Chip
+                            label={props.action?.status || "No status"}
+                            size="small"
+                            color={getStatusColor(props.action.status)}
+                            variant="outlined"
+                        />
+                    </Box>
+
+                    <Divider orientation="vertical" flexItem/>
+
+                    {/* Status Transition Chips */}
+                    <Stack spacing={0.5}>
+                        {statusTransitions[props.action.status]?.map((targetStatus) => (
+                            <Chip
+                                key={targetStatus}
+                                label={targetStatus.toLowerCase().replace("_", " ")}
+                                variant="outlined"
+                                size="small"
+                                clickable
+                                onClick={() => handleStatusChipClick(targetStatus)}
+                                color={getTransitionColor(targetStatus)}
+                                sx={{textTransform: "capitalize", minWidth: 100}}
+                            />
+                        ))}
+                        {props.action.status !== "CANCELLED" && (
+                            <Chip
+                                label="cancelled"
+                                variant="outlined"
+                                size="small"
+                                clickable
+                                onClick={() => handleStatusChipClick("CANCELLED")}
+                                color="error"
+                                sx={{minWidth: 100}}
+                            />
+                        )}
+                    </Stack>
                 </Box>
-
-                <Divider orientation="vertical" flexItem/>
-
-                {/* Status Transition Chips */}
-                <Stack spacing={0.5}>
-                    {statusTransitions[props.action.status]?.map((targetStatus) => (
-                        <Chip
-                            key={targetStatus}
-                            label={targetStatus.toLowerCase().replace("_", " ")}
-                            variant="outlined"
-                            size="small"
-                            clickable
-                            onClick={() => handleStatusChipClick(targetStatus)}
-                            color={getTransitionColor(targetStatus)}
-                            sx={{textTransform: "capitalize", minWidth: 100}}
-                        />
-                    ))}
-                    {props.action.status !== "CANCELLED" && (
-                        <Chip
-                            label="cancelled"
-                            variant="outlined"
-                            size="small"
-                            clickable
-                            onClick={() => handleStatusChipClick("CANCELLED")}
-                            color="error"
-                            sx={{minWidth: 100}}
-                        />
-                    )}
-                </Stack>
-            </Box>
+            }
 
             {/* Save & Delete */}
             <Stack direction="row" spacing={1} alignItems="center">
@@ -150,7 +154,7 @@ export default function StateManagement(props: Props) {
                         <SaveIcon fontSize="medium"/>
                     </IconButton>
                 </Tooltip>
-                {params.id && (
+                {props.isDetailsPage && (
                     <Tooltip title="Delete">
                         <IconButton color="error" size="medium" onClick={handleDelete}>
                             <DeleteIcon fontSize="medium"/>

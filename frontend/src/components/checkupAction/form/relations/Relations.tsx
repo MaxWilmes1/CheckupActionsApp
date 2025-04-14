@@ -1,8 +1,8 @@
 import {ChangeEvent} from 'react';
 import {Box, SelectChangeEvent, Typography} from "@mui/material";
-import ManagedDataForm from "./components/ManagedDataForm.tsx";
-import {ManagedData} from "../../../models/managed_data/ManagedData.ts";
-import {CheckupAction} from "../../../models/checkupAction/CheckupAction.ts";
+import ManagedDataForm from "../components/ManagedDataForm.tsx";
+import {ManagedData} from "../../../../models/managed_data/ManagedData.ts";
+import {CheckupAction} from "../../../../models/checkupAction/CheckupAction.ts";
 
 type Props = {
     action: CheckupAction;
@@ -10,7 +10,7 @@ type Props = {
     onChange: (event: SelectChangeEvent | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
-export default function Relations(props: Props) {
+export default function Relations(props: Readonly<Props>) {
     const arts = props.managedData.filter(o => o.type === "ART")
     const adus = props.managedData.filter(o => o.type === "ADU")
     const applications = props.managedData.filter(o => o.type === "APPLICATION")

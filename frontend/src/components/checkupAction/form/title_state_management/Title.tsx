@@ -10,7 +10,7 @@ type Props = {
     onChange: (event: SelectChangeEvent | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
-export default function Title(props: Props) {
+export default function Title(props: Readonly<Props>) {
     const titles = props.managedData.filter(o => o.type === "TITLE")
     const subtitles = props.managedData.filter(o => o.type === "SUBTITLE")
 

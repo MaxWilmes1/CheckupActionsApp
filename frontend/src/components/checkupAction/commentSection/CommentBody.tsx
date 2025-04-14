@@ -10,7 +10,7 @@ type Props = {
     onChange: (event: SelectChangeEvent | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
-export default function CommentBody(props: Props) {
+export default function CommentBody(props: Readonly<Props>) {
     return (
         <Box
             sx={{
@@ -23,8 +23,8 @@ export default function CommentBody(props: Props) {
                 p: 2
             }}
         >
-            <Box sx={{display: 'flex', alignItems: 'center', mb: 2}}>
-                <IconButton onClick={props.onClose} sx={{mr: 2}}>
+            <Box sx={{display: 'flex', alignItems: 'center'}}>
+                <IconButton onClick={props.onClose}>
                     <ChevronRightIcon/>
                 </IconButton>
                 <Typography variant="h6">

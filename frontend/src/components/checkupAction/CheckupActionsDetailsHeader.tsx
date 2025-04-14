@@ -6,7 +6,7 @@ type Props = {
     action: CheckupAction
 };
 
-export default function CheckupActionsDetailsHeader(props: Props) {
+export default function CheckupActionsDetailsHeader(props: Readonly<Props>) {
     return (
         <Box>
             <Box sx={{
