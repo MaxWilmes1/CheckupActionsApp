@@ -23,9 +23,9 @@ export default function CheckupActionForm(props: Readonly<Props>) {
     return (
         <Box sx={{display: "flex", flexDirection: "column", padding: 0.5}}>
             <form onSubmit={props.onSubmit} style={{display: "flex", flexDirection: "row"}}>
-                <Box sx={
-                    {width: props.isDetailsPage ? "97%" : "100%",}
-                }
+                <Box sx={{
+                    width: props.isDetailsPage ? "97%" : "100%", mr: 1
+                }}
                 >
                     <TitleAndStateManagement action={props.action} managedData={props.managedData}
                                              onChange={props.onChange} isDetailsPage={props.isDetailsPage}/>
@@ -47,7 +47,7 @@ export default function CheckupActionForm(props: Readonly<Props>) {
                             display: 'flex',
                             alignItems: 'flex-start',
                             overflow: 'hidden',
-                            transition: 'width 0.3s ease-in-out',
+                            transition: 'width 0.15s ease-in-out',
                         }}
                     >
                         <CommentDrawer
