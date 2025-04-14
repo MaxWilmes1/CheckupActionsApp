@@ -53,5 +53,4 @@ public class CheckupActionController {
     public CheckupAction deleteComment(@PathVariable String actionId, @PathVariable String commentId) {
         return checkupActionService.deleteComment(actionId, commentId);
     }
-
 }
