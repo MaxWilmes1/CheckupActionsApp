@@ -10,7 +10,7 @@ type Props = {
     onChange: (event: SelectChangeEvent | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
-export default function CommentBody(props: Props) {
+export default function CommentBody(props: Readonly<Props>) {
     return (
         <Box
             sx={{

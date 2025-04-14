@@ -37,7 +37,7 @@ function EditToolbar({onAddClick}: Readonly<{ onAddClick: () => void }>) {
 }
 
 // -------------------- Component --------------------
-export default function DataForm(props: Props) {
+export default function DataForm(props: Readonly<Props>) {
     const [data, setData] = useState<ManagedData[]>([]);
     const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
     const type = props.type

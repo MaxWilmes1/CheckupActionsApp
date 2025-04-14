@@ -5,7 +5,7 @@ type Props = {
     onOpen: () => void;
 };
 
-export default function CommentHeader(props: Props) {
+export default function CommentHeader(props: Readonly<Props>) {
     return (
         <IconButton
             onClick={props.onOpen}

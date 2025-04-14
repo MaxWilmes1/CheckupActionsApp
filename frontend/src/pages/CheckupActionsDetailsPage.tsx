@@ -41,6 +41,7 @@ export default function CheckupActionsDetailsPage() {
                 managedData={managedData}
                 onChange={handleChange}
                 onSubmit={handleSubmit}
+                isDetailsPage={true}
             />
         </Box>
     );

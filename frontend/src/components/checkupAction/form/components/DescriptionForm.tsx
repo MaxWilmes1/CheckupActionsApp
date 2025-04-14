@@ -7,7 +7,7 @@ type Props = {
     onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-export default function DescriptionForm(props: Props) {
+export default function DescriptionForm(props: Readonly<Props>) {
     return (
         <Box sx={{marginTop: 0.5}}>
             <TextField

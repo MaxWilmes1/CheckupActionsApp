@@ -10,15 +10,15 @@ type Props = {
     action: CheckupAction;
     managedData: ManagedData[];
     onChange: (event: SelectChangeEvent | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    isDetailsPage: boolean;
 };
 
-export default function TitleAndStateManagement(props: Props) {
+export default function TitleAndStateManagement(props: Readonly<Props>) {
     return (
-        <Box >
+        <Box>
             <Box sx={{marginBottom: 1}}>
-                <StateManagement action={props.action} onChange={props.onChange}/>
+                <StateManagement action={props.action} onChange={props.onChange} isDetailsPage={props.isDetailsPage}/>
             </Box>
-
             <Divider/>
             <Box sx={{width: "50%", marginTop: 2}}>
                 <Title action={props.action} managedData={props.managedData} onChange={props.onChange}/>

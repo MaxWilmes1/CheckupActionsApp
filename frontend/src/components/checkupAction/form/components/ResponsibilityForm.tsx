@@ -7,7 +7,7 @@ type Props = {
     onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-export default function ResponsibilityForm(props: Props) {
+export default function ResponsibilityForm(props: Readonly<Props>) {
     return (
         <TextField
             name={"responsibility"}
