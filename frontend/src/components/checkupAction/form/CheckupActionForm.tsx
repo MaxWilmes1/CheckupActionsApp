@@ -52,13 +52,13 @@ export default function CheckupActionForm(props: Readonly<Props>) {
                 >
                     <TitleAndStateManagement action={props.action} managedData={props.managedData}
                                              onChange={props.onChange} isDetailsPage={props.isDetailsPage}/>
-                    <Divider sx={{marginBottom: 1}}/>
+                    <Divider sx={{marginBottom: 1, borderBottomWidth: 1, borderColor: "primary.main"}}/>
                     <Relations action={props.action} managedData={props.managedData}
                                onChange={props.onChange}/>
-                    <Divider sx={{marginBottom: 1}}/>
+                    <Divider sx={{marginBottom: 1, borderBottomWidth: 1, borderColor: "primary.main"}}/>
 
                     <Assignment action={props.action} managedData={props.managedData} onChange={props.onChange}/>
-                    <Divider sx={{marginBottom: 1}}/>
+                    <Divider sx={{marginBottom: 1, borderBottomWidth: 1, borderColor: "primary.main"}}/>
                     <DescriptionForm action={props.action} onChange={props.onChange}/>
                 </Box>
                 {

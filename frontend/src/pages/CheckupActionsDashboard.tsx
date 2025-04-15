@@ -59,7 +59,7 @@ export default function CheckupActionsDashboard() {
         {
             field: "actions",
             headerName: "Actions",
-            width: 90,
+            width: 110,
             sortable: false,
             filterable: false,
             renderCell: (params) => (
@@ -78,16 +78,16 @@ export default function CheckupActionsDashboard() {
                 </AdminOnly>
             )
         },
-        {field: "status", headerName: "Status", width: 70},
-        {field: "pi", headerName: "PI", width: 70},
-        {field: "dateCreated", headerName: "Created", width: 130},
-        {field: "dateLastEdit", headerName: "Last Edit", width: 130},
-        {field: "title", headerName: "Title", width: 150},
-        {field: "subtitle", headerName: "Sub-Title", width: 150},
-        {field: "art", headerName: "ART", width: 130},
-        {field: "adu", headerName: "ADU", width: 130},
-        {field: "application", headerName: "App", width: 150},
-        {field: "cinum", headerName: "CINUM", width: 125},
+        {field: "status", headerName: "Status", width: 90},
+        {field: "pi", headerName: "PI", width: 90},
+        {field: "dateCreated", headerName: "Created", width: 150},
+        {field: "dateLastEdit", headerName: "Last Edit", width: 150},
+        {field: "title", headerName: "Title", width: 170},
+        {field: "subtitle", headerName: "Sub-Title", width: 170},
+        {field: "art", headerName: "ART", width: 150},
+        {field: "adu", headerName: "ADU", width: 150},
+        {field: "application", headerName: "App", width: 170},
+        {field: "cinum", headerName: "CINUM", width: 140},
     ];
 
     return (

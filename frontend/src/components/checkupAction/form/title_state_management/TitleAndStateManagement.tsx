@@ -19,7 +19,7 @@ export default function TitleAndStateManagement(props: Readonly<Props>) {
             <Box sx={{marginBottom: "1rem"}}>
                 <StateManagement action={props.action} onChange={props.onChange} isDetailsPage={props.isDetailsPage}/>
             </Box>
-            <Divider/>
+            <Divider sx={{marginBottom: 1, borderBottomWidth: 1, borderColor: "primary.main"}}/>
             <Box sx={{width: "50%", marginTop: "1rem", marginBottom: "1rem"}}>
                 <Title action={props.action} managedData={props.managedData} onChange={props.onChange}/>
             </Box>
