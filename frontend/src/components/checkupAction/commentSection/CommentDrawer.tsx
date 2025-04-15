@@ -20,7 +20,6 @@ export default function CommentDrawer(props: Readonly<Props>) {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center',
                 height: '100%',
                 overflow: 'hidden',
             }}

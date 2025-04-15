@@ -14,7 +14,6 @@ export default function CommentBody(props: Readonly<Props>) {
     return (
         <Box
             sx={{
-                boxShadow: 5,
                 borderLeft: '1px solid #ddd',
                 display: 'flex',
                 flexDirection: 'column',
