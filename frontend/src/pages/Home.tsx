@@ -8,8 +8,8 @@ import {
 import HasRole from "../utils/components/HasRole.tsx";
 import {DragDropContext, DropResult} from "@hello-pangea/dnd";
 import {Status} from "../models/checkupAction/Status.ts";
-import PiInputFilter from "../components/homeStatusColumns/components/PiInputFilter.tsx";
-import StatusDashboard from "../components/homeStatusColumns/StatusDashboard.tsx";
+import PiInputFilter from "../components/homeStatusDashboard/components/PiInputFilter.tsx";
+import StatusDashboard from "../components/homeStatusDashboard/StatusDashboard.tsx";
 
 export default function Home() {
     const [data, setData] = useState<CheckupAction[]>([]);

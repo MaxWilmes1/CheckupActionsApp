@@ -1,5 +1,5 @@
 import {Box, Divider} from "@mui/material";
-import StatusColumn from "./components/StatusColumn.tsx";
+import StatusDashboardArea from "./components/StatusDashboardArea.tsx";
 import {CheckupAction} from "../../models/checkupAction/CheckupAction.ts";
 
 type Props = {
@@ -15,7 +15,7 @@ export default function StatusDashboard(props: Readonly<Props>) {
         <Box>
             <Box sx={{display: "flex", gap: "2rem"}}>
                 {statuses.map(status => (
-                    <StatusColumn
+                    <StatusDashboardArea
                         key={status}
                         status={status}
                         data={props.data.filter(o => o.status === status && o.pi === props.selectedPi)}
@@ -25,7 +25,7 @@ export default function StatusDashboard(props: Readonly<Props>) {
             <Divider sx={{mt: 2, mb: 2, borderBottomWidth: 2}}/>
             <Box sx={{display: "flex", gap: "2rem"}}>
                 {reactiveStatus.map(status => (
-                    <StatusColumn
+                    <StatusDashboardArea
                         key={status}
                         status={status}
                         data={props.data.filter(o => o.status === status && o.pi === props.selectedPi)}
