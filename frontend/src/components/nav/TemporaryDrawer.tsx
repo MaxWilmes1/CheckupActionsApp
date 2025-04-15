@@ -11,6 +11,7 @@ import {NavLink} from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 type Props = {
     open: boolean;
@@ -39,6 +40,14 @@ export default function TemporaryDrawer({open, setDrawerOpen}: Readonly<Props>) 
                                 <DashboardIcon />
                             </ListItemIcon>
                             <ListItemText>Checkup Actions Dashboard</ListItemText>
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                        <ListItemButton component={NavLink} to="/checkup-actions/add">
+                            <ListItemIcon>
+                                <AddCircleOutlineIcon />
+                            </ListItemIcon>
+                            <ListItemText>New Checkup Action</ListItemText>
                         </ListItemButton>
                     </ListItem>
                 </List>
