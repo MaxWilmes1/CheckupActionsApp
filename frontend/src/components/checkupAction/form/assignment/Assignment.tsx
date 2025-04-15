@@ -16,7 +16,7 @@ export default function Assignment(props: Readonly<Props>) {
 
     return (
         <Box>
-            <Typography variant="subtitle1" sx={{marginBottom: 0.5}}>
+            <Typography variant="subtitle1" sx={{marginBottom: "1rem"}}>
                 Assignment
             </Typography>
             <Box
@@ -25,7 +25,7 @@ export default function Assignment(props: Readonly<Props>) {
                     flexDirection: "column",
                     width: "50%",
                     borderRadius: 2,
-                    marginBottom: 2,
+                    marginBottom: "2rem",
                 }}
             >
                 <ManagedDataForm

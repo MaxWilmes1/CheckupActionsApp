@@ -16,11 +16,11 @@ type Props = {
 export default function TitleAndStateManagement(props: Readonly<Props>) {
     return (
         <Box>
-            <Box sx={{marginBottom: 1}}>
+            <Box sx={{marginBottom: "1rem"}}>
                 <StateManagement action={props.action} onChange={props.onChange} isDetailsPage={props.isDetailsPage}/>
             </Box>
             <Divider/>
-            <Box sx={{width: "50%", marginTop: 2}}>
+            <Box sx={{width: "50%", marginTop: "1rem", marginBottom: "1rem"}}>
                 <Title action={props.action} managedData={props.managedData} onChange={props.onChange}/>
             </Box>
         </Box>

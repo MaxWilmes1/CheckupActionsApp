@@ -68,7 +68,6 @@ export default function CommentListForm(props: Readonly<Props>) {
                     display: "flex",
                     flexDirection: "column",
                     p: 2,
-                    backgroundColor: '#fff',
                     border: '1px solid #e0e0e0',
                     borderRadius: 3,
                     mb: 0.5

@@ -11,12 +11,10 @@ export default function CommentHeader(props: Readonly<Props>) {
             <Box
                 sx={{
                     display: 'flex',
+                    height: '100%',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    backgroundColor: 'white',
                     boxShadow: 1,
-                    m: 1,
-                    p: 0,
                 }}
             >
                 <IconButton onClick={props.onOpen}>
@@ -27,11 +25,10 @@ export default function CommentHeader(props: Readonly<Props>) {
                     sx={{
                         mt: 9,
                         transform: 'rotate(90deg)',
-                        whiteSpace: 'nowrap',
                         fontSize: '1.2rem',
                         letterSpacing: '0.4em',
-                        color: 'darkgray',
                         fontWeight: 'bold',
+                        color: 'gray',
                     }}
                 >
                     Comments

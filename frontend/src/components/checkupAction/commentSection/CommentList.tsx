@@ -12,7 +12,13 @@ type Props = {
 export default function CommentList(props: Readonly<Props>) {
 
     return (
-        <List sx={{display: 'flex', flexDirection: 'column', gap: 2}}>
+        <List sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            padding: "1rem"
+        }}
+        >
             <NewCommentForm action={props.action} onChange={props.onChange}/>
             <Divider/>
             <CommentListForm action={props.action} onChange={props.onChange}/>

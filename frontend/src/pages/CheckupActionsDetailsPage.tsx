@@ -34,7 +34,13 @@ export default function CheckupActionsDetailsPage() {
     }
 
     return (
-        <Box sx={{display: "flex", flexDirection: "column", padding: 2}}>
+        <Box sx={{
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            p: 2
+        }}
+        >
             <CheckupActionsDetailsHeader action={action}/>
             <CheckupActionForm
                 action={action}

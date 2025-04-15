@@ -19,14 +19,9 @@ export default function CommentDrawer(props: Readonly<Props>) {
         <Box
             sx={{
                 display: 'flex',
-                justifyContent: 'center',
+                flexDirection: 'column',
                 height: '100%',
-                width: '100%',
-                backgroundColor: '#fafafa',
-                overflowY: 'auto',
-                overflowX: 'hidden',
-                maxHeight: '100vh',
-                boxSizing: 'border-box'
+                overflow: 'hidden',
             }}
         >
             {!props.open && (

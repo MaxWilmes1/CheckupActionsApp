@@ -21,10 +21,33 @@ export default function CheckupActionForm(props: Readonly<Props>) {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
     return (
-        <Box sx={{display: "flex", flexDirection: "column", padding: 0.5}}>
-            <form onSubmit={props.onSubmit} style={{display: "flex", flexDirection: "row"}}>
+        <Box sx={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+            fontSize: {
+                xs: '0.8rem',
+                sm: '0.9rem',
+                md: '1rem',
+                lg: '1.1rem',
+                xl: '1.2rem',
+            },
+            p: {
+                xs: 1,
+                sm: 1.5,
+                md: 2,
+                lg: 2.5,
+            }
+        }}
+        >
+            <form
+                onSubmit={props.onSubmit}
+                style={{display: "flex", flexDirection: "row", height: "100%", width: "100%"}}>
                 <Box sx={{
-                    width: props.isDetailsPage ? "97%" : "100%", mr: 1
+                    width: props.isDetailsPage
+                        ? "97%"
+                        : "100%",
+                    mr: "1%"
                 }}
                 >
                     <TitleAndStateManagement action={props.action} managedData={props.managedData}
@@ -40,23 +63,23 @@ export default function CheckupActionForm(props: Readonly<Props>) {
                 </Box>
                 {
                     props.isDetailsPage && <>
-                        <Divider orientation={"vertical"} flexItem/><Box
-                        sx={{
-                            width: isDrawerOpen ? "35%" : "3%",
-                            backgroundColor: 'lightgray',
-                            display: 'flex',
-                            alignItems: 'flex-start',
-                            overflow: 'hidden',
-                            transition: 'width 0.15s ease-in-out',
-                        }}
-                    >
-                        <CommentDrawer
-                            open={isDrawerOpen}
-                            onOpen={() => setIsDrawerOpen(true)}
-                            onClose={() => setIsDrawerOpen(false)}
-                            action={props.action}
-                            onChange={props.onChange}/>
-                    </Box>
+                        <Divider orientation={"vertical"} flexItem/>
+                        <Box
+                            sx={{
+                                width: isDrawerOpen ? "50%" : "3%",
+                                display: 'flex',
+                                overflow: 'hidden',
+                                alignItems: 'flex-start',
+                                transition: 'width 0.15s ease-in-out'
+                            }}
+                        >
+                            <CommentDrawer
+                                open={isDrawerOpen}
+                                onOpen={() => setIsDrawerOpen(true)}
+                                onClose={() => setIsDrawerOpen(false)}
+                                action={props.action}
+                                onChange={props.onChange}/>
+                        </Box>
                     </>
                 }
             </form>
