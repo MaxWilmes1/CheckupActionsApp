@@ -1,5 +1,5 @@
 import {Box, Card, CardContent, Typography, Stack, Divider} from "@mui/material";
-import {CheckupAction} from "../../models/checkupAction/CheckupAction.ts";
+import {CheckupAction} from "../../../models/checkupAction/CheckupAction.ts";
 import {useNavigate} from "react-router-dom";
 import {useTheme} from "@mui/material/styles";
 import {Droppable, Draggable} from "@hello-pangea/dnd";
