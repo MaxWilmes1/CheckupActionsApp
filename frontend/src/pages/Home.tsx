@@ -10,7 +10,10 @@ import Divider from "@mui/material/Divider";
 export default function Home() {
     const [data, setData] = useState<CheckupAction[]>([]);
     const managedData = useManagedData();
-    const [selectedPi, setSelectedPi] = useState<string>("");
+    const [selectedPi, setSelectedPi] = useState<string>(() => {
+        return localStorage.getItem("selectedPi") ?? "";
+    });
+
 
     useEffect(() => {
         fetchData();
@@ -23,8 +26,10 @@ export default function Home() {
     };
 
     const handlePIChange = (event: SelectChangeEvent) => {
-        setSelectedPi(event.target.value)
-    }
+        setSelectedPi(event.target.value);
+        localStorage.setItem("selectedPi", event.target.value);
+    };
+
 
     return (
         <HasRole>
@@ -73,6 +78,22 @@ export default function Home() {
                     }}
                 >
                     {["OPEN", "PLANNED", "IN_PROGRESS", "DONE", "CANCELLED"].map(status => (
+                        <StatusColumn
+                            key={status}
+                            status={status}
+                            data={data.filter(o => o.status === status && o.pi === selectedPi)}/>
+                    ))}
+                </Box>
+                <Divider
+                    sx={{mt: 2, mb: 2, borderBottomWidth: 2}}
+                />
+                <Box
+                    sx={{
+                        display: "flex",
+                        gap: "2rem",
+                    }}
+                >
+                    {["REACTIVE"].map(status => (
                         <StatusColumn
                             key={status}
                             status={status}

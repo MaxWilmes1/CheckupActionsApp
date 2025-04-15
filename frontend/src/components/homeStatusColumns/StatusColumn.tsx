@@ -2,21 +2,25 @@ import {Box, Card, CardContent, Typography, Stack} from "@mui/material";
 import {CheckupAction} from "../../models/checkupAction/CheckupAction.ts";
 import Divider from "@mui/material/Divider";
 import {useNavigate} from "react-router-dom";
+import {useTheme} from "@mui/material/styles";
 
 type Props = {
     status: string;
     data: CheckupAction[];
 };
 
-const statusColors: Record<string, string> = {
-    OPEN: "#fff3cd",
-    PLANNED: "#d1ecf1",
-    IN_PROGRESS: "#cce5ff",
-    DONE: "#d4edda",
-    CANCELLED: "#f8d7da"
-};
-
 export default function StatusColumn(props: Readonly<Props>) {
+    const theme = useTheme();
+
+    const statusColors: Record<string, string> = {
+        OPEN: theme.palette.info.main,
+        PLANNED: theme.palette.warning.main,
+        IN_PROGRESS: theme.palette.secondary.main,
+        DONE: theme.palette.success.main,
+        CANCELLED: theme.palette.error.main,
+        REACTIVE: theme.palette.secondary.main,
+    };
+
     const navigate = useNavigate();
 
     const handleClick = (id: string) => {
@@ -27,7 +31,7 @@ export default function StatusColumn(props: Readonly<Props>) {
         <Box sx={{display: "flex", flexDirection: "column", width: "100%"}}>
             <Card
                 variant="outlined"
-                sx={{borderRadius: 3, bgcolor: "#fafafa", minHeight: 600}}
+                sx={{borderRadius: 3, bgcolor: "#fafafa", minHeight: 400}}
             >
                 <CardContent>
                     <Typography variant="h6" gutterBottom textAlign="center">
