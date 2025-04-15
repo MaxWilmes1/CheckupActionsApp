@@ -17,8 +17,8 @@ export default function Relations(props: Readonly<Props>) {
     const cinums = props.managedData.filter(o => o.type === "CINUM")
 
     return (
-        <Box sx={{display: "flex", flexDirection: "column", marginBottom: 0.5}}>
-            <Typography variant="subtitle1" sx={{marginBottom: 0.5}}>
+        <Box sx={{display: "flex", flexDirection: "column", marginBottom: "1rem"}}>
+            <Typography variant="subtitle1" sx={{marginBottom: "1rem"}}>
                 Relations
             </Typography>
             <Box sx={{display: "flex", flexDirection: "row"}}>

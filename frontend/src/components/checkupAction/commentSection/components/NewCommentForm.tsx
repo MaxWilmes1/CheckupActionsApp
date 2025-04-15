@@ -68,7 +68,7 @@ export default function NewCommentForm(props: Readonly<Props>) {
                         onChange={handleCommentChange}
                         required={true}
                     />
-                    <Box sx={{display: "flex", flexDirection: "row", justifyContent:"flex-end" ,gap: 1}}>
+                    <Box sx={{display: "flex", flexDirection: "row", justifyContent: "flex-end", gap: 1}}>
                         <Button
                             variant={"contained"}
                             color={"error"}

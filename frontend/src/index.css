@@ -3,4 +3,9 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Roboto", serif;
+    font-size: 1rem;
+}
+
+html, body, #root {
+    height: 100%;
 }

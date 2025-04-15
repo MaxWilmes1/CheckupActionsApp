@@ -5,7 +5,7 @@ import CommentList from "./CommentList.tsx";
 import {ChangeEvent} from "react";
 
 type Props = {
-    action: CheckupAction
+    action: CheckupAction;
     onClose: () => void;
     onChange: (event: SelectChangeEvent | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
@@ -14,13 +14,11 @@ export default function CommentBody(props: Readonly<Props>) {
     return (
         <Box
             sx={{
-                width: "100%",
-                height: '100%',
                 boxShadow: 5,
                 borderLeft: '1px solid #ddd',
-                backgroundColor: '#fafafa',
-                overflowY: 'auto',
-                p: 2
+                display: 'flex',
+                flexDirection: 'column',
+                overflowY: 'auto'
             }}
         >
             <Box sx={{display: 'flex', alignItems: 'center'}}>
@@ -32,8 +30,11 @@ export default function CommentBody(props: Readonly<Props>) {
                 </Typography>
             </Box>
 
-            <Divider sx={{mb: 2}}/>
-            <CommentList action={props.action} onChange={props.onChange}/>
+            <Divider/>
+
+            <Box>
+                <CommentList action={props.action} onChange={props.onChange}/>
+            </Box>
         </Box>
     );
 }

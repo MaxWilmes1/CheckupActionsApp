@@ -14,23 +14,23 @@ export default function CheckupActionsDetailsHeader(props: Readonly<Props>) {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
-                marginBottom: 1
+                marginBottom: "1rem",
             }}>
                 <Box sx={{
                     display: "flex",
                     flexDirection: "column",
                 }}>
-                    <Typography variant="h6" component="h1" color="textPrimary"
-                                sx={{marginBottom: 0.5, fontWeight: "bold"}}>
+                    <Typography variant="h5" component="h1" color="textPrimary"
+                                sx={{fontWeight: "bold"}}>
                         Edit Checkup Action
                     </Typography>
-                    <Typography variant="caption" component="h1" color="textPrimary">
+                    <Typography variant="subtitle2" component="h1" color="textPrimary">
                         Action ID: {props.action.id}
                     </Typography>
                 </Box>
                 <Box sx={{
                     display: "flex",
-                    paddingRight: 2,
+                    paddingRight: "1rem",
                     flexDirection: "column",
                     alignItems: "flex-end",
                 }}>

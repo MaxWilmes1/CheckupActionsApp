@@ -25,7 +25,7 @@ export default function ManagedDataForm(props: Readonly<Props>) {
             required
             sx={{
                 borderRadius: 1,
-                marginBottom: 1.5
+                marginBottom: "1rem",
             }}
         >
             <InputLabel>{label}</InputLabel>

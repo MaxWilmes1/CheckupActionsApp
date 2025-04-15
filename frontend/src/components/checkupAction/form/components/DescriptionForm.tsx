@@ -9,7 +9,7 @@ type Props = {
 
 export default function DescriptionForm(props: Readonly<Props>) {
     return (
-        <Box sx={{marginTop: 0.5}}>
+        <Box sx={{marginTop: "1rem", marginBottom: "1rem"}}>
             <TextField
                 name={"description"}
                 value={props.action.description}
@@ -17,7 +17,7 @@ export default function DescriptionForm(props: Readonly<Props>) {
                 label="Description"
                 multiline
                 fullWidth
-                rows={5}
+                rows={10}
                 placeholder="Enter description"
                 onChange={props.onChange}
                 required={true}
