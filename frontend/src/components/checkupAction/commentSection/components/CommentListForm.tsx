@@ -105,64 +105,63 @@ export default function CommentListForm(props: Readonly<Props>) {
                         )}
                 </Typography>
                 <Divider sx={{my: 1}}/>
-                {
-                    <AdminOnly>
+                <AdminOnly>
+                    {
                         editingCommentId !== o.id
-                        ? <Box
-                        sx={{display: "flex", flexDirection: "row", justifyContent: "flex-end", gap: 1}}
-                    >
-                        <Button
-                            color={"primary"}
-                            variant={"contained"}
-                            size={"small"}
-                            onClick={() => handleEditClick(o.id, o.comment)}
-                            sx={{
-                                textTransform: "none"
-                            }}
-                        >
-                            edit
-                        </Button>
-                        <Button
-                            color={"error"}
-                            variant={"contained"}
-                            size={"small"}
-                            onClick={() => handleDeleteCommentClick(o.id)}
-                            sx={{
-                                textTransform: "none"
-                            }}
-                        >
-                            delete
-                        </Button>
-                    </Box>
-                        : <Box
-                        sx={{display: "flex", flexDirection: "row", justifyContent: "flex-end", gap: 1}}
-                    >
-                        <Button
-                            color={"error"}
-                            variant={"contained"}
-                            size={"small"}
-                            onClick={() => handleCancelEditClick()}
-                            sx={{
-                                textTransform: "none"
-                            }}
-                        >
-                            cancel
-                        </Button>
-                        <Button
-                            color={"success"}
-                            variant={"contained"}
-                            size={"small"}
-                            onClick={() => handleUpdate(o.id)}
-                            sx={{
-                                textTransform: "none"
-                            }}
-                        >
-                            save
-                        </Button>
-                    </Box>
-                    </AdminOnly>
-
-                }
+                            ? <Box
+                                sx={{display: "flex", flexDirection: "row", justifyContent: "flex-end", gap: 1}}
+                            >
+                                <Button
+                                    color={"primary"}
+                                    variant={"contained"}
+                                    size={"small"}
+                                    onClick={() => handleEditClick(o.id, o.comment)}
+                                    sx={{
+                                        textTransform: "none"
+                                    }}
+                                >
+                                    edit
+                                </Button>
+                                <Button
+                                    color={"error"}
+                                    variant={"contained"}
+                                    size={"small"}
+                                    onClick={() => handleDeleteCommentClick(o.id)}
+                                    sx={{
+                                        textTransform: "none"
+                                    }}
+                                >
+                                    delete
+                                </Button>
+                            </Box>
+                            : <Box
+                                sx={{display: "flex", flexDirection: "row", justifyContent: "flex-end", gap: 1}}
+                            >
+                                <Button
+                                    color={"error"}
+                                    variant={"contained"}
+                                    size={"small"}
+                                    onClick={() => handleCancelEditClick()}
+                                    sx={{
+                                        textTransform: "none"
+                                    }}
+                                >
+                                    cancel
+                                </Button>
+                                <Button
+                                    color={"success"}
+                                    variant={"contained"}
+                                    size={"small"}
+                                    onClick={() => handleUpdate(o.id)}
+                                    sx={{
+                                        textTransform: "none"
+                                    }}
+                                >
+                                    save
+                                </Button>
+                            </Box>
+                    }
+                </AdminOnly>
             </Paper>
         ))
     );

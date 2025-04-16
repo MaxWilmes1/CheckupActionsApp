@@ -1,6 +1,8 @@
 import {
     Box,
+    Button,
     Chip,
+    Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
     Divider,
     IconButton,
     SelectChangeEvent,
@@ -15,7 +17,7 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
 import {CheckupAction} from "../../../../models/checkupAction/CheckupAction.ts";
-import {ChangeEvent} from "react";
+import {ChangeEvent, useState} from "react";
 import {Status} from "../../../../models/checkupAction/Status.ts";
 import AdminOnly from "../../../../utils/components/AdminOnly.tsx";
 
@@ -30,6 +32,15 @@ export default function StateManagement(props: Readonly<Props>) {
     const params = useParams();
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
+    const handleOpenDeleteDialog = () => {
+        setOpenDeleteDialog(true);
+    };
+
+    const handleCloseDeleteDialog = () => {
+        setOpenDeleteDialog(false);
+    };
 
     const statusTransitions: Record<Status, Status[]> = {
         OPEN: ["PLANNED"],
@@ -121,7 +132,6 @@ export default function StateManagement(props: Readonly<Props>) {
 
                     {/* Status Transition Chips */}
                     <AdminOnly>
-
                         <Stack spacing={0.5}>
                             {statusTransitions[props.action.status]?.map((targetStatus) => (
                                 <Chip
@@ -162,10 +172,31 @@ export default function StateManagement(props: Readonly<Props>) {
                     props.isDetailsPage && (
                         <AdminOnly>
                             <Tooltip title="Delete">
-                                <IconButton color="error" size="medium" onClick={handleDelete}>
+                                <IconButton color="error" size="medium" onClick={handleOpenDeleteDialog}>
                                     <DeleteIcon fontSize="medium"/>
                                 </IconButton>
                             </Tooltip>
+                            <Dialog
+                                open={openDeleteDialog}
+                                onClose={handleCloseDeleteDialog}
+                                aria-labelledby="alert-dialog-title"
+                                aria-describedby="alert-dialog-description"
+                            >
+                                <DialogTitle id="alert-dialog-title">
+                                    {"Delete Checkup Action"}
+                                </DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText id="alert-dialog-description">
+                                        Are you sure you want to delete this item? This action cannot be undone.
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleCloseDeleteDialog}>cancel</Button>
+                                    <Button variant={"contained"} color={"error"} onClick={handleDelete} autoFocus>
+                                        delete
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
                         </AdminOnly>
                     )
                 }
