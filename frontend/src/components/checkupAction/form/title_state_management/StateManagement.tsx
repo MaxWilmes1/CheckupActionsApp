@@ -1,8 +1,6 @@
 import {
     Box,
-    Button,
     Chip,
-    Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
     Divider,
     IconButton,
     SelectChangeEvent,
@@ -20,6 +18,7 @@ import {CheckupAction} from "../../../../models/checkupAction/CheckupAction.ts";
 import {ChangeEvent, useState} from "react";
 import {Status} from "../../../../models/checkupAction/Status.ts";
 import AdminOnly from "../../../../utils/components/AdminOnly.tsx";
+import DeleteDialog from "../../../../utils/components/DeleteDialog.tsx";
 
 type Props = {
     action: CheckupAction;
@@ -67,7 +66,10 @@ export default function StateManagement(props: Readonly<Props>) {
 
     const handleDelete = () => {
         axios.delete(`/api/checkup-actions/${params.id}`)
-            .then(() => navigate("/checkup-actions"))
+            .then(() => {
+                    navigate("/checkup-actions")
+                }
+            )
             .catch(error => console.error("Error deleting item", error));
     };
 
@@ -176,27 +178,12 @@ export default function StateManagement(props: Readonly<Props>) {
                                     <DeleteIcon fontSize="medium"/>
                                 </IconButton>
                             </Tooltip>
-                            <Dialog
+                            <DeleteDialog
+                                item={"Checkup Action"}
                                 open={openDeleteDialog}
-                                onClose={handleCloseDeleteDialog}
-                                aria-labelledby="alert-dialog-title"
-                                aria-describedby="alert-dialog-description"
-                            >
-                                <DialogTitle id="alert-dialog-title">
-                                    {"Delete Checkup Action"}
-                                </DialogTitle>
-                                <DialogContent>
-                                    <DialogContentText id="alert-dialog-description">
-                                        Are you sure you want to delete this item? This action cannot be undone.
-                                    </DialogContentText>
-                                </DialogContent>
-                                <DialogActions>
-                                    <Button onClick={handleCloseDeleteDialog}>cancel</Button>
-                                    <Button variant={"contained"} color={"error"} onClick={handleDelete} autoFocus>
-                                        delete
-                                    </Button>
-                                </DialogActions>
-                            </Dialog>
+                                handleClose={handleCloseDeleteDialog}
+                                handleDelete={handleDelete}
+                            />
                         </AdminOnly>
                     )
                 }

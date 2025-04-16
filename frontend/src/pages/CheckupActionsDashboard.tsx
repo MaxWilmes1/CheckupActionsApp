@@ -9,13 +9,20 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import EditIcon from "@mui/icons-material/EditOutlined";
 import IconButton from "@mui/material/IconButton";
-import {DataGrid, GridActionsCellItem, GridColDef, GridRowsProp} from "@mui/x-data-grid";
+import {
+    DataGrid,
+    GridActionsCellItem,
+    GridColDef,
+    GridRowsProp
+} from "@mui/x-data-grid";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import dayjs from "dayjs";
+import DeleteDialog from "../utils/components/DeleteDialog.tsx";
 
 export default function CheckupActionsDashboard() {
     const [data, setData] = useState<CheckupAction[]>([]);
+    const [deleteId, setDeleteId] = useState<string | null>(null);
 
     useEffect(() => {
         fetchData();
@@ -23,18 +30,25 @@ export default function CheckupActionsDashboard() {
 
     const fetchData = () => {
         axios.get("/api/checkup-actions")
-            .then(r => {
-                setData(r.data);
-            })
-            .catch(error => {
-                console.error("Error fetching data", error);
-            });
+            .then(r => setData(r.data))
+            .catch(error => console.error("Error fetching data", error));
     };
 
-    const handleDelete = (id: string) => {
-        axios.delete(`/api/checkup-actions/${id}`)
+    const openDeleteDialog = (id: string) => {
+        setDeleteId(id);
+    };
+
+    const closeDeleteDialog = () => {
+        setDeleteId(null);
+    };
+
+    const handleDeleteConfirmed = () => {
+        if (!deleteId) return;
+
+        axios.delete(`/api/checkup-actions/${deleteId}`)
             .then(() => {
                 fetchData();
+                closeDeleteDialog();
             })
             .catch(error => {
                 console.error("Error deleting item", error);
@@ -64,17 +78,19 @@ export default function CheckupActionsDashboard() {
             filterable: false,
             renderCell: (params) => (
                 <AdminOnly>
-                    <GridActionsCellItem
-                        icon={<DeleteIcon/>}
-                        label="Delete"
-                        color="inherit"
-                        onClick={() => handleDelete(params.row.id)}
-                    />
-                    <NavLink to={`/checkup-actions/${params.row.id}`}>
-                        <IconButton aria-label="edit">
-                            <EditIcon />
-                        </IconButton>
-                    </NavLink>
+                    <>
+                        <GridActionsCellItem
+                            icon={<DeleteIcon/>}
+                            label="Delete"
+                            color="inherit"
+                            onClick={() => openDeleteDialog(params.row.id)}
+                        />
+                        <NavLink to={`/checkup-actions/${params.row.id}`}>
+                            <IconButton aria-label="edit">
+                                <EditIcon />
+                            </IconButton>
+                        </NavLink>
+                    </>
                 </AdminOnly>
             )
         },
@@ -116,6 +132,13 @@ export default function CheckupActionsDashboard() {
                         fontSize: 16
                     }
                 }}
+            />
+
+            <DeleteDialog
+                item="Checkup Action"
+                open={!!deleteId}
+                handleDelete={handleDeleteConfirmed}
+                handleClose={closeDeleteDialog}
             />
         </Box>
     );
