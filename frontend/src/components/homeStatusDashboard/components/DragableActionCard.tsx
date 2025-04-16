@@ -1,63 +1,50 @@
-import {Card, Divider, Typography} from "@mui/material";
 import {Draggable} from "@hello-pangea/dnd";
-import {useTheme} from "@mui/material/styles";
 import {useNavigate} from "react-router-dom";
+import CardForm from "./CardForm.tsx";
+import {useIsAdmin} from "../../../utils/customHooks/useIsAdmin.ts";
 import {CheckupAction} from "../../../models/checkupAction/CheckupAction.ts";
 
 type Props = {
     status: string;
-    action: CheckupAction
+    action: CheckupAction;
     index: number;
 };
 
 export default function DragableActionCard(props: Readonly<Props>) {
-    const theme = useTheme();
     const navigate = useNavigate();
-
-    const statusColors: Record<string, string> = {
-        OPEN: theme.palette.info.main,
-        PLANNED: theme.palette.warning.main,
-        IN_PROGRESS: theme.palette.secondary.main,
-        DONE: theme.palette.success.main,
-        CANCELLED: theme.palette.error.main,
-        REACTIVE: theme.palette.secondary.main,
-    };
+    const isAdmin = useIsAdmin();
 
     const handleClick = (id: string) => {
         navigate("/checkup-actions/" + id);
     };
 
+    if (!isAdmin) {
+        return (
+            <CardForm
+                ref={null}
+                action={props.action}
+                status={props.status}
+                isDragging={false}
+                onClick={() => handleClick(props.action.id)}
+            />
+        );
+    }
+
     return (
-        <Draggable key={props.action.id} draggableId={props.action.id} index={props.index}>
+        <Draggable draggableId={props.action.id} index={props.index}>
             {(provided, snapshot) => (
-                <Card
+                <CardForm
                     ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
+                    action={props.action}
+                    status={props.status}
+                    isDragging={snapshot.isDragging}
                     onClick={() => handleClick(props.action.id)}
-                    sx={{
-                        borderLeft: `5px solid ${statusColors[props.status]}`,
-                        padding: 1.5,
-                        borderRadius: 2,
-                        backgroundColor: snapshot.isDragging ? "#f0f0f0" : "#fff",
-                        boxShadow: 2,
-                        ...provided.draggableProps.style
+                    style={provided.draggableProps.style}
+                    dragHandleProps={{
+                        ...provided.draggableProps,
+                        ...provided.dragHandleProps
                     }}
-                >
-                    <Typography variant="subtitle1" fontWeight="bold">
-                        {props.action.adu}
-                    </Typography>
-                    <Typography variant="subtitle2" fontWeight="bold">
-                        {props.action.application}
-                    </Typography>
-                    <Divider sx={{m: 1}}/>
-                    <Typography variant="body2" color="textPrimary">
-                        {props.action.title}
-                    </Typography>
-                    <Typography variant="body2" mt={0.5}>
-                        {props.action.subtitle}
-                    </Typography>
-                </Card>
+                />
             )}
         </Draggable>
     );
