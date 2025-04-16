@@ -15,8 +15,10 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
 import {CheckupAction} from "../../../../models/checkupAction/CheckupAction.ts";
-import {ChangeEvent} from "react";
+import {ChangeEvent, useState} from "react";
 import {Status} from "../../../../models/checkupAction/Status.ts";
+import AdminOnly from "../../../../utils/components/AdminOnly.tsx";
+import DeleteDialog from "../../../../utils/components/DeleteDialog.tsx";
 
 type Props = {
     action: CheckupAction;
@@ -29,6 +31,15 @@ export default function StateManagement(props: Readonly<Props>) {
     const params = useParams();
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
+    const handleOpenDeleteDialog = () => {
+        setOpenDeleteDialog(true);
+    };
+
+    const handleCloseDeleteDialog = () => {
+        setOpenDeleteDialog(false);
+    };
 
     const statusTransitions: Record<Status, Status[]> = {
         OPEN: ["PLANNED"],
@@ -55,7 +66,10 @@ export default function StateManagement(props: Readonly<Props>) {
 
     const handleDelete = () => {
         axios.delete(`/api/checkup-actions/${params.id}`)
-            .then(() => navigate("/checkup-actions"))
+            .then(() => {
+                    navigate("/checkup-actions")
+                }
+            )
             .catch(error => console.error("Error deleting item", error));
     };
 
@@ -119,31 +133,33 @@ export default function StateManagement(props: Readonly<Props>) {
                     <Divider orientation="vertical" flexItem/>
 
                     {/* Status Transition Chips */}
-                    <Stack spacing={0.5}>
-                        {statusTransitions[props.action.status]?.map((targetStatus) => (
-                            <Chip
-                                key={targetStatus}
-                                label={targetStatus.toLowerCase().replace("_", " ")}
-                                variant="outlined"
-                                size="small"
-                                clickable
-                                onClick={() => handleStatusChipClick(targetStatus)}
-                                color={getTransitionColor(targetStatus)}
-                                sx={{textTransform: "capitalize", minWidth: 100}}
-                            />
-                        ))}
-                        {props.action.status !== "CANCELLED" && (
-                            <Chip
-                                label="cancelled"
-                                variant="outlined"
-                                size="small"
-                                clickable
-                                onClick={() => handleStatusChipClick("CANCELLED")}
-                                color="error"
-                                sx={{minWidth: 100}}
-                            />
-                        )}
-                    </Stack>
+                    <AdminOnly>
+                        <Stack spacing={0.5}>
+                            {statusTransitions[props.action.status]?.map((targetStatus) => (
+                                <Chip
+                                    key={targetStatus}
+                                    label={targetStatus.toLowerCase().replace("_", " ")}
+                                    variant="outlined"
+                                    size="small"
+                                    clickable
+                                    onClick={() => handleStatusChipClick(targetStatus)}
+                                    color={getTransitionColor(targetStatus)}
+                                    sx={{textTransform: "capitalize", minWidth: 100}}
+                                />
+                            ))}
+                            {props.action.status !== "CANCELLED" && (
+                                <Chip
+                                    label="cancelled"
+                                    variant="outlined"
+                                    size="small"
+                                    clickable
+                                    onClick={() => handleStatusChipClick("CANCELLED")}
+                                    color="error"
+                                    sx={{minWidth: 100}}
+                                />
+                            )}
+                        </Stack>
+                    </AdminOnly>
                 </Box>
             }
 
@@ -154,13 +170,23 @@ export default function StateManagement(props: Readonly<Props>) {
                         <SaveIcon fontSize="medium"/>
                     </IconButton>
                 </Tooltip>
-                {props.isDetailsPage && (
-                    <Tooltip title="Delete">
-                        <IconButton color="error" size="medium" onClick={handleDelete}>
-                            <DeleteIcon fontSize="medium"/>
-                        </IconButton>
-                    </Tooltip>
-                )}
+                {
+                    props.isDetailsPage && (
+                        <AdminOnly>
+                            <Tooltip title="Delete">
+                                <IconButton color="error" size="medium" onClick={handleOpenDeleteDialog}>
+                                    <DeleteIcon fontSize="medium"/>
+                                </IconButton>
+                            </Tooltip>
+                            <DeleteDialog
+                                item={"Checkup Action"}
+                                open={openDeleteDialog}
+                                handleClose={handleCloseDeleteDialog}
+                                handleDelete={handleDelete}
+                            />
+                        </AdminOnly>
+                    )
+                }
             </Stack>
         </Box>
     );

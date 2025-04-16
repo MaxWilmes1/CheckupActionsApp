@@ -17,11 +17,13 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
 import {Box} from "@mui/material";
+import DeleteDialog from "../../../utils/components/DeleteDialog.tsx";
 
 export default function ManageUsers() {
     const [users, setUsers] = useState<AppUser[]>([]);
     const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
-    const roles = ['NONE', 'USER', 'ADMIN']
+    const [deleteId, setDeleteId] = useState<GridRowId | null>(null);
+    const roles = ['NONE', 'USER', 'ADMIN'];
 
     useEffect(() => {
         fetchUsers();
@@ -29,22 +31,12 @@ export default function ManageUsers() {
 
     const fetchUsers = () => {
         axios.get("/api/user")
-            .then(response => {
-                setUsers(response.data);
-            })
-            .catch(error => {
-                console.error("Error fetching users!", error);
-            });
+            .then(response => setUsers(response.data))
+            .catch(error => console.error("Error fetching users!", error));
     };
 
-    if (!users) {
-        return "Loading...";
-    }
-
-    // API-Requests
     const processRowUpdate = (newRow: AppUser) => {
         setUsers(prevUsers => prevUsers.map(user => user.id === newRow.id ? newRow : user));
-
         axios.put(`/api/user/${newRow.id}`, newRow)
             .then(response => {
                 console.log("User updated:", response.data);
@@ -56,21 +48,44 @@ export default function ManageUsers() {
         return newRow;
     };
 
+    // Delete Dialog logic
+    const openDeleteDialog = (id: GridRowId) => {
+        setDeleteId(id);
+    };
+
+    const closeDeleteDialog = () => {
+        setDeleteId(null);
+    };
+
+    const handleDeleteConfirmed = () => {
+        if (!deleteId) return;
+
+        axios.delete(`/api/user/${deleteId}`)
+            .then(() => {
+                setUsers(users.filter(row => row.id !== deleteId));
+                closeDeleteDialog();
+            })
+            .catch(e => {
+                console.error("Error deleting user", e);
+            });
+    };
+
+    // Edit Mode Management
     const handleSaveClick = (id: GridRowId) => () => {
         setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.View}});
     };
 
-    const handleDeleteClick = (id: GridRowId) => () => {
-        axios.delete(`/api/user/${id}`)
-            .then(() => {
-                setUsers(users.filter(row => row.id !== id));
-            })
-            .catch(e => {
-                console.error("Error deleting user",e)
-            })
+    const handleCancelClick = (id: GridRowId) => () => {
+        setRowModesModel({
+            ...rowModesModel,
+            [id]: {mode: GridRowModes.View, ignoreModifications: true}
+        });
     };
 
-    // Edit Mode Management
+    const handleEditClick = (id: GridRowId) => () => {
+        setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.Edit}});
+    };
+
     const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
         setRowModesModel(newRowModesModel);
     };
@@ -81,24 +96,14 @@ export default function ManageUsers() {
         }
     };
 
-    const handleEditClick = (id: GridRowId) => () => {
-        setRowModesModel({...rowModesModel, [id]: {mode: GridRowModes.Edit}});
-    };
-
-    const handleCancelClick = (id: GridRowId) => () => {
-        setRowModesModel({
-            ...rowModesModel,
-            [id]: {mode: GridRowModes.View, ignoreModifications: true}
-        });
-    };
-
     const columns: GridColDef[] = [
         {field: "username", headerName: "Name", width: 180, editable: false},
         {field: "id", headerName: "ID", width: 140, editable: false},
         {
             field: "role",
             headerName: "Role",
-            width: 130, align: "left",
+            width: 130,
+            align: "left",
             headerAlign: "left",
             editable: true,
             type: "singleSelect",
@@ -114,13 +119,13 @@ export default function ManageUsers() {
                 const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
                 if (isInEditMode) {
                     return [
-                        <GridActionsCellItem key={`save-${id}`} icon={<SaveIcon/>} label="Save" onClick={handleSaveClick(id)}/>,
-                        <GridActionsCellItem key={`cancel-${id}`} icon={<CancelIcon/>} label="Cancel" onClick={handleCancelClick(id)}/>
+                        <GridActionsCellItem key={`save-${id}`} icon={<SaveIcon />} label="Save" onClick={handleSaveClick(id)} />,
+                        <GridActionsCellItem key={`cancel-${id}`} icon={<CancelIcon />} label="Cancel" onClick={handleCancelClick(id)} />
                     ];
                 }
                 return [
-                    <GridActionsCellItem key={`edit-${id}`} icon={<EditIcon/>} label="Edit" onClick={handleEditClick(id)}/>,
-                    <GridActionsCellItem key={`delete-${id}`} icon={<DeleteIcon/>} label="Delete" onClick={handleDeleteClick(id)}/>
+                    <GridActionsCellItem key={`edit-${id}`} icon={<EditIcon />} label="Edit" onClick={handleEditClick(id)} />,
+                    <GridActionsCellItem key={`delete-${id}`} icon={<DeleteIcon />} label="Delete" onClick={() => openDeleteDialog(id)} />
                 ];
             }
         }
@@ -149,6 +154,13 @@ export default function ManageUsers() {
                         fontSize: 16
                     }
                 }}
+            />
+
+            <DeleteDialog
+                item="User"
+                open={!!deleteId}
+                handleDelete={handleDeleteConfirmed}
+                handleClose={closeDeleteDialog}
             />
         </Box>
     );
